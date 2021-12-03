@@ -1,50 +1,33 @@
+import 'package:carousel_slider/carousel_options.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:grocery_app/common_widgets/app_text.dart';
-import 'package:grocery_app/styles/colors.dart';
+import 'carousel_page.dart';
+
 
 class HomeBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 500,
-      height: 115,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
-          image: DecorationImage(
-              image: AssetImage(
-                "assets/images/banner_background.png",
+    List<Widget> pages=[];
+    List<String> images=["assets/images/slider1.png","assets/images/slider2.png","assets/images/slider3","assets/images/banner_background.png"];
+    for(int i=0;i<2;i++){
+pages.add(  CarouselPage(image:images[i]));
+    }
+    return  CarouselSlider(
+              items:pages,
+              
+            //Slider Container properties
+              options: CarouselOptions(
+                height: 180.0,
+                enlargeCenterPage: true,
+                autoPlay: true,
+                aspectRatio: 16 / 9,
+                autoPlayCurve: Curves.fastOutSlowIn,
+                enableInfiniteScroll: true,
+                autoPlayAnimationDuration: Duration(milliseconds: 800),
+                viewportFraction: 0.8,
               ),
-              fit: BoxFit.cover)),
-      child: Row(
-        children: [
-          Container(
-            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-            child: Image.asset(
-              "assets/images/banner_image.png",
-            ),
-          ),
-          Spacer(),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              AppText(
-                text: "Fresh Vegetables",
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-              ),
-              AppText(
-                text: "Get Up To 40%  OFF",
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-                color: AppColors.primaryColor,
-              ),
-            ],
-          ),
-          SizedBox(
-            width: 20,
-          )
-        ],
-      ),
-    );
+          );
   }
 }
+
+

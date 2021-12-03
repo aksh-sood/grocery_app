@@ -6,9 +6,8 @@ import 'package:grocery_app/helpers/constants.dart';
 import 'package:grocery_app/helpers/form_error.dart';
 import 'package:grocery_app/helpers/keyboard.dart';
 import 'package:grocery_app/helpers/size_config.dart';
+import 'package:grocery_app/screens/dashboard/dashboard_screen.dart';
 import 'package:grocery_app/screens/forgot_password/forgot_password_screen.dart';
-import 'package:grocery_app/screens/login_success/login_success_screen.dart';
-import 'package:grocery_app/styles/colors.dart';
 import 'package:grocery_app/widgets/custom_surfix_icon.dart';
 
 
@@ -89,7 +88,7 @@ void initState() {
                 // if all are valid then go to success screen
                 KeyboardUtil.hideKeyboard(context);
                 Navigator.push(context, MaterialPageRoute<void>(
-      builder: (BuildContext context) =>  LoginSuccessScreen(),
+      builder: (BuildContext context) =>  DashboardScreen(),
     ),
   );
               }

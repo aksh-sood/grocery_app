@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:grocery_app/common_widgets/drawer.dart';
+import 'package:grocery_app/helpers/constants.dart';
 import 'package:grocery_app/styles/colors.dart';
-
 import 'navigator_item.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -14,7 +15,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final GlobalKey<ScaffoldState> _key = GlobalKey();
     return Scaffold(
+      key: _key,
+       drawer: CategoryDrawer(),
+      appBar: appBarDesign(_key),
       body: navigatorItems[currentIndex].screen,
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
@@ -71,3 +76,4 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 }
+

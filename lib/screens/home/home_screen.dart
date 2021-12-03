@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:grocery_app/helpers/size_config.dart';
 import 'package:grocery_app/models/grocery_item.dart';
 import 'package:grocery_app/screens/product_details/product_details_screen.dart';
 import 'package:grocery_app/styles/colors.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:grocery_app/widgets/grocery_item_card_widget.dart';
 import 'package:grocery_app/widgets/search_bar_widget.dart';
-
 import 'grocery_featured_Item_widget.dart';
 import 'home_banner_widget.dart';
 
@@ -13,6 +13,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+     
       body: SafeArea(
         child: Container(
           child: SingleChildScrollView(
@@ -22,11 +23,11 @@ class HomeScreen extends StatelessWidget {
                   SizedBox(
                     height: 15,
                   ),
-                  // SvgPicture.asset("assets/icons/app_icon_color.svg"),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  padded(locationWidget()),
+                  // Image.asset("assets/icons/marketspalsh.png",scale: 2.7,),
+                  // SizedBox(
+                  //   height: 5,
+                  // ),
+                  // padded(locationWidget()),
                   SizedBox(
                     height: 15,
                   ),
@@ -174,3 +175,5 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
+
+

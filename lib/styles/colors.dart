@@ -13,6 +13,8 @@ class AppColors {
   static const primaryColor = Color(0xFF5b8c16);
   static const yellowColor = Color(0xFFffd200);
   static const whiteShader = Color(0xfff4f4f4);
+  static const greyShader = Color(0xff7C7C7C);
   static const whiteColor = Color(0xffffffff);
   static const blackColor = Colors.black;
+  static const redColor = Colors.red;
 }

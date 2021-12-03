@@ -13,7 +13,8 @@ class SignInScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          title: Text("Sign In"),
+          // centerTitle: true,
+          title: Text("Sign In",style:TextStyle(color:AppColors.blackColor,fontSize:getProportionateScreenHeight(30))),
         ),
         body: Body(),
       ),

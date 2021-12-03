@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:grocery_app/helpers/size_config.dart';
+import 'package:grocery_app/styles/colors.dart';
 
 const kPrimaryColor = Color(0xFF517d14);
 const kPrimaryLightColor = Color(0xFF5b8c16);
@@ -50,3 +52,44 @@ OutlineInputBorder outlineInputBorder() {
     borderSide: BorderSide(color: kTextColor),
   );
 }
+
+
+ appBarDesign(var key) {
+    return AppBar(
+  //  automaticallyImplyLeading: false,
+   
+  leading: GestureDetector(
+    onTap: (){
+key.currentState.openDrawer();
+    },
+    child: Row(
+      children: [
+       SizedBox(width: getProportionateScreenWidth(5)),
+       IconButton(onPressed:null, icon: Image.asset("assets/icons/marketspalsh.png"),iconSize: 30,)
+      
+      ],
+    ),
+  ),
+  titleSpacing: 0,
+  title:Row(children: [SvgPicture.asset("assets/icons/app_bar_lead.svg"),
+    //  SizedBox(width: getProportionateScreenWidth(40)),
+    Spacer(),
+     Column(
+       mainAxisAlignment: MainAxisAlignment.center,
+       crossAxisAlignment: CrossAxisAlignment.end,
+       children: [
+         Text("Location",style: TextStyle(color: AppColors.primaryColor,fontSize: 15)),
+         
+         Row(
+           mainAxisAlignment: MainAxisAlignment.start,
+           children: [
+             Icon(Icons.location_on),
+             Text("Brooklyn Home",style: TextStyle(color: AppColors.blackColor,fontSize: 15)),
+           ],
+         ),
+       ],
+     ),
+     
+     ],),
+    );
+  }

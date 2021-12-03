@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:grocery_app/common_widgets/app_button.dart';
 import 'package:grocery_app/common_widgets/app_text.dart';
 import 'package:grocery_app/models/grocery_item.dart';
+import 'package:grocery_app/styles/colors.dart';
 import 'package:grocery_app/widgets/item_counter_widget.dart';
 
 import 'favourite_toggle_icon_widget.dart';
@@ -24,6 +25,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(backgroundColor: Colors.transparent,foregroundColor: Colors.transparent,),
       body: SafeArea(
         child: Column(
           children: [
@@ -44,23 +46,17 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         text: widget.groceryItem.description,
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
-                        color: Color(0xff7C7C7C),
+                        color: AppColors.greyShader,
                       ),
                       trailing: FavoriteToggleIcon(),
                     ),
                     Spacer(),
                     Row(
                       children: [
-                        ItemCounterWidget(
-                          onAmountChanged: (newAmount) {
-                            setState(() {
-                              amount = newAmount;
-                            });
-                          },
-                        ),
+                        AppText(text:"Price", fontWeight: FontWeight.w600, fontSize: 16),
                         Spacer(),
                         Text(
-                          "\$${getTotalPrice().toStringAsFixed(2)}",
+                          "د.إ${widget.groceryItem.price.toStringAsFixed(2)}",
                           style: TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
@@ -78,6 +74,28 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     getProductDataRowWidget(
                       "Review",
                       customWidget: ratingWidget(),
+                    ),
+                    Spacer(),
+                    Row(
+                      children: [
+                         Text(
+                          "د.إ${getTotalPrice().toStringAsFixed(2)}",
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Spacer(),
+                        ItemCounterWidget(
+                          onAmountChanged: (newAmount) {
+                            setState(() {
+                              amount = newAmount;
+                            });
+                          },
+                        ),
+                       
+                       
+                      ],
                     ),
                     Spacer(),
                     AppButton(

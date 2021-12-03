@@ -18,7 +18,7 @@ class _ItemCounterWidgetState extends State<ItemCounterWidget> {
     return Row(
       children: [
         iconWidget(Icons.remove,
-            iconColor: AppColors.whiteShader, onPressed: decrementAmount),
+            iconColor: AppColors.redColor, onPressed: decrementAmount),
         SizedBox(width: 18),
         Container(
             width: 30,
@@ -40,7 +40,7 @@ class _ItemCounterWidgetState extends State<ItemCounterWidget> {
   }
 
   void decrementAmount() {
-    if (amount <= 0) return;
+    if (amount <= 1) return;
     setState(() {
       amount = amount - 1;
       updateParent();
