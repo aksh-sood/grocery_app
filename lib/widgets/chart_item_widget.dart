@@ -50,7 +50,7 @@ class _ChartItemWidgetState extends State<ChartItemWidget> {
                     text: widget.item.description,
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
-                    color: AppColors.darkGrey),
+                    color: AppColors.whiteShader),
                 SizedBox(
                   height: 12,
                 ),
@@ -68,7 +68,7 @@ class _ChartItemWidgetState extends State<ChartItemWidget> {
               children: [
                 Icon(
                   Icons.close,
-                  color: AppColors.darkGrey,
+                  color: AppColors.whiteShader,
                   size: 25,
                 ),
                 Spacer(

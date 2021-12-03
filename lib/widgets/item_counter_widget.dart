@@ -18,7 +18,7 @@ class _ItemCounterWidgetState extends State<ItemCounterWidget> {
     return Row(
       children: [
         iconWidget(Icons.remove,
-            iconColor: AppColors.darkGrey, onPressed: decrementAmount),
+            iconColor: AppColors.whiteShader, onPressed: decrementAmount),
         SizedBox(width: 18),
         Container(
             width: 30,

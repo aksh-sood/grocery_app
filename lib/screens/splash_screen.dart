@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:grocery_app/helpers/size_config.dart';
 import 'package:grocery_app/screens/welcome_screen.dart';
+import 'package:grocery_app/screens/welcomeslider/slider1.dart';
 import 'package:grocery_app/styles/colors.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -15,14 +17,14 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
 
-    const delay = const Duration(seconds: 3);
-    Future.delayed(delay, () => onTimerFinished());
+    // const delay = const Duration(seconds: 3);
+    // Future.delayed(delay, () => onTimerFinished());
   }
 
   void onTimerFinished() {
     Navigator.of(context).pushReplacement(new MaterialPageRoute(
       builder: (BuildContext context) {
-        return WelcomeScreen();
+        return IntroScreen();
       },
     ));
   }
@@ -46,7 +48,7 @@ Widget splashScreenIcon(context) {
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
       Image.asset(iconPath),
-      SizedBox(height:MediaQuery.of(context).size.height/25 ,),
+      SizedBox(height:getProportionateScreenHeight(10) ,),
       Image.asset(textPath),
 
     ],
