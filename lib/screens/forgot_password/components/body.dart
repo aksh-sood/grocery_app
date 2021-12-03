@@ -57,8 +57,8 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
         children: [
           TextFormField(
             keyboardType: TextInputType.emailAddress,
-            onSaved: (newValue) => email = newValue,
             onChanged: (value) {
+              email=value;
               if (value.isNotEmpty && errors.contains(kEmailNullError)) {
                 setState(() {
                   errors.remove(kEmailNullError);
@@ -72,7 +72,7 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
               return null;
             },
             validator: (value) {
-              if (value.isNotEmpty && !errors.contains(kEmailNullError)) {
+              if (value.isEmpty && !errors.contains(kEmailNullError)) {
                 setState(() {
                   errors.add(kEmailNullError);
                 });

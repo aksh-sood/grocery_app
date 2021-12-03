@@ -52,7 +52,10 @@ class _SignUpFormState extends State<SignUpForm> {
               if (_formKey.currentState.validate()) {
                 _formKey.currentState.save();
                 // if all are valid then go to success screen
-                Navigator.pushNamed(context, CompleteProfileScreen.routeName);
+                Navigator.push(context, MaterialPageRoute<void>(
+      builder: (BuildContext context) =>  CompleteProfileScreen(),
+    ),
+  );
               }
             },
           ),
@@ -64,8 +67,8 @@ class _SignUpFormState extends State<SignUpForm> {
   TextFormField buildConformPassFormField() {
     return TextFormField(
       obscureText: true,
-      onSaved: (newValue) => confirm_password = newValue,
       onChanged: (value) {
+        confirm_password = value;
         if (value.isNotEmpty) {
           removeError(error: kPassNullError);
         } else if (value.isNotEmpty && password == confirm_password) {
@@ -97,8 +100,8 @@ class _SignUpFormState extends State<SignUpForm> {
   TextFormField buildPasswordFormField() {
     return TextFormField(
       obscureText: true,
-      onSaved: (newValue) => password = newValue,
       onChanged: (value) {
+        password = value;
         if (value.isNotEmpty) {
           removeError(error: kPassNullError);
         } else if (value.length >= 8) {
@@ -130,8 +133,8 @@ class _SignUpFormState extends State<SignUpForm> {
   TextFormField buildEmailFormField() {
     return TextFormField(
       keyboardType: TextInputType.emailAddress,
-      onSaved: (newValue) => email = newValue,
       onChanged: (value) {
+        email=value;
         if (value.isNotEmpty) {
           removeError(error: kEmailNullError);
         } else if (emailValidatorRegExp.hasMatch(value)) {

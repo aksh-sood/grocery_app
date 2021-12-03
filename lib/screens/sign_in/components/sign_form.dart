@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:grocery_app/common_widgets/default_button.dart';
 import 'package:grocery_app/helpers/constants.dart';
@@ -8,6 +10,7 @@ import 'package:grocery_app/screens/forgot_password/forgot_password_screen.dart'
 import 'package:grocery_app/screens/login_success/login_success_screen.dart';
 import 'package:grocery_app/styles/colors.dart';
 import 'package:grocery_app/widgets/custom_surfix_icon.dart';
+
 
 class SignForm extends StatefulWidget {
   @override
@@ -53,7 +56,7 @@ void initState() {
             children: [
               Checkbox(
                 value: remember,
-                activeColor: AppColors.primaryColor,
+                activeColor: kPrimaryColor,
                 onChanged: (value) {
                   setState(() {
                     remember = value;
@@ -63,8 +66,10 @@ void initState() {
               Text("Remember me"),
               Spacer(),
               GestureDetector(
-                onTap: () => Navigator.pushNamed(
-                    context, ForgotPasswordScreen.routeName),
+                onTap: () => Navigator.push(context, MaterialPageRoute<void>(
+      builder: (BuildContext context) => ForgotPasswordScreen(),
+    ),
+  ),
                 child: Text(
                   "Forgot Password",
                   style: TextStyle(decoration: TextDecoration.underline),
@@ -77,11 +82,16 @@ void initState() {
           DefaultButton(
             text: "Continue",
             press: () {
+              log(password,name: "ps");
+              log(email,name: "es");
               if (_formKey.currentState.validate()) {
                 _formKey.currentState.save();
                 // if all are valid then go to success screen
                 KeyboardUtil.hideKeyboard(context);
-                Navigator.pushNamed(context, LoginSuccessScreen.routeName);
+                Navigator.push(context, MaterialPageRoute<void>(
+      builder: (BuildContext context) =>  LoginSuccessScreen(),
+    ),
+  );
               }
             },
           ),
@@ -93,8 +103,8 @@ void initState() {
   TextFormField buildPasswordFormField() {
     return TextFormField(
       obscureText: true,
-      onSaved: (newValue) => password = newValue,
       onChanged: (value) {
+        password=value;
         if (value.isNotEmpty) {
           removeError(error: kPassNullError);
         } else if (value.length >= 8) {
@@ -126,8 +136,9 @@ void initState() {
   TextFormField buildEmailFormField() {
     return TextFormField(
       keyboardType: TextInputType.emailAddress,
-      onSaved: (newValue) => email = newValue,
+      
       onChanged: (value) {
+        email=value;
         if (value.isNotEmpty) {
           removeError(error: kEmailNullError);
         } else if (emailValidatorRegExp.hasMatch(value)) {
@@ -148,6 +159,8 @@ void initState() {
       decoration: InputDecoration(
         labelText: "Email",
         hintText: "Enter your email",
+        // If  you are using latest version of flutter then lable text and hint text shown like this
+        // if you r using flutter less then 1.20.* then maybe this is not working properly
         floatingLabelBehavior: FloatingLabelBehavior.always,
         suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Mail.svg"),
       ),

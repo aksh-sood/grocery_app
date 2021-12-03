@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:grocery_app/helpers/size_config.dart';
 import 'package:grocery_app/screens/sign_in/sign_in_screen.dart';
 import 'package:grocery_app/styles/colors.dart';
 import 'package:intro_slider/intro_slider.dart';
@@ -20,56 +22,21 @@ class IntroScreenState extends State<IntroScreen> {
   @override
   void initState() {
     super.initState();
-
-    slides.add(
+ slides.add(
       new Slide(
-        centerWidget: Stack(
-
-        ),
-        directionColorBegin: Alignment.topLeft,
-        directionColorEnd: Alignment.bottomRight,
-        onCenterItemPress: () {},
+        backgroundImage:"assets/images/slider1.png",
+        backgroundOpacity: 0,
       ),
     );
-    slides.add(
+  slides.add(
       new Slide(
-        title: "CITY",
-        styleTitle: TextStyle(
-            color: Color(0xff7FFFD4),
-            fontSize: 30.0,
-            fontWeight: FontWeight.bold,
-            fontFamily: 'RobotoMono'),
-        description:
-            "Ye indulgence unreserved connection alteration appearance",
-        styleDescription: TextStyle(
-            color: Color(0xff7FFFD4),
-            fontSize: 20.0,
-            fontStyle: FontStyle.italic,
-            fontFamily: 'Raleway'),
-        backgroundImage: "images/city.jpeg",
-        directionColorBegin: Alignment.topRight,
-        directionColorEnd: Alignment.bottomLeft,
+        backgroundImage:"assets/images/slider2.png",
+        backgroundOpacity: 0,
       ),
-    );
-    slides.add(
+    ); slides.add(
       new Slide(
-        title: "BEACH",
-        styleTitle: TextStyle(
-            color: Color(0xffFFDAB9),
-            fontSize: 30.0,
-            fontWeight: FontWeight.bold,
-            fontFamily: 'RobotoMono'),
-        description:
-            "Much evil soon high in hope do view. Out may few northward believing attempted. Yet timed being songs marry one defer men our. Although finished blessing do of",
-        styleDescription: TextStyle(
-            color: Color(0xffFFDAB9),
-            fontSize: 20.0,
-            fontStyle: FontStyle.italic,
-            fontFamily: 'Raleway'),
-        backgroundImage: "images/beach.jpeg",
-        directionColorBegin: Alignment.topCenter,
-        directionColorEnd: Alignment.bottomCenter,
-        maxLineTextDescription: 3,
+        backgroundImage:"assets/images/slider3.png",
+        backgroundOpacity: 0,
       ),
     );
   }
@@ -82,65 +49,39 @@ class IntroScreenState extends State<IntroScreen> {
     );
   }
 
-  Widget renderNextBtn() {
-    return Icon(
-      Icons.navigate_next,
-      color: Color(0xffF3B4BA),
-      size: 35.0,
-    );
-  }
 
   Widget renderDoneBtn() {
     return Icon(
       Icons.done,
-      color: Color(0xffF3B4BA),
+      color: AppColors.primaryColor,
     );
   }
 
-  Widget renderSkipBtn() {
-    return Icon(
-      Icons.skip_next,
-      color: Color(0xffF3B4BA),
-    );
-  }
 
   ButtonStyle myButtonStyle() {
     return ButtonStyle(
       shape: MaterialStateProperty.all<OutlinedBorder>(StadiumBorder()),
-      backgroundColor: MaterialStateProperty.all<Color>(Color(0x33F3B4BA)),
-      overlayColor: MaterialStateProperty.all<Color>(Color(0x33FFA8B0)),
+      backgroundColor: MaterialStateProperty.all<Color>(AppColors.whiteShader),
+      overlayColor: MaterialStateProperty.all<Color>(AppColors.whiteColor),
     );
   }
+
 
   @override
   Widget build(BuildContext context) {
     return new IntroSlider(
-      // List slides
       slides: this.slides,
-
-      // Skip button
-      // renderSkipBtn: this.renderSkipBtn(),
-      // skipButtonStyle: myButtonStyle(),
-
-      // Next button
-      // renderNextBtn: this.renderNextBtn(),
-      // nextButtonStyle: myButtonStyle(),
-
-      // Done button
+      showSkipBtn: false,
+      showNextBtn: false,
+      showPrevBtn: false,
       renderDoneBtn: this.renderDoneBtn(),
       onDonePress: this.onDonePress,
       doneButtonStyle: myButtonStyle(),
-
-      // Dot indicator
       colorDot: AppColors.whiteShader.withOpacity(0.5),
       colorActiveDot:AppColors.whiteShader ,
       sizeDot: 13.0,
-
-      // Show or hide status bar
       hideStatusBar: true,
       backgroundColorAllSlides: AppColors.primaryColor,
-
-      // Scrollbar
       verticalScrollbarBehavior: scrollbarBehavior.SHOW_ALWAYS,
     );
   }

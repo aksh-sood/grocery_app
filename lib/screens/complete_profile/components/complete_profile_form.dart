@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:grocery_app/common_widgets/default_button.dart';
 import 'package:grocery_app/helpers/constants.dart';
@@ -50,10 +52,17 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
           FormError(errors: errors),
           SizedBox(height: getProportionateScreenHeight(40)),
           DefaultButton(
-            text: "continue",
+            text: "Continue",
             press: () {
+                //  log(address,name:"z");
+                //  log(phoneNumber,name:"x");
+                //  log(firstName,name:"y");
+                //  log(lastName,name:"g");
               if (_formKey.currentState.validate()) {
-                Navigator.pushNamed(context, OtpScreen.routeName);
+                Navigator.push(context, MaterialPageRoute<void>(
+      builder: (BuildContext context) =>  OtpScreen(phoneNumber: phoneNumber,),
+    ),
+  );
               }
             },
           ),
@@ -64,8 +73,9 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
 
   TextFormField buildAddressFormField() {
     return TextFormField(
-      onSaved: (newValue) => address = newValue,
+
       onChanged: (value) {
+        address = value;
         if (value.isNotEmpty) {
           removeError(error: kAddressNullError);
         }
@@ -91,10 +101,12 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
   }
 
   TextFormField buildPhoneNumberFormField() {
+
     return TextFormField(
       keyboardType: TextInputType.phone,
-      onSaved: (newValue) => phoneNumber = newValue,
+   
       onChanged: (value) {
+        phoneNumber=value;
         if (value.isNotEmpty) {
           removeError(error: kPhoneNumberNullError);
         }
@@ -120,7 +132,20 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
 
   TextFormField buildLastNameFormField() {
     return TextFormField(
-      onSaved: (newValue) => lastName = newValue,
+onChanged: (value) {
+        lastName=value;
+        if (value.isNotEmpty) {
+          removeError(error: kLastNameNullError);
+        }
+        return null;
+      },
+      validator: (value) {
+        if (value.isEmpty) {
+          addError(error: kLastNameNullError);
+          return "";
+        }
+        return null;
+      },
       decoration: InputDecoration(
         labelText: "Last Name",
         hintText: "Enter your last name",
@@ -134,8 +159,8 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
 
   TextFormField buildFirstNameFormField() {
     return TextFormField(
-      onSaved: (newValue) => firstName = newValue,
       onChanged: (value) {
+        firstName=value;
         if (value.isNotEmpty) {
           removeError(error: kNamelNullError);
         }

@@ -17,8 +17,8 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
 
-    // const delay = const Duration(seconds: 3);
-    // Future.delayed(delay, () => onTimerFinished());
+    const delay = const Duration(seconds: 3);
+    Future.delayed(delay, () => onTimerFinished());
   }
 
   void onTimerFinished() {
@@ -31,6 +31,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return Scaffold(
       backgroundColor: AppColors.primaryColor,
       body: Center(
@@ -48,7 +49,7 @@ Widget splashScreenIcon(context) {
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
       Image.asset(iconPath),
-      SizedBox(height:getProportionateScreenHeight(10) ,),
+      SizedBox(height:getProportionateScreenHeight(10)) ,
       Image.asset(textPath),
 
     ],
