@@ -1,62 +1,112 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:grocery_app/helpers/constants.dart';
+import 'package:grocery_app/helpers/size_config.dart';
+import 'package:grocery_app/models/category_item.dart';
 import 'package:grocery_app/styles/colors.dart';
+import 'package:grocery_app/widgets/category_item_card_widget.dart';
 
 class CategoryDrawer extends StatelessWidget {
-  const CategoryDrawer({
+  CategoryDrawer({
     Key key,
   }) : super(key: key);
+  List<Widget> drawerItem = [];
 
   @override
   Widget build(BuildContext context) {
-    return Drawer(
-       child: ListView(
-       // Important: Remove any padding from the ListView.
-       padding: EdgeInsets.zero,
-       children: [
-         const DrawerHeader(
-           decoration: BoxDecoration(
-             color: Colors.blue,
-           ),
-           child: Text('Drawer Header'),
-         ),
-         ListTile(
-           title: const Text('Item 1'),
-           onTap: () {
-             // Update the state of the app
-             // ...
-             // Then close the drawer
-             Navigator.pop(context);
-           },
-         ),
-         ListTile(
-           title: const Text('Item 2'),
-           onTap: () {
-             // Update the state of the app
-             // ...
-             // Then close the drawer
-             Navigator.pop(context);
-           },
-         ),
-       ],
-     ),
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      body: SafeArea(
+          child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            height: SizeConfig.screenHeight,
+            color: AppColors.whiteColor,
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: categoryItemsDemo.asMap().entries.map<Widget>((e) {
+      int index = e.key;
+      CategoryItem categoryItem = e.value;
+      return GestureDetector(
+        onTap: () {
+          onCategoryItemClicked(context, categoryItem);
+        },
+        child: Container(
+          padding: EdgeInsets.all(10),
+          child: DrawerItem(
+            item: categoryItem,
+            color: gridColors[index % gridColors.length],
+          ),
+        ),
+      );
+    }).toList(),
+              ),
+            ),
+          )
+        ],
+      )),
     );
   }
 }
 
 class DrawerItem extends StatelessWidget {
-  const DrawerItem({ Key key }) : super(key: key);
-
+   DrawerItem({Key key,this.item,this.color}) : super(key: key);
+final CategoryItem item;
+final Color color;
   @override
   Widget build(BuildContext context) {
     return Container(
-      child:   Column(
-       mainAxisAlignment: MainAxisAlignment.center,
-       crossAxisAlignment: CrossAxisAlignment.end,
-       children: [
-         
-         Text("Location",style: TextStyle(color: AppColors.blackColor,fontSize: 15)),
-       ],
-     ),
+      width: getProportionateScreenWidth(80),
+      padding: EdgeInsets.all(10),
+
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          CircleAvatar(
+            child: Image.asset(item.imagePath,
+                scale: 10),
+            backgroundColor: color.withOpacity(0.1),
+            radius: getProportionateScreenWidth(35),
+          ),
+          SizedBox(height:10),
+          Text(item.name,textAlign:TextAlign.center,
+          softWrap: true,
+              style: TextStyle(color: AppColors.blackColor, fontSize: 15)),
+        ],
+      ),
     );
   }
+}
+
+Widget getStaggeredGridView(BuildContext context) {
+  return StaggeredGridView.count(
+    crossAxisCount: 4,
+    children: categoryItemsDemo.asMap().entries.map<Widget>((e) {
+      int index = e.key;
+      CategoryItem categoryItem = e.value;
+      return GestureDetector(
+        onTap: () {
+          onCategoryItemClicked(context, categoryItem);
+        },
+        child: Container(
+          padding: EdgeInsets.all(10),
+          child: CategoryItemCardWidget(
+            item: categoryItem,
+            color: gridColors[index % gridColors.length],
+          ),
+        ),
+      );
+    }).toList(),
+
+    //Here is the place that we are getting flexible/ dynamic card for various images
+    staggeredTiles: categoryItemsDemo
+        .map<StaggeredTile>((_) => StaggeredTile.fit(2))
+        .toList(),
+    mainAxisSpacing: 3.0,
+    crossAxisSpacing: 4.0, // add some space
+  );
 }

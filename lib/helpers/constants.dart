@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:grocery_app/helpers/size_config.dart';
+import 'package:grocery_app/models/category_item.dart';
+import 'package:grocery_app/screens/category_items_screen.dart';
 import 'package:grocery_app/styles/colors.dart';
 
 const kPrimaryColor = Color(0xFF517d14);
@@ -93,3 +95,12 @@ key.currentState.openDrawer();
      ],),
     );
   }
+
+   void onCategoryItemClicked(BuildContext context, CategoryItem categoryItem) {
+    Navigator.of(context).push(new MaterialPageRoute(
+      builder: (BuildContext context) {
+        return CategoryItemsScreen();
+      },
+    ));
+  }
+

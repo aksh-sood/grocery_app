@@ -3,21 +3,13 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:grocery_app/common_widgets/app_text.dart';
 import 'package:grocery_app/models/category_item.dart';
+import 'package:grocery_app/styles/colors.dart';
 import 'package:grocery_app/widgets/category_item_card_widget.dart';
 import 'package:grocery_app/widgets/search_bar_widget.dart';
 
 import 'category_items_screen.dart';
 
-List<Color> gridColors = [
-  Color(0xff53B175),
-  Color(0xffF8A44C),
-  Color(0xffF7A593),
-  Color(0xffD3B0E0),
-  Color(0xffFDE598),
-  Color(0xffB7DFF5),
-  Color(0xff836AF6),
-  Color(0xffD73B77),
-];
+
 
 class ExploreScreen extends StatelessWidget {
   @override

@@ -32,10 +32,12 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    return Scaffold(
-      backgroundColor: AppColors.primaryColor,
-      body: Center(
-        child: splashScreenIcon(context),
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: AppColors.primaryColor,
+        body: Center(
+          child: splashScreenIcon(context),
+        ),
       ),
     );
   }

@@ -18,3 +18,13 @@ class AppColors {
   static const blackColor = Colors.black;
   static const redColor = Colors.red;
 }
+List<Color> gridColors = [
+  Color(0xff53B175),
+  Color(0xffF8A44C),
+  Color(0xffF7A593),
+  Color(0xffD3B0E0),
+  Color(0xffFDE598),
+  Color(0xffB7DFF5),
+  Color(0xff836AF6),
+  Color(0xffD73B77),
+];
