@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:shop_app/components/custom_surfix_icon.dart';
-import 'package:shop_app/components/default_button.dart';
-import 'package:shop_app/components/form_error.dart';
-import 'package:shop_app/screens/complete_profile/complete_profile_screen.dart';
-
-import '../../../constants.dart';
-import '../../../size_config.dart';
-
+import 'package:grocery_app/common_widgets/default_button.dart';
+import 'package:grocery_app/helpers/constants.dart';
+import 'package:grocery_app/helpers/form_error.dart';
+import 'package:grocery_app/helpers/size_config.dart';
+import 'package:grocery_app/screens/complete_profile/complete_profile_screen.dart';
+import 'package:grocery_app/widgets/custom_surfix_icon.dart';
 
 class SignUpForm extends StatefulWidget {
   @override
@@ -19,16 +17,16 @@ class _SignUpFormState extends State<SignUpForm> {
   String password;
   String confirm_password;
   bool remember = false;
-  final List<String?> errors = [];
+  final List<String> errors = [];
 
-  void addError({String? error}) {
+  void addError({String error}) {
     if (!errors.contains(error))
       setState(() {
         errors.add(error);
       });
   }
 
-  void removeError({String? error}) {
+  void removeError({String error}) {
     if (errors.contains(error))
       setState(() {
         errors.remove(error);
@@ -51,8 +49,8 @@ class _SignUpFormState extends State<SignUpForm> {
           DefaultButton(
             text: "Continue",
             press: () {
-              if (_formKey.currentState!.validate()) {
-                _formKey.currentState!.save();
+              if (_formKey.currentState.validate()) {
+                _formKey.currentState.save();
                 // if all are valid then go to success screen
                 Navigator.pushNamed(context, CompleteProfileScreen.routeName);
               }
@@ -76,7 +74,7 @@ class _SignUpFormState extends State<SignUpForm> {
         confirm_password = value;
       },
       validator: (value) {
-        if (value!.isEmpty) {
+        if (value.isEmpty) {
           addError(error: kPassNullError);
           return "";
         } else if ((password != value)) {
@@ -109,7 +107,7 @@ class _SignUpFormState extends State<SignUpForm> {
         password = value;
       },
       validator: (value) {
-        if (value!.isEmpty) {
+        if (value.isEmpty) {
           addError(error: kPassNullError);
           return "";
         } else if (value.length < 8) {
@@ -142,7 +140,7 @@ class _SignUpFormState extends State<SignUpForm> {
         return null;
       },
       validator: (value) {
-        if (value!.isEmpty) {
+        if (value.isEmpty) {
           addError(error: kEmailNullError);
           return "";
         } else if (!emailValidatorRegExp.hasMatch(value)) {
