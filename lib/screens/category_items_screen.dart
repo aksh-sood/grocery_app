@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:grocery_app/common_widgets/app_text.dart';
+import 'package:grocery_app/common_widgets/drawer.dart';
 import 'package:grocery_app/models/grocery_item.dart';
 import 'package:grocery_app/screens/product_details/product_details_screen.dart';
 import 'package:grocery_app/widgets/grocery_item_card_widget.dart';
@@ -11,7 +12,10 @@ import 'filter_screen.dart';
 class CategoryItemsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+     final GlobalKey<ScaffoldState> _key = GlobalKey();
     return Scaffold(
+       key: _key,
+       drawer: CategoryDrawer(),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
