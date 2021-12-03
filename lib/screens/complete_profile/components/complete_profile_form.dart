@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:shop_app/components/custom_surfix_icon.dart';
-import 'package:shop_app/components/default_button.dart';
-import 'package:shop_app/components/form_error.dart';
-import 'package:shop_app/screens/otp/otp_screen.dart';
+import 'package:grocery_app/common_widgets/default_button.dart';
+import 'package:grocery_app/helpers/constants.dart';
+import 'package:grocery_app/helpers/form_error.dart';
+import 'package:grocery_app/helpers/size_config.dart';
+import 'package:grocery_app/widgets/custom_surfix_icon.dart';
 
-import '../../../constants.dart';
-import '../../../size_config.dart';
 
 class CompleteProfileForm extends StatefulWidget {
   @override
@@ -14,20 +13,20 @@ class CompleteProfileForm extends StatefulWidget {
 
 class _CompleteProfileFormState extends State<CompleteProfileForm> {
   final _formKey = GlobalKey<FormState>();
-  final List<String?> errors = [];
-  String? firstName;
-  String? lastName;
-  String? phoneNumber;
-  String? address;
+  final List<String> errors = [];
+  String firstName;
+  String lastName;
+  String phoneNumber;
+  String address;
 
-  void addError({String? error}) {
+  void addError({String error}) {
     if (!errors.contains(error))
       setState(() {
         errors.add(error);
       });
   }
 
-  void removeError({String? error}) {
+  void removeError({String error}) {
     if (errors.contains(error))
       setState(() {
         errors.remove(error);
@@ -52,7 +51,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
           DefaultButton(
             text: "continue",
             press: () {
-              if (_formKey.currentState!.validate()) {
+              if (_formKey.currentState.validate()) {
                 Navigator.pushNamed(context, OtpScreen.routeName);
               }
             },
@@ -72,7 +71,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
         return null;
       },
       validator: (value) {
-        if (value!.isEmpty) {
+        if (value.isEmpty) {
           addError(error: kAddressNullError);
           return "";
         }
@@ -101,7 +100,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
         return null;
       },
       validator: (value) {
-        if (value!.isEmpty) {
+        if (value.isEmpty) {
           addError(error: kPhoneNumberNullError);
           return "";
         }
@@ -142,7 +141,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
         return null;
       },
       validator: (value) {
-        if (value!.isEmpty) {
+        if (value.isEmpty) {
           addError(error: kNamelNullError);
           return "";
         }
