@@ -32,15 +32,23 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       backgroundColor: AppColors.primaryColor,
       body: Center(
-        child: splashScreenIcon(),
+        child: splashScreenIcon(context),
       ),
     );
   }
 }
 
-Widget splashScreenIcon() {
-  String iconPath = "assets/icons/splash_screen_icon.svg";
-  return SvgPicture.asset(
-    iconPath,
+Widget splashScreenIcon(context) {
+  String iconPath = "assets/icons/marketspalsh.png";
+  String textPath = "assets/icons/yourgrocer.png";
+  return 
+  Column(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: [
+      Image.asset(iconPath),
+      SizedBox(height:MediaQuery.of(context).size.height/25 ,),
+      Image.asset(textPath),
+
+    ],
   );
 }

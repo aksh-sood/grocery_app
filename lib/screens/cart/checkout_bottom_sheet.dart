@@ -144,6 +144,6 @@ class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
 
   void onPlaceOrderClicked() {
     Navigator.pop(context);
-    showDialog(context: context, child: OrderFailedDialogue());
+    showDialog(context: context, builder: (BuildContext context) => OrderFailedDialogue());
   }
 }

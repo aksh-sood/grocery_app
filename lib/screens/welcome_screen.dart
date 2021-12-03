@@ -26,7 +26,7 @@ class WelcomeScreen extends StatelessWidget {
               mainAxisSize: MainAxisSize.max,
               children: [
                 Spacer(),
-                icon(),
+                // icon(),
                 SizedBox(
                   height: 20,
                 ),

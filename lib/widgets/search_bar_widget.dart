@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 class SearchBarWidget extends StatelessWidget {
   final String searchIcon = "assets/icons/search_icon.svg";
@@ -16,9 +15,7 @@ class SearchBarWidget extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          SvgPicture.asset(
-            searchIcon,
-          ),
+          Icon(Icons.search),
           SizedBox(
             width: 8,
           ),
