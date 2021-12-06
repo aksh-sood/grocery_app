@@ -39,6 +39,10 @@ const String kNamelNullError = "Please Enter your name";
 const String kPhoneNumberNullError = "Please Enter your phone number";
 const String kLastNameNullError = "Please Enter your last name";
 const String kAddressNullError = "Please Enter your address";
+const kTextFieldBorderRadius = BorderRadius.all(Radius.circular(18.0));
+const kHintTextStyle = TextStyle(color: AppColors.blackColor, fontSize: 18.0);
+const kTextFieldStyle = TextStyle(color: AppColors.blackColor, fontSize: 18.0);
+
 
 final otpInputDecoration = InputDecoration(
   contentPadding:
@@ -56,45 +60,53 @@ OutlineInputBorder outlineInputBorder() {
 }
 
 
- appBarDesign(var key) {
-    return AppBar(
-  //  automaticallyImplyLeading: false,
-   
-  leading: GestureDetector(
-    onTap: (){
-key.currentState.openDrawer();
-    },
-    child: Row(
-      children: [
-       SizedBox(width: getProportionateScreenWidth(5)),
-       IconButton(onPressed:null, icon: Image.asset("assets/icons/marketspalsh.png"),iconSize: 30,)
+//  appBarDesign(var key) {
+//     return AppBar(
+//   //  automaticallyImplyLeading: false,
+//    actions: [  IconButton(
+//             icon: Icon(Icons.search, color: Colors.white),
+//             onPressed: () {
+//               setState(() {
+//                 _searching = !_searching;
+//               });
+//             },
+//             tooltip: 'Search',
+//           ),],
+//   leading: GestureDetector(
+//     onTap: (){
+// key.currentState.openDrawer();
+//     },
+//     child: Row(
+//       children: [
+//        SizedBox(width: getProportionateScreenWidth(5)),
+//        IconButton(onPressed:null, icon: Image.asset("assets/icons/marketspalsh.png"),iconSize: 30,)
       
-      ],
-    ),
-  ),
-  titleSpacing: 0,
-  title:Row(children: [SvgPicture.asset("assets/icons/app_bar_lead.svg"),
-    //  SizedBox(width: getProportionateScreenWidth(40)),
-    Spacer(),
-     Column(
-       mainAxisAlignment: MainAxisAlignment.center,
-       crossAxisAlignment: CrossAxisAlignment.end,
-       children: [
-         Text("Location",style: TextStyle(color: AppColors.primaryColor,fontSize: 15)),
+//       ],
+//     ),
+//   ),
+//   titleSpacing: 0,
+//   title:Row(children: [SvgPicture.asset("assets/icons/app_bar_lead.svg"),
+//     //  SizedBox(width: getProportionateScreenWidth(40)),
+//     Spacer(),
+//      Column(
+//        mainAxisAlignment: MainAxisAlignment.center,
+//        crossAxisAlignment: CrossAxisAlignment.end,
+//        children: [
+//          Text("Location",style: TextStyle(color: AppColors.primaryColor,fontSize: 15)),
          
-         Row(
-           mainAxisAlignment: MainAxisAlignment.start,
-           children: [
-             Icon(Icons.location_on),
-             Text("Brooklyn Home",style: TextStyle(color: AppColors.blackColor,fontSize: 15)),
-           ],
-         ),
-       ],
-     ),
+//          Row(
+//            mainAxisAlignment: MainAxisAlignment.start,
+//            children: [
+//              Icon(Icons.location_on),
+//              Text("Brooklyn Home",style: TextStyle(color: AppColors.blackColor,fontSize: 15)),
+//            ],
+//          ),
+//        ],
+//      ),
      
-     ],),
-    );
-  }
+//      ],),
+//     );
+//   }
 
    void onCategoryItemClicked(BuildContext context, CategoryItem categoryItem) {
     Navigator.of(context).push(new MaterialPageRoute(
