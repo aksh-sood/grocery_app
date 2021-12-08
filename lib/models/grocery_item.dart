@@ -29,22 +29,22 @@ var demoItems = [
       price: 4.99,
       imagePath: "assets/images/grocery_images/ginger.png"),
   GroceryItem(
-      name: "Ginger",
+      name: "Beef",
       description: "250gm, Priceg",
       price: 4.99,
       imagePath: "assets/images/grocery_images/beef.png"),
   GroceryItem(
-      name: "Ginger",
+      name: "Chicken",
       description: "250gm, Priceg",
       price: 4.99,
       imagePath: "assets/images/grocery_images/chicken.png"),
 ];
 
-var exclusiveOffers = [demoItems[0], demoItems[1]];
+var exclusiveOffers = [demoItems[0], demoItems[1],demoItems[3]];
 
-var bestSelling = [demoItems[2], demoItems[3]];
+var bestSelling = [demoItems[2], demoItems[3],demoItems[0]];
 
-var groceries = [demoItems[4], demoItems[5]];
+var groceries = [demoItems[4], demoItems[5],demoItems[1]];
 
 var beverages = [
   GroceryItem(

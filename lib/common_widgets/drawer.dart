@@ -14,67 +14,96 @@ class CategoryDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.transparent,
-      body: SafeArea(
-          child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            height: SizeConfig.screenHeight,
-            color: AppColors.whiteColor,
-            child: SingleChildScrollView(
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: Row(
+          children: [
+            Container(
+              color: AppColors.primaryColor,
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: categoryItemsDemo.asMap().entries.map<Widget>((e) {
-      int index = e.key;
-      CategoryItem categoryItem = e.value;
-      return GestureDetector(
-        onTap: () {
-          onCategoryItemClicked(context, categoryItem);
-        },
-        child: Container(
-          padding: EdgeInsets.all(10),
-          child: DrawerItem(
-            item: categoryItem,
-            color: gridColors[index % gridColors.length],
-          ),
-        ),
-      );
-    }).toList(),
+                children: [
+                  Spacer(),
+                  Row(children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Container(
+                       
+                          child: Text(
+                            "C\n\nT\n\nA\n\nG\n\nO\n\nR\n\nI\n\nE\n\nS",
+                            style: TextStyle(
+                              color: AppColors.yellowColor,
+                                fontSize: 20, fontWeight: FontWeight.bold),
+                          ),
+                          color: AppColors.primaryColor),
+                    )
+                  ]),
+                  Spacer()
+                ],
               ),
             ),
-          )
-        ],
-      )),
+          
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  height: SizeConfig.screenHeight,
+                  color: AppColors.whiteColor,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children:
+                          categoryItemsDemo.asMap().entries.map<Widget>((e) {
+                        int index = e.key;
+                        CategoryItem categoryItem = e.value;
+                        return GestureDetector(
+                          onTap: () {
+                            onCategoryItemClicked(context, categoryItem);
+                          },
+                          child: Container(
+                            padding: EdgeInsets.all(10),
+                            child: DrawerItem(
+                              item: categoryItem,
+                              color: gridColors[index % gridColors.length],
+                            ),
+                          ),
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
 
 class DrawerItem extends StatelessWidget {
-   DrawerItem({Key key,this.item,this.color}) : super(key: key);
-final CategoryItem item;
-final Color color;
+  DrawerItem({Key key, this.item, this.color}) : super(key: key);
+  final CategoryItem item;
+  final Color color;
   @override
   Widget build(BuildContext context) {
     return Container(
       width: getProportionateScreenWidth(80),
       padding: EdgeInsets.all(10),
-
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           CircleAvatar(
-            child: Image.asset(item.imagePath,
-                scale: 10),
+            child: Image.asset(item.imagePath, scale: 10),
             backgroundColor: color.withOpacity(0.1),
             radius: getProportionateScreenWidth(35),
           ),
-          SizedBox(height:10),
-          Text(item.name,textAlign:TextAlign.center,
-          softWrap: true,
+          SizedBox(height: 10),
+          Text(item.name,
+              textAlign: TextAlign.center,
+              softWrap: true,
               style: TextStyle(color: AppColors.blackColor, fontSize: 15)),
         ],
       ),

@@ -1,5 +1,5 @@
 import 'dart:ui';
-
+import 'package:accordion/accordion.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:grocery_app/common_widgets/app_button.dart';
@@ -27,86 +27,47 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     return Scaffold(
       appBar: AppBar(backgroundColor: Colors.transparent,foregroundColor: Colors.transparent,),
       body: SafeArea(
-        child: Column(
-          children: [
-            getImageHeaderWidget(),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25),
-                child: Column(
-                  children: [
-                    ListTile(
-                      contentPadding: EdgeInsets.zero,
-                      title: Text(
-                        widget.groceryItem.name,
-                        style: TextStyle(
-                            fontSize: 24, fontWeight: FontWeight.bold),
-                      ),
-                      subtitle: AppText(
-                        text: widget.groceryItem.description,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: AppColors.greyShader,
-                      ),
-                      trailing: FavoriteToggleIcon(),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              getImageHeaderWidget(),
+              Column(
+                children: [
+                  ListTile(
+                    contentPadding: EdgeInsets.zero,
+                    title: Text(
+                      widget.groceryItem.name,
+                      style: TextStyle(
+                          fontSize: 24, fontWeight: FontWeight.bold),
                     ),
-                    Spacer(),
-                    Row(
-                      children: [
-                        AppText(text:"Price", fontWeight: FontWeight.w600, fontSize: 16),
-                        Spacer(),
-                        Text(
-                          "د.إ${widget.groceryItem.price.toStringAsFixed(2)}",
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        )
-                      ],
+                    subtitle: AppText(
+                      text: widget.groceryItem.description,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.greyShader,
                     ),
-                    Spacer(),
-                    Divider(thickness: 1),
-                    getProductDataRowWidget("Product Details"),
-                    Divider(thickness: 1),
-                    getProductDataRowWidget("Nutritions",
-                        customWidget: nutritionWidget()),
-                    Divider(thickness: 1),
-                    getProductDataRowWidget(
-                      "Review",
-                      customWidget: ratingWidget(),
-                    ),
-                    Spacer(),
-                    Row(
-                      children: [
-                         Text(
-                          "د.إ${getTotalPrice().toStringAsFixed(2)}",
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Spacer(),
-                        ItemCounterWidget(
-                          onAmountChanged: (newAmount) {
-                            setState(() {
-                              amount = newAmount;
-                            });
-                          },
-                        ),
-                       
-                       
-                      ],
-                    ),
-                    Spacer(),
-                    AppButton(
-                      label: "Add To Basket",
-                    ),
-                    Spacer(),
-                  ],
-                ),
+                    trailing: FavoriteToggleIcon(),
+                  ),
+                  // Spacer(),
+                  
+                  // Spacer(),
+                  // Divider(thickness: 1),
+                  getProductDataRowWidget("Product Details"),
+                  // Divider(thickness: 1),
+                  // getProductDataRowWidget("Nutritions",
+                      // customWidget: nutritionWidget()),
+                  // Divider(thickness: 1),
+                  // getProductDataRowWidget(
+                    // "Review",
+                    // customWidget: ratingWidget(),
+                  // ),
+                  // Spacer(),
+                  
+                
+                ],
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -140,28 +101,31 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   }
 
   Widget getProductDataRowWidget(String label, {Widget customWidget}) {
-    return Container(
-      margin: EdgeInsets.only(
-        top: 20,
-        bottom: 20,
-      ),
-      child: Row(
-        children: [
-          AppText(text: label, fontWeight: FontWeight.w600, fontSize: 16),
-          Spacer(),
-          if (customWidget != null) ...[
-            customWidget,
-            SizedBox(
-              width: 20,
-            )
-          ],
-          Icon(
-            Icons.arrow_forward_ios,
-            size: 20,
-          )
-        ],
-      ),
-    );
+    return Accordion(
+	maxOpenSections: 2,
+	// headerTextStyle: TextStyle(color: Colors.white, fontSize: 17, fontWeight: FontWeight.bold),
+	// leftIcon: Icon(Icons.audiotrack, color: Colors.white),
+  headerBackgroundColor: AppColors.whiteColor,
+	children: [
+		AccordionSection(
+			isOpen: true,
+			header: Text("intro",style:TextStyle(
+                          fontSize: 24, fontWeight: FontWeight.bold),
+                    ),
+			content: Text('This is the introduction right here ...'),
+		),
+		AccordionSection(
+			isOpen: true,
+			header: Text('About Us',style: TextStyle(color: Colors.white, fontSize: 17)),
+			content: Icon(Icons.airline_seat_flat, size: 120, color: Colors.blue[200]),
+		),
+		AccordionSection(
+			isOpen: true,
+			header: Text('Company Info',style: TextStyle(color: Colors.white, fontSize: 17)),
+			content: Icon(Icons.airplay, size: 70, color: Colors.green[200]),
+		),
+	],
+);
   }
 
   Widget nutritionWidget() {
@@ -204,3 +168,60 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     return amount * widget.groceryItem.price;
   }
 }
+
+
+  //  AppText(text: label, fontWeight: FontWeight.w600, fontSize: 16),
+  //         Spacer(),
+  //         if (customWidget != null) ...[
+  //           customWidget,
+  //           SizedBox(
+  //             width: 20,
+  //           )
+  //         ],
+  //         Icon(
+  //           Icons.arrow_forward_ios,
+  //           size: 20,
+  //         )
+
+// Row(
+                      //   children: [
+                      //      Text(
+                      //       "د.إ${getTotalPrice().toStringAsFixed(2)}",
+                      //       style: TextStyle(
+                      //         fontSize: 24,
+                      //         fontWeight: FontWeight.bold,
+                      //       ),
+                      //     ),
+                      //     Spacer(),
+                      //     ItemCounterWidget(
+                      //       onAmountChanged: (newAmount) {
+                      //         setState(() {
+                      //           amount = newAmount;
+                      //         });
+                      //       },
+                      //     ),
+                         
+                         
+                      //   ],
+                      // ),
+
+                      //   Spacer(),
+                      // AppButton(
+                      //   label: "Add To Basket",
+                      // ),
+                      // Spacer(),
+
+
+                    //   Row(
+                    //   children: [
+                    //     AppText(text:"Price", fontWeight: FontWeight.w600, fontSize: 16),
+                    //     Spacer(),
+                    //     Text(
+                    //       "د.إ${widget.groceryItem.price.toStringAsFixed(2)}",
+                    //       style: TextStyle(
+                    //         fontSize: 24,
+                    //         fontWeight: FontWeight.bold,
+                    //       ),
+                    //     )
+                    //   ],
+                    // ),

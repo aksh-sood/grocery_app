@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:grocery_app/common_widgets/app_text.dart';
+import 'package:grocery_app/helpers/size_config.dart';
 import 'package:grocery_app/styles/colors.dart';
+import 'home_screen.dart';
 
 class GroceryFeaturedItem {
   final String name;
@@ -9,10 +11,6 @@ class GroceryFeaturedItem {
   GroceryFeaturedItem(this.name, this.imagePath);
 }
 
-var groceryFeaturedItems = [
-  GroceryFeaturedItem("Pulses", "assets/images/pulses.png"),
-  GroceryFeaturedItem("Rise", "assets/images/rise.png"),
-];
 
 class GroceryFeaturedCard extends StatelessWidget {
   const GroceryFeaturedCard(this.groceryFeaturedItem,
@@ -23,27 +21,36 @@ class GroceryFeaturedCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 250,
-      height: 105,
-      padding: EdgeInsets.symmetric(vertical: 16, horizontal: 17),
-      decoration: BoxDecoration(
-          color: color.withOpacity(0.25),
-          borderRadius: BorderRadius.circular(18)),
-      child: Row(
-        children: [
-          Image(
-            image: AssetImage(groceryFeaturedItem.imagePath),
-          ),
-          SizedBox(
-            width: 15,
-          ),
-          AppText(
-            text: groceryFeaturedItem.name,
-            fontSize: 20,
-            fontWeight: FontWeight.w600,
-          )
-        ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      child: Container(
+        width: 110,
+        height: 500,
+        padding: EdgeInsets.symmetric(vertical: 8),
+        decoration: BoxDecoration(
+            color: color.withOpacity(0.25),
+            borderRadius: BorderRadius.circular(18)),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image(
+              height: getProportionateScreenHeight(40),
+              width: getProportionateScreenWidth(50),
+              image: AssetImage(groceryFeaturedItem.imagePath),
+            ),
+            SizedBox(
+              height:5,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: AppText(
+                text: groceryFeaturedItem.name,
+                fontSize: 15,
+                fontWeight: FontWeight.w600,
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

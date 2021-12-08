@@ -48,7 +48,12 @@ class IntroScreenState extends State<IntroScreen> {
       MaterialPageRoute(builder: (context) => SignInScreen()),
     );
   }
-
+Widget renderSkipBtn() {
+    return Icon(
+      Icons.skip_next,
+      color: AppColors.primaryColor,
+    );
+  }
 
   Widget renderDoneBtn() {
     return Icon(
@@ -71,9 +76,10 @@ class IntroScreenState extends State<IntroScreen> {
   Widget build(BuildContext context) {
     return new IntroSlider(
       slides: this.slides,
-      showSkipBtn: false,
       showNextBtn: false,
       showPrevBtn: false,
+      renderSkipBtn: this.renderSkipBtn(),
+       skipButtonStyle: myButtonStyle(),
       renderDoneBtn: this.renderDoneBtn(),
       onDonePress: this.onDonePress,
       doneButtonStyle: myButtonStyle(),

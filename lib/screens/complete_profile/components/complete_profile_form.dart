@@ -1,15 +1,19 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:grocery_app/common_widgets/default_button.dart';
+import 'package:grocery_app/helpers/api_helper.dart';
 import 'package:grocery_app/helpers/constants.dart';
 import 'package:grocery_app/helpers/form_error.dart';
+import 'package:grocery_app/helpers/progressHUD.dart';
 import 'package:grocery_app/helpers/size_config.dart';
-import 'package:grocery_app/screens/otp/otp_screen.dart';
+import 'package:grocery_app/models/customer.dart';
+import 'package:grocery_app/screens/sign_in/sign_in_screen.dart';
 import 'package:grocery_app/widgets/custom_surfix_icon.dart';
 
 
 class CompleteProfileForm extends StatefulWidget {
+  CompleteProfileForm({@required this.email,@required this.password});
+  String email,password;
   @override
   _CompleteProfileFormState createState() => _CompleteProfileFormState();
 }
@@ -21,6 +25,9 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
   String lastName;
   String phoneNumber;
   String address;
+  ApiService apiService;
+  CustomerModel model;
+  bool isApiCallProcess=false;
 
   void addError({String error}) {
     if (!errors.contains(error))
@@ -37,36 +44,75 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
   }
 
   @override
+  void initState() {
+
+apiService=new ApiService();
+model=new CustomerModel();
+
+
+    super.initState();
+    
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Form(
-      key: _formKey,
-      child: Column(
-        children: [
-          buildFirstNameFormField(),
-          SizedBox(height: getProportionateScreenHeight(30)),
-          buildLastNameFormField(),
-          SizedBox(height: getProportionateScreenHeight(30)),
-          buildPhoneNumberFormField(),
-          SizedBox(height: getProportionateScreenHeight(30)),
-          buildAddressFormField(),
-          FormError(errors: errors),
-          SizedBox(height: getProportionateScreenHeight(40)),
-          DefaultButton(
-            text: "Continue",
-            press: () {
-                //  log(address,name:"z");
-                //  log(phoneNumber,name:"x");
-                //  log(firstName,name:"y");
-                //  log(lastName,name:"g");
-              if (_formKey.currentState.validate()) {
-                Navigator.push(context, MaterialPageRoute<void>(
-      builder: (BuildContext context) =>  OtpScreen(phoneNumber: phoneNumber,),
-    ),
-  );
-              }
-            },
-          ),
-        ],
+    return ProgressHUD(
+ 
+      inAsyncCall: isApiCallProcess,
+      child: Form(
+        key: _formKey,
+        child: Column(
+          children: [
+            buildFirstNameFormField(),
+            SizedBox(height: getProportionateScreenHeight(30)),
+            buildLastNameFormField(),
+            SizedBox(height: getProportionateScreenHeight(30)),
+            buildPhoneNumberFormField(),
+            SizedBox(height: getProportionateScreenHeight(30)),
+            buildAddressFormField(),
+            FormError(errors: errors),
+            SizedBox(height: getProportionateScreenHeight(40)),
+            DefaultButton(
+              text: "Continue",
+              press: () {
+                   log(address,name:"z");
+                   log(phoneNumber,name:"x");
+                   log(firstName,name:"y");
+                   log(lastName,name:"g");
+                      log(widget.email,name: "yyy");
+                log(widget.password,name: "uuu");
+    
+
+  setState(() {
+    isApiCallProcess=true;
+  });
+
+                if (_formKey.currentState.validate()) {
+                  model.email=widget.email;
+                  model.firstName=firstName;
+                  model.lastName=lastName;
+                  model.password=widget.password;
+                  print(model.toJson());
+
+                  apiService.createCustomer(model).then((ret) {
+                            Navigator.push(context, MaterialPageRoute<void>(
+        builder: (BuildContext context) =>SignInScreen(),
+        
+        
+        // OtpScreen(phoneNumber: phoneNumber,),
+      ),
+      );
+                  });
+          
+                }else {print("not registered");}
+
+                setState(() {
+    isApiCallProcess=false;
+  });
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

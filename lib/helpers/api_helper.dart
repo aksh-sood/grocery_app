@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:grocery_app/models/customer.dart';
@@ -16,6 +17,7 @@ class ApiService{
           HttpHeaders.contentTypeHeader:"application/json",
         }
       ));
+      log(response.toString(),name:"res");
       if (response.statusCode == 201){
         ret=true;
       }

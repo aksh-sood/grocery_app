@@ -22,7 +22,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
       key: _key,
        drawer: CategoryDrawer(),
       appBar: AppBar(
-  //  automaticallyImplyLeading: false,
    actions: [  Padding(
      padding: const EdgeInsets.only(left:8.0),
      child: CircleAvatar(
@@ -54,9 +53,14 @@ _key.currentState.openDrawer();
   title:
   
   _searching
-              ? SearchBar(
-                  isSearching: _searching,
-                )
+              ? Container(
+                height: getProportionateScreenHeight(40),
+                child: Center(
+                  child: SearchBar(
+                      isSearching: _searching,
+                    ),
+                ),
+              )
   :Row(children: [SvgPicture.asset("assets/icons/app_bar_lead.svg"),
     //  SizedBox(width: getProportionateScreenWidth(40)),
     Spacer(),
@@ -125,6 +129,9 @@ _key.currentState.openDrawer();
       {String label, String iconPath, int index}) {
     Color iconColor =
         index == currentIndex ? AppColors.primaryColor : Colors.black;
+        setState(() {
+          _searching=false;
+        });
     return BottomNavigationBarItem(
       label: label,
       icon: SvgPicture.asset(

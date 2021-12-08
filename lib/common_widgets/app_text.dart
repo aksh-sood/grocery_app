@@ -20,6 +20,7 @@ class AppText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
+      softWrap: true,
       textAlign: textAlign == null ? null : TextAlign.center,
       style: TextStyle(
         fontSize: fontSize,

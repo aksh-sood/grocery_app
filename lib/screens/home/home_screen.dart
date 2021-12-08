@@ -9,6 +9,14 @@ import 'package:grocery_app/widgets/search_bar_widget.dart';
 import 'grocery_featured_Item_widget.dart';
 import 'home_banner_widget.dart';
 
+
+List<GroceryFeaturedItem> groceryFeaturedItems = [
+  GroceryFeaturedItem("Pulses", "assets/images/pulses.png"),
+  GroceryFeaturedItem("Rice", "assets/images/rise.png"),
+  GroceryFeaturedItem("Meat & Fish", "assets/images/categories_images/meat.png"),
+  GroceryFeaturedItem("Bakery & Snacks", "assets/images/categories_images/bakery.png"),
+];
+
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -23,15 +31,9 @@ class HomeScreen extends StatelessWidget {
                   SizedBox(
                     height: 15,
                   ),
-                  // Image.asset("assets/icons/marketspalsh.png",scale: 2.7,),
-                  // SizedBox(
-                  //   height: 5,
-                  // ),
-                  // padded(locationWidget()),
                   SizedBox(
                     height: 15,
                   ),
-                  // padded(SearchBarWidget()),
                   SizedBox(
                     height: 25,
                   ),
@@ -53,32 +55,7 @@ class HomeScreen extends StatelessWidget {
                   SizedBox(
                     height: 15,
                   ),
-                  Container(
-                    height: 105,
-                    child: ListView(
-                      padding: EdgeInsets.zero,
-                      scrollDirection: Axis.horizontal,
-                      children: [
-                        SizedBox(
-                          width: 20,
-                        ),
-                        GroceryFeaturedCard(
-                          groceryFeaturedItems[0],
-                          color: Color(0xffF8A44C),
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        GroceryFeaturedCard(
-                          groceryFeaturedItems[1],
-                          color: AppColors.primaryColor,
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                      ],
-                    ),
-                  ),
+                  groceryList(),
                   SizedBox(
                     height: 15,
                   ),
@@ -95,6 +72,19 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
+  Widget groceryList() {
+    return Container(
+                  height: 105,
+                  child: ListView(
+                    padding: EdgeInsets.zero,
+                    scrollDirection: Axis.horizontal,
+                    children: List.generate(groceryFeaturedItems.length, (index){
+                      return GroceryFeaturedCard(groceryFeaturedItems[index],color:gridColors[index % gridColors.length]);
+                    }),
+                  ),
+                );
+  }
+
   Widget padded(Widget widget) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 25),
@@ -105,37 +95,26 @@ class HomeScreen extends StatelessWidget {
   Widget getHorizontalItemSlider(List<GroceryItem> items) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
-      height: 250,
+      height: getProportionateScreenHeight(200),
       child: ListView.separated(
         padding: EdgeInsets.symmetric(horizontal: 20),
         itemCount: items.length,
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
-          return GestureDetector(
-            onTap: () {
-              onItemClicked(context, items[index]);
-            },
-            child: GroceryItemCardWidget(
-              item: items[index],
-            ),
+          return GroceryItemCardWidget(
+            item: items[index],
           );
         },
         separatorBuilder: (BuildContext context, int index) {
           return SizedBox(
-            width: 20,
+            width: 2,
           );
         },
       ),
     );
   }
 
-  void onItemClicked(BuildContext context, GroceryItem groceryItem) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-          builder: (context) => ProductDetailsScreen(groceryItem)),
-    );
-  }
+ 
 
   Widget subTitle(String text) {
     return Row(
@@ -175,5 +154,6 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
+
 
 

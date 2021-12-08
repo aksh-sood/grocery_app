@@ -23,12 +23,12 @@ class AccountScreen extends StatelessWidget {
                 leading:
                     SizedBox(width: 65, height: 65, child: getImageHeader()),
                 title: AppText(
-                  text: "Mohammed Hashim",
+                  text: "Aksh Sood",
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),
                 subtitle: AppText(
-                  text: "github.com/mohammedhashim44",
+                  text: "akshsood.decoders@gmail.com",
                   color: Color(0xff7C7C7C),
                   fontWeight: FontWeight.normal,
                   fontSize: 16,
@@ -98,11 +98,12 @@ class AccountScreen extends StatelessWidget {
   }
 
   Widget getImageHeader() {
-    String imagePath = "assets/images/account_image.jpg";
     return CircleAvatar(
       radius: 5.0,
-      backgroundImage: AssetImage(imagePath),
-      backgroundColor: AppColors.primaryColor.withOpacity(0.7),
+      child:Icon(Icons.person_outline_rounded,color:AppColors.primaryColor,size:25),
+      backgroundColor: AppColors.whiteShader,
+      // backgroundImage: AssetImage(imagePath),
+      // backgroundColor: AppColors.primaryColor.withOpacity(0.7),
     );
   }
 
