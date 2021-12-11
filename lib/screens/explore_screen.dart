@@ -7,7 +7,7 @@ import 'package:grocery_app/styles/colors.dart';
 import 'package:grocery_app/widgets/category_item_card_widget.dart';
 import 'package:grocery_app/widgets/search_bar_widget.dart';
 
-import 'category_items_screen.dart';
+import '../categoryItemsPage/category_items_screen.dart';
 
 
 

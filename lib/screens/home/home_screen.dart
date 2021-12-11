@@ -94,8 +94,8 @@ class HomeScreen extends StatelessWidget {
 
   Widget getHorizontalItemSlider(List<GroceryItem> items) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 10),
-      height: getProportionateScreenHeight(200),
+      margin: EdgeInsets.symmetric(vertical: 8),
+      height: getProportionateScreenHeight(210),
       child: ListView.separated(
         padding: EdgeInsets.symmetric(horizontal: 20),
         itemCount: items.length,

@@ -51,19 +51,19 @@ class GroceryItemCardWidget extends StatelessWidget {
                   ),
                   Container(
                     height: getProportionateScreenHeight(40),
-                    child: Center(
-                      child: AppText(
-                        text: item.name,
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                      ),
+                    child: AppText(
+                      text: item.name,
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                  AppText(
-                    text: item.description,
-                    fontSize: 13,
-                    // fontWeight: FontWeight.w600,
-                    color: Color(0xFF7C7C7C),
+                  Expanded(
+                    child: AppText(
+                      text: item.description,
+                      fontSize: 13,
+                      // fontWeight: FontWeight.w600,
+                      color: Color(0xFF7C7C7C),
+                    ),
                   ),
                   SizedBox(
                     height: 2,
@@ -88,8 +88,8 @@ class GroceryItemCardWidget extends StatelessWidget {
       Padding(
         padding: const EdgeInsets.fromLTRB(1,8,0,0),
         child: Container(
-        height: getProportionateScreenHeight(32),
-        width: getProportionateScreenHeight(37),
+        height: getProportionateScreenHeight(23),
+        width: getProportionateScreenWidth(62),
         padding: EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(6)),
         decoration: BoxDecoration(
           color: Colors.red[600].withOpacity(0.85),

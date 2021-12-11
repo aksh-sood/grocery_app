@@ -27,50 +27,90 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     return Scaffold(
       appBar: AppBar(backgroundColor: Colors.transparent,foregroundColor: Colors.transparent,),
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              getImageHeaderWidget(),
-              Column(
-                children: [
-                  ListTile(
-                    contentPadding: EdgeInsets.zero,
-                    title: Text(
-                      widget.groceryItem.name,
-                      style: TextStyle(
-                          fontSize: 24, fontWeight: FontWeight.bold),
+        child: Column(
+          children: [
+            getImageHeaderWidget(),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 25),
+                child: Column(
+                  children: [
+                    ListTile(
+                      contentPadding: EdgeInsets.zero,
+                      title: Text(
+                        widget.groceryItem.name,
+                        style: TextStyle(
+                            fontSize: 24, fontWeight: FontWeight.bold),
+                      ),
+                      subtitle: AppText(
+                        text: widget.groceryItem.description,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.greyShader,
+                      ),
+                      trailing: FavoriteToggleIcon(),
                     ),
-                    subtitle: AppText(
-                      text: widget.groceryItem.description,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.greyShader,
+                    Spacer(),
+                    Row(
+                      children: [
+                        AppText(text:"Price", fontWeight: FontWeight.w600, fontSize: 16),
+                        Spacer(),
+                        Text(
+                          "د.إ${widget.groceryItem.price.toStringAsFixed(2)}",
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        )
+                      ],
                     ),
-                    trailing: FavoriteToggleIcon(),
-                  ),
-                  // Spacer(),
-                  
-                  // Spacer(),
-                  // Divider(thickness: 1),
-                  getProductDataRowWidget("Product Details"),
-                  // Divider(thickness: 1),
-                  // getProductDataRowWidget("Nutritions",
-                      // customWidget: nutritionWidget()),
-                  // Divider(thickness: 1),
-                  // getProductDataRowWidget(
-                    // "Review",
-                    // customWidget: ratingWidget(),
-                  // ),
-                  // Spacer(),
-                  
-                
-                ],
+                    Spacer(),
+                    Divider(thickness: 1),
+                    getProductDataRowWidget("Product Details"),
+                    Divider(thickness: 1),
+                    getProductDataRowWidget("Nutritions",
+                        customWidget: nutritionWidget()),
+                    Divider(thickness: 1),
+                    getProductDataRowWidget(
+                      "Review",
+                      customWidget: ratingWidget(),
+                    ),
+                    Spacer(),
+                    Row(
+                      children: [
+                         Text(
+                          "د.إ${getTotalPrice().toStringAsFixed(2)}",
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Spacer(),
+                        ItemCounterWidget(
+                          onAmountChanged: (newAmount) {
+                            setState(() {
+                              amount = newAmount;
+                            });
+                          },
+                        ),
+
+
+                      ],
+                    ),
+                    Spacer(),
+                    AppButton(
+                      label: "Add To Basket",
+                    ),
+                    Spacer(),
+                  ],
+                ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
+
   }
 
   Widget getImageHeaderWidget() {
