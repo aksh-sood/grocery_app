@@ -7,9 +7,9 @@ class CategoryItemCardWidget extends StatelessWidget {
       : super(key: key);
   final CategoryItem item;
 
-  final height = 200.0;
+  final height = 125.0;
 
-  final width = 175.0;
+  final width = 125.0;
 
   final Color borderColor = Color(0xffE2E2E2);
   final double borderRadius = 18;
@@ -31,8 +31,8 @@ class CategoryItemCardWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
-            height: 120,
-            width: 120,
+            height: 70,
+            width: 70,
             child: imageWidget(),
           ),
           SizedBox(

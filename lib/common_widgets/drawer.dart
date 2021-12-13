@@ -14,10 +14,10 @@ class CategoryDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        body: Row(
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      body: SafeArea(
+        child: Row(
           children: [
             Container(
               color: AppColors.primaryColor,
@@ -79,6 +79,8 @@ class CategoryDrawer extends StatelessWidget {
         ),
       ),
     );
+ 
+ 
   }
 }
 

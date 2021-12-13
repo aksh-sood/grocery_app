@@ -59,6 +59,15 @@ OutlineInputBorder outlineInputBorder() {
   );
 }
 
+String removeAllHtmlTags(String htmlText) {
+    RegExp exp = RegExp(
+      r"<.*?>|&([a-z0-9]+|#[0-9]{1,6}|#x[0-9a-f]{1,6});",
+      multiLine: true,
+      caseSensitive: true
+    );
+
+    return htmlText.replaceAll(exp, '');
+  }
 
 //  appBarDesign(var key) {
 //     return AppBar(
@@ -111,7 +120,7 @@ OutlineInputBorder outlineInputBorder() {
    void onCategoryItemClicked(BuildContext context, CategoryItem categoryItem) {
     Navigator.of(context).push(new MaterialPageRoute(
       builder: (BuildContext context) {
-        return CategoryItemsScreen();
+        return CategoryItemsScreen(disVal:categoryItem.name);
       },
     ));
   }

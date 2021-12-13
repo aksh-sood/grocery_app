@@ -41,6 +41,7 @@ void initState() {
   super.initState();
   
 }
+bool obscure = true;
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -49,7 +50,48 @@ void initState() {
         children: [
           buildEmailFormField(),
           SizedBox(height: getProportionateScreenHeight(30)),
-          buildPasswordFormField(),
+               TextFormField(
+      obscureText: obscure,
+     onChanged: (value) {
+        password = value;
+        if (value.isNotEmpty) {
+          removeError(error: kPassNullError);
+        } else if (value.length >= 8) {
+          removeError(error: kShortPassError);
+        }
+        password = value;
+      },
+      validator: (value) {
+        if (value.isEmpty) {
+          addError(error: kPassNullError);
+          return "";
+        } else if (value.length < 8) {
+          addError(error: kShortPassError);
+          return "";
+        }
+        return null;
+      },
+      decoration: InputDecoration(
+        labelText: "Confirm Password",
+        hintText: "Re-enter your password",
+        // If  you are using latest version of flutter then lable text and hint text shown like this
+        // if you r using flutter less then 1.20.* then maybe this is not working properly
+        floatingLabelBehavior: FloatingLabelBehavior.always,
+        suffixIcon:IconButton(
+                                icon: Icon(
+                                    obscure
+                                        ? Icons.visibility_off
+                                        : Icons.visibility,
+                                    color: kPrimaryColor),
+                                onPressed: () {
+                                  setState(() {
+                                    obscure = !obscure;
+                                  });
+                                }),
+        
+      ),
+    ),
+
           SizedBox(height: getProportionateScreenHeight(30)),
           Row(
             children: [

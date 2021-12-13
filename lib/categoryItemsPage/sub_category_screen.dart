@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:grocery_app/categoryItemsPage/category_items_screen.dart';
+import 'package:grocery_app/common_widgets/drawer.dart';
+import 'package:grocery_app/helpers/constants.dart';
+import 'package:grocery_app/helpers/size_config.dart';
+import 'package:grocery_app/models/category_item.dart';
 import 'package:grocery_app/styles/colors.dart';
 
 class SubCategoryScreen extends StatefulWidget {
@@ -11,7 +16,7 @@ String preVal;
 
 class _SubCategoryScreenState extends State<SubCategoryScreen> {
   static String selVal; 
-  GoBack(){
+  goBack(){
     Navigator.pop(context,selVal);
   }
   @override
@@ -19,34 +24,56 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
     return  SafeArea(
       child: Scaffold(
         backgroundColor: Colors.transparent,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          foregroundColor: Colors.transparent,
+          automaticallyImplyLeading: false,
+        ),
         body: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-         
-          
             Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            
+              // mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
-              //     height: MediaQuery.of(context).size.height/3,
-              // width: MediaQuery.of(context).size.width/2,
-              padding:EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width/4),
+                      Container(  
+                        padding: EdgeInsets.all(8),
+                       width: SizeConfig.screenWidth/2,
+                       decoration:BoxDecoration(
                   color: AppColors.whiteColor,
+                  
+                   borderRadius: BorderRadius.only(
+             topRight: Radius.circular(8),
+             topLeft: Radius.circular(8),)
+                  ),
+                  
+                                                          child:CatTile(cat: "Categories", inVal: ".") ),
+                Container(
+                  height: SizeConfig.screenHeight/4,
+                  width: SizeConfig.screenWidth/2,
+                  
+                  decoration:BoxDecoration(
+color: AppColors.whiteColor,
+                     borderRadius: BorderRadius.only(
+             bottomLeft: Radius.circular(8),
+             bottomRight: Radius.circular(8),)
+                  ),
                   child: SingleChildScrollView(
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children:
-                         [
-Text("Categories",style:TextStyle(fontSize: 10,fontWeight: FontWeight.bold)),
-
-              ListView(
-                      padding: EdgeInsets.zero,
-                      scrollDirection: Axis.vertical,
-                      children: List.generate(widget.subCat.length, (index){
-                        return CatTile(cat:widget.subCat[index],inVal:widget.preVal);
-                      }),
-                    ),
-                         ]
+                          widget.subCat.asMap().entries.map<Widget>((e) {
+                        // int index = e.key;
+                        // CategoryItem categoryItem = e.value;
+                        return Container(
+                          padding: EdgeInsets.fromLTRB(0, 8, 0, 8),
+                          child: CatTile(
+                           cat:e.value,
+                         inVal: widget.preVal,
+                          ),
+                        );
+                      }).toList(),
                     ),
                   ),
                 )
@@ -56,21 +83,52 @@ Text("Categories",style:TextStyle(fontSize: 10,fontWeight: FontWeight.bold)),
         ),
       ),
     );
- 
   }
 }
 
 class CatTile extends StatelessWidget {
-  const CatTile({
+   CatTile({
     Key key,@required this.cat,@required this.inVal
   }) : super(key: key);
 final String cat;
   final String inVal;
+   String outVal;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      // height: ,
-      child:Text(cat,style:TextStyle(color:cat==inVal?Colors.purple:Colors.black,fontSize:10))
+    return GestureDetector(
+      onTap: (){
+
+outVal=cat;
+
+           Navigator.of(context).push(new MaterialPageRoute(
+      builder: (BuildContext context) {
+        return CategoryItemsScreen(disVal:outVal);
+      },
+    ));
+      },
+      child: Container(
+        // height: ,
+        child:Row(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+             color:       cat==inVal?Colors.purple:Colors.white,
+             borderRadius: BorderRadius.only(
+               topRight: Radius.circular(5),
+               bottomRight: Radius.circular(5),
+             )
+              ),
+       
+            width:7,
+            height:15
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left:8),
+              child: Text(cat,softWrap:true,style:TextStyle(color:cat==inVal?Colors.purple:Colors.black,fontSize:13,fontWeight: FontWeight.bold)),
+            ),
+          ],
+        )
+      ),
     );
   }
 }

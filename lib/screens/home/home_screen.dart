@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:grocery_app/helpers/size_config.dart';
 import 'package:grocery_app/models/grocery_item.dart';
 import 'package:grocery_app/screens/product_details/product_details_screen.dart';
@@ -94,7 +95,7 @@ class HomeScreen extends StatelessWidget {
 
   Widget getHorizontalItemSlider(List<GroceryItem> items) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 8),
+      margin: EdgeInsets.symmetric(vertical: 8.h),
       height: getProportionateScreenHeight(210),
       child: ListView.separated(
         padding: EdgeInsets.symmetric(horizontal: 20),
@@ -107,7 +108,7 @@ class HomeScreen extends StatelessWidget {
         },
         separatorBuilder: (BuildContext context, int index) {
           return SizedBox(
-            width: 2,
+            width: 10,
           );
         },
       ),

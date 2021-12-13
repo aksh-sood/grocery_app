@@ -1,15 +1,17 @@
+import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:grocery_app/common_widgets/default_button.dart';
-import 'package:grocery_app/helpers/api_helper.dart';
+// import 'package:grocery_app/helpers/api_helper.dart';
 import 'package:grocery_app/helpers/constants.dart';
 import 'package:grocery_app/helpers/form_error.dart';
 import 'package:grocery_app/helpers/progressHUD.dart';
 import 'package:grocery_app/helpers/size_config.dart';
 import 'package:grocery_app/models/customer.dart';
 import 'package:grocery_app/screens/sign_in/sign_in_screen.dart';
+import 'package:grocery_app/styles/colors.dart';
 import 'package:grocery_app/widgets/custom_surfix_icon.dart';
-
+import 'package:fluttertoast/fluttertoast.dart';
 
 class CompleteProfileForm extends StatefulWidget {
   CompleteProfileForm({@required this.email,@required this.password});
@@ -25,8 +27,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
   String lastName;
   String phoneNumber;
   String address;
-  ApiService apiService;
-  CustomerModel model;
+ 
   bool isApiCallProcess=false;
 
   void addError({String error}) {
@@ -46,8 +47,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
   @override
   void initState() {
 
-apiService=new ApiService();
-model=new CustomerModel();
+
 
 
     super.initState();
@@ -56,63 +56,117 @@ model=new CustomerModel();
 
   @override
   Widget build(BuildContext context) {
-    return ProgressHUD(
- 
-      inAsyncCall: isApiCallProcess,
-      child: Form(
-        key: _formKey,
-        child: Column(
-          children: [
-            buildFirstNameFormField(),
-            SizedBox(height: getProportionateScreenHeight(30)),
-            buildLastNameFormField(),
-            SizedBox(height: getProportionateScreenHeight(30)),
-            buildPhoneNumberFormField(),
-            SizedBox(height: getProportionateScreenHeight(30)),
-            buildAddressFormField(),
-            FormError(errors: errors),
-            SizedBox(height: getProportionateScreenHeight(40)),
-            DefaultButton(
-              text: "Continue",
-              press: () {
-                   log(address,name:"z");
-                   log(phoneNumber,name:"x");
-                   log(firstName,name:"y");
-                   log(lastName,name:"g");
-                      log(widget.email,name: "yyy");
-                log(widget.password,name: "uuu");
-    
-
+    return Form(
+      key: _formKey,
+      child: Column(
+        children: [
+          buildFirstNameFormField(),
+          SizedBox(height: getProportionateScreenHeight(30)),
+          buildLastNameFormField(),
+          SizedBox(height: getProportionateScreenHeight(30)),
+          buildPhoneNumberFormField(),
+          SizedBox(height: getProportionateScreenHeight(30)),
+          buildAddressFormField(),
+          FormError(errors: errors),
+          SizedBox(height: getProportionateScreenHeight(40)),
+          DefaultButton(
+            text: "Continue",
+            press: () async{
   setState(() {
     isApiCallProcess=true;
   });
+              if (_formKey.currentState.validate()) {
+              CustomerModel  model=new CustomerModel.a(email:widget.email,firstName:firstName,lastName: lastName,password: widget.password);
+       
+                print(model.toJson());
+                
+  String jsonUser = jsonEncode(model);
+  print(jsonUser);
+                       print("555555555555555555555555555555555555555555555555555555555555555555555555555555555555555");   
+                            
+var  response= await model.createUser(
+  // '{"email":"${widget.email}","first_name":"${firstName}","last_name": "$lastName","password":"${widget.password}","username": "${widget.email}"}'
+ jsonUser
+  );
+        //  log(response["message"].toString(),name:"tyu");
+ String msg=removeAllHtmlTags(response["message"]);
+ 
+if (
+  response["success"]!="no"
+){
 
-                if (_formKey.currentState.validate()) {
-                  model.email=widget.email;
-                  model.firstName=firstName;
-                  model.lastName=lastName;
-                  model.password=widget.password;
-                  print(model.toJson());
+  try{
+   if (response["email"]==widget.email){
+       Fluttertoast.showToast(
+                                            msg: "Account created successfully",
+                                            toastLength: Toast.LENGTH_SHORT,
+                                            gravity: ToastGravity.BOTTOM,
+                                            timeInSecForIosWeb: 5,
+                                            backgroundColor:
+                                                Colors.grey[850],
+                                            textColor: AppColors.whiteColor,
+                                            fontSize: 16.0);
 
-                  apiService.createCustomer(model).then((ret) {
-                            Navigator.push(context, MaterialPageRoute<void>(
-        builder: (BuildContext context) =>SignInScreen(),
+                                             Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => SignInScreen()),
+    );}
+  }finally{
+       Fluttertoast.showToast(
+                                            msg: "$msg",
+                                            toastLength: Toast.LENGTH_SHORT,
+                                            gravity: ToastGravity.BOTTOM,
+                                            timeInSecForIosWeb: 5,
+                                            backgroundColor:
+                                                Colors.grey[850],
+                                            textColor: AppColors.whiteColor,
+                                            fontSize: 16.0);
+
+                                             Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => SignInScreen()),
+    );
+  }
+
+         
+                                            }else{
+
+
+            Fluttertoast.showToast(
+                                            msg: "Error Occured please try later",
+                                            toastLength: Toast.LENGTH_SHORT,
+                                            gravity: ToastGravity.BOTTOM,
+                                            timeInSecForIosWeb: 5,
+                                            backgroundColor:
+                                                Colors.grey[850],
+                                            textColor: AppColors.whiteColor,
+                                            fontSize: 16.0);
+                                            }
+
+                                        
         
-        
-        // OtpScreen(phoneNumber: phoneNumber,),
-      ),
-      );
-                  });
-          
-                }else {print("not registered");}
+              }else {
+            Fluttertoast.showToast(
+                                            msg: "Details Not Valid, Please check again",
+                                            toastLength: Toast.LENGTH_SHORT,
+                                            gravity: ToastGravity.BOTTOM,
+                                            timeInSecForIosWeb: 5,
+                                            backgroundColor:
+                                                Colors.grey[850],
+                                            textColor: AppColors.whiteColor,
+                                            fontSize: 16.0);}
+                                            
+                                             Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => SignInScreen()),
+    );
 
-                setState(() {
+              setState(() {
     isApiCallProcess=false;
   });
-              },
-            ),
-          ],
-        ),
+            },
+          ),
+        ],
       ),
     );
   }

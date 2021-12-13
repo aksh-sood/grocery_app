@@ -15,7 +15,6 @@ class IntroScreen extends StatefulWidget {
   IntroScreenState createState() => new IntroScreenState();
 }
 
-// ------------------ Custom config ------------------
 class IntroScreenState extends State<IntroScreen> {
   List<Slide> slides = [];
 

@@ -50,7 +50,7 @@ class ExploreScreen extends StatelessWidget {
 
   Widget getStaggeredGridView(BuildContext context) {
     return StaggeredGridView.count(
-      crossAxisCount: 4,
+      crossAxisCount: 3,
       children: categoryItemsDemo.asMap().entries.map<Widget>((e) {
         int index = e.key;
         CategoryItem categoryItem = e.value;
@@ -59,7 +59,7 @@ class ExploreScreen extends StatelessWidget {
             onCategoryItemClicked(context, categoryItem);
           },
           child: Container(
-            padding: EdgeInsets.all(10),
+            padding: EdgeInsets.all(4),
             child: CategoryItemCardWidget(
               item: categoryItem,
               color: gridColors[index % gridColors.length],
@@ -70,7 +70,7 @@ class ExploreScreen extends StatelessWidget {
 
       //Here is the place that we are getting flexible/ dynamic card for various images
       staggeredTiles: categoryItemsDemo
-          .map<StaggeredTile>((_) => StaggeredTile.fit(2))
+          .map<StaggeredTile>((_) => StaggeredTile.fit(1))
           .toList(),
       mainAxisSpacing: 3.0,
       crossAxisSpacing: 4.0, // add some space
@@ -80,7 +80,7 @@ class ExploreScreen extends StatelessWidget {
   void onCategoryItemClicked(BuildContext context, CategoryItem categoryItem) {
     Navigator.of(context).push(new MaterialPageRoute(
       builder: (BuildContext context) {
-        return CategoryItemsScreen();
+        return CategoryItemsScreen(disVal:categoryItem.name);
       },
     ));
   }

@@ -15,17 +15,19 @@ import 'package:grocery_app/styles/colors.dart';
 import '../screens/filter_screen.dart';
 
 class CategoryItemsScreen extends StatefulWidget {
+  CategoryItemsScreen({@required this.disVal});
+  final String disVal;
   @override
   State<CategoryItemsScreen> createState() => _CategoryItemsScreenState();
 }
 
 class _CategoryItemsScreenState extends State<CategoryItemsScreen> {
    final GlobalKey<ScaffoldState> _key = GlobalKey();
-    List<String> _subCategories=["Fruits and Vegetables","Breads","Juices"];
+    List<String> _subCategories=["Fruits and Vegetables","Cooking Oil","Juices","Bakery & Snacks","Beverages","Meat & Fish","Breads","Dairy & Eggs"];
         GlobalKey colKey;
         double colWidth ;
 void calculateColWidth() {
-  WidgetsBinding.instance.addPostFrameCallback((_) { 
+  WidgetsBinding.instance.addPostFrameCallback((context) { 
     final RenderBox box=colKey.currentContext.findRenderObject();
 
 setState(() {
@@ -43,16 +45,16 @@ void initState() {
   @override
   Widget build(BuildContext context) {
     
-     String _subCategory=_subCategories[0];
-     void GoToCategory(BuildContext context)async{
- _subCategory=await    
-Navigator.push(context, MaterialPageRoute(builder: (context) =>SubCategoryScreen(subCat:_subCategories,preVal: _subCategory,)));
+     String _subCategory=widget.disVal;
+//      void GoToCategory(BuildContext context)async{
+//  _subCategory=await    
+// Navigator.push(context, MaterialPageRoute(builder: (context) =>SubCategoryScreen(subCat:_subCategories,preVal: _subCategory,)));
 
-}
+// }
 
     return Scaffold(
        key: _key,
-       drawer: CategoryDrawer(),
+       drawer: SubCategoryScreen(subCat:_subCategories,preVal: _subCategory,),
       appBar: AppBar(
     titleSpacing: 0,
         backgroundColor: Colors.transparent,
@@ -90,8 +92,9 @@ Navigator.push(context, MaterialPageRoute(builder: (context) =>SubCategoryScreen
         ],
         title: GestureDetector(
           onTap: () {
-      GoToCategory(context);
-          },
+            
+      _key.currentState.openDrawer();},
+          
           child: Container(
             padding: EdgeInsets.symmetric(
               horizontal: 25,
@@ -163,7 +166,7 @@ Navigator.push(context, MaterialPageRoute(builder: (context) =>SubCategoryScreen
                       child: Container(
                           //  margin: EdgeInsets.symmetric(vertical: 4),
                 height: getProportionateScreenHeight(210),
-                         padding: EdgeInsets.symmetric(horizontal: 0),
+                         margin: EdgeInsets.symmetric(horizontal: 5,vertical: 5),
                         child: GroceryItemCardWidget(
                           item: groceryItem,
                         ),
