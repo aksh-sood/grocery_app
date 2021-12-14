@@ -3,7 +3,7 @@ import 'package:grocery_app/common_widgets/socal_card.dart';
 import 'package:grocery_app/helpers/no_account_text.dart';
 import 'package:grocery_app/helpers/size_config.dart';
 import 'sign_form.dart';
-
+import 'package:flutter_screenutil/flutter_screenutil.dart'; 
 class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -52,6 +52,7 @@ class Body extends StatelessWidget {
                 ),
                 SizedBox(height: getProportionateScreenHeight(20)),
                 NoAccountText(),
+                SizedBox(height: 25.h,)
               ],
             ),
           ),

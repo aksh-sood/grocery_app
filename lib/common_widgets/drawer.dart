@@ -47,7 +47,7 @@ class CategoryDrawer extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  height: SizeConfig.screenHeight,
+                  height: MediaQuery.of(context).size.height,
                   color: AppColors.whiteColor,
                   child: SingleChildScrollView(
                     child: Column(

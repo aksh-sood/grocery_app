@@ -54,7 +54,7 @@ bool obscure = true;
       obscureText: obscure,
      onChanged: (value) {
         password = value;
-        if (value.isNotEmpty) {
+        if (value.isEmpty) {
           removeError(error: kPassNullError);
         } else if (value.length >= 8) {
           removeError(error: kShortPassError);
@@ -72,8 +72,8 @@ bool obscure = true;
         return null;
       },
       decoration: InputDecoration(
-        labelText: "Confirm Password",
-        hintText: "Re-enter your password",
+        labelText: "Password",
+        hintText: "Enter your password",
         // If  you are using latest version of flutter then lable text and hint text shown like this
         // if you r using flutter less then 1.20.* then maybe this is not working properly
         floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -123,12 +123,17 @@ bool obscure = true;
           DefaultButton(
             text: "Continue",
             press: () {
-              log(password,name: "ps");
-              log(email,name: "es");
+          
               if (_formKey.currentState.validate()) {
+                    log(password,name: "ps");
+              log(email,name: "es");
                 _formKey.currentState.save();
                 // if all are valid then go to success screen
                 KeyboardUtil.hideKeyboard(context);
+
+
+
+                
                 Navigator.push(context, MaterialPageRoute<void>(
       builder: (BuildContext context) =>  DashboardScreen(),
     ),

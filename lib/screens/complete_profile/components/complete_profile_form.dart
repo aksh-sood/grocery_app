@@ -81,20 +81,19 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
                 print(model.toJson());
                 
   String jsonUser = jsonEncode(model);
-  print(jsonUser);
-                       print("555555555555555555555555555555555555555555555555555555555555555555555555555555555555555");   
+ 
                             
 var  response= await model.createUser(
   // '{"email":"${widget.email}","first_name":"${firstName}","last_name": "$lastName","password":"${widget.password}","username": "${widget.email}"}'
  jsonUser
   );
         //  log(response["message"].toString(),name:"tyu");
- String msg=removeAllHtmlTags(response["message"]);
+
  
 if (
   response["success"]!="no"
 ){
-
+// log(response["email"],name:"email");
   try{
    if (response["email"]==widget.email){
        Fluttertoast.showToast(
@@ -106,12 +105,26 @@ if (
                                                 Colors.grey[850],
                                             textColor: AppColors.whiteColor,
                                             fontSize: 16.0);
+   }
+  //  }else if(response["message"]!=null){
+  //    String msg=removeAllHtmlTags(response["message"]);
+  //    Fluttertoast.showToast(
+  //                                           msg: "$msg",
+  //                                           toastLength: Toast.LENGTH_SHORT,
+  //                                           gravity: ToastGravity.BOTTOM,
+  //                                           timeInSecForIosWeb: 5,
+  //                                           backgroundColor:
+  //                                               Colors.grey[850],
+  //                                           textColor: AppColors.whiteColor,
+  //                                           fontSize: 16.0);
 
+  //  }
                                              Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => SignInScreen()),
-    );}
+    );
   }finally{
+     String msg=removeAllHtmlTags(response["message"]);
        Fluttertoast.showToast(
                                             msg: "$msg",
                                             toastLength: Toast.LENGTH_SHORT,

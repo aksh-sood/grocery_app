@@ -7,7 +7,7 @@ import 'dart:convert' as convert;
 class ApiBaseHelper {
   bool status;
   var s;
-   Future<dynamic> post( String path,String body) async {
+   Future<dynamic> post( String path,var body) async {
     print('Api Post, url ${Config.url+Config.customerURL}');
     try {
       print(body);
