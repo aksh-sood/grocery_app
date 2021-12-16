@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:grocery_app/common_widgets/drawer.dart';
@@ -5,7 +7,9 @@ import 'package:grocery_app/common_widgets/search_bar.dart';
 import 'package:grocery_app/helpers/constants.dart';
 import 'package:grocery_app/helpers/size_config.dart';
 import 'package:grocery_app/styles/colors.dart';
+import 'package:grocery_app/woo/config.dart';
 import 'navigator_item.dart';
+import 'package:grocery_app/screens/sign_in/components/sign_form.dart';
 
 class DashboardScreen extends StatefulWidget {
   @override
@@ -14,19 +18,24 @@ class DashboardScreen extends StatefulWidget {
 
 class _DashboardScreenState extends State<DashboardScreen> {
   int currentIndex = 0;
+  String token = Config.token;
+  final GlobalKey<ScaffoldState> _key = GlobalKey();
   bool _searching = false;
   @override
   Widget build(BuildContext context) {
-    final GlobalKey<ScaffoldState> _key = GlobalKey();
+    log(token, name: "tokenDash");
+
+    // SignForm.token;
     return Scaffold(
       key: _key,
-       drawer: CategoryDrawer(),
+      drawer: CategoryDrawer(),
       appBar: AppBar(
-   actions: [  Padding(
-     padding: const EdgeInsets.only(left:8.0),
-     child: CircleAvatar(
-       backgroundColor: AppColors.blackColor,
-       child: IconButton(
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(left: 8.0),
+            child: CircleAvatar(
+              backgroundColor: AppColors.blackColor,
+              child: IconButton(
                 icon: Icon(Icons.search, color: AppColors.whiteShader),
                 onPressed: () {
                   setState(() {
@@ -35,53 +44,60 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 },
                 tooltip: 'Search',
               ),
-     ),
-   ),],
-  leading: GestureDetector(
-    onTap: (){
-_key.currentState.openDrawer();
-    },
-    child: Row(
-      children: [
-       SizedBox(width: getProportionateScreenWidth(5)),
-       IconButton(onPressed:null, icon: Image.asset("assets/icons/marketspalsh.png"),iconSize: 30,)
-      
-      ],
-    ),
-  ),
-  titleSpacing: 0,
-  title:
-  
-  _searching
-              ? Container(
+            ),
+          ),
+        ],
+        leading: GestureDetector(
+          onTap: () {
+            _key.currentState.openDrawer();
+          },
+          child: Row(
+            children: [
+              SizedBox(width: getProportionateScreenWidth(5)),
+              IconButton(
+                onPressed: null,
+                icon: Image.asset("assets/icons/marketspalsh.png"),
+                iconSize: 30,
+              )
+            ],
+          ),
+        ),
+        titleSpacing: 0,
+        title: _searching
+            ? Container(
                 height: getProportionateScreenHeight(40),
                 child: Center(
                   child: SearchBar(
-                      isSearching: _searching,
-                    ),
+                    isSearching: _searching,
+                  ),
                 ),
               )
-  :Row(children: [SvgPicture.asset("assets/icons/app_bar_lead.svg"),
-    //  SizedBox(width: getProportionateScreenWidth(40)),
-    Spacer(),
-     Column(
-       mainAxisAlignment: MainAxisAlignment.center,
-       crossAxisAlignment: CrossAxisAlignment.end,
-       children: [
-         Text("Location",style: TextStyle(color: AppColors.primaryColor,fontSize: 15)),
-         
-         Row(
-           mainAxisAlignment: MainAxisAlignment.start,
-           children: [
-             Icon(Icons.location_on),
-             Text("Brooklyn Home",style: TextStyle(color: AppColors.blackColor,fontSize: 15)),
-           ],
-         ),
-       ],
-     ),
-     
-     ],),
-    ),
+            : Row(
+                children: [
+                  SvgPicture.asset("assets/icons/app_bar_lead.svg"),
+                  //  SizedBox(width: getProportionateScreenWidth(40)),
+                  Spacer(),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text("Location",
+                          style: TextStyle(
+                              color: AppColors.primaryColor, fontSize: 15)),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Icon(Icons.location_on),
+                          Text("Brooklyn Home",
+                              style: TextStyle(
+                                  color: AppColors.blackColor, fontSize: 15)),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+      ),
       body: navigatorItems[currentIndex].screen,
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
@@ -129,9 +145,9 @@ _key.currentState.openDrawer();
       {String label, String iconPath, int index}) {
     Color iconColor =
         index == currentIndex ? AppColors.primaryColor : Colors.black;
-        setState(() {
-          _searching=false;
-        });
+    setState(() {
+      _searching = false;
+    });
     return BottomNavigationBarItem(
       label: label,
       icon: SvgPicture.asset(
@@ -141,4 +157,3 @@ _key.currentState.openDrawer();
     );
   }
 }
-

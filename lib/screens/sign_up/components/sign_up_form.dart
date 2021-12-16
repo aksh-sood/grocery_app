@@ -136,9 +136,7 @@ class _SignUpFormState extends State<SignUpForm> {
           DefaultButton(
             text: "Continue",
             press: () {
-              log(email,name: "yyy");
-              log(password,name: "uuu");
-              log(confirm_password,name: "lll");
+     
               if (_formKey.currentState.validate()) {
                 _formKey.currentState.save();
                 // if all are valid then go to success screen

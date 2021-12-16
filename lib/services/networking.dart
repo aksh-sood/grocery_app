@@ -7,22 +7,46 @@ import 'dart:convert' as convert;
 class ApiBaseHelper {
   bool status;
   var s;
-   Future<dynamic> post( String path,var body) async {
-    print('Api Post, url ${Config.url+Config.customerURL}');
+  Future<dynamic> postLogin(String path, var body, String contentType) async {
+    print('Api Post, url ${Config.tokenUrl}');
     try {
       print(body);
       final response =
-          await http.post(Uri.parse(Config.url+"$path/?consumer_key=${Config.key}&consumer_secret=${Config.secret}"),
-           body: body,
-            headers: {
-   HttpHeaders.contentTypeHeader:"application/json",
-           'Access-Control-Allow-Origin':'true',
-        "accept": "application/json",
-        // "cookie": "$cookie"
+          await http.post(Uri.parse(Config.tokenUrl), body: body, headers: {
+        HttpHeaders.contentTypeHeader: contentType,
+        'Access-Control-Allow-Origin': 'true',
       });
-       log(response.statusCode.toString(),name:"resStat");
- log(response.body.toString(),name:"res");
-   if (response.statusCode == 201 || response.statusCode == 400) {
+      log(response.statusCode.toString(), name: "resStat");
+      log(response.body.toString(), name: "res");
+      if (response.statusCode == 200 || response.statusCode == 400) {
+        var jsonResponse = convert.jsonDecode(response.body);
+        print('$jsonResponse');
+        return jsonResponse;
+      }
+      return {
+        'success': 'no',
+        'message': 'Request failed with status: ${response.statusCode}.'
+      };
+    } on SocketException {
+      return {'success': 'no', 'message': 'Socket Exception.'};
+    }
+  }
+
+  Future<dynamic> postSignUp(String path, var body, String contentType) async {
+    print('Api Post, url ${Config.url + Config.customerURL}');
+    try {
+      print(body);
+      final response = await http.post(
+          Uri.parse(Config.url +
+              "$path/?consumer_key=${Config.key}&consumer_secret=${Config.secret}"),
+          body: body,
+          headers: {
+            HttpHeaders.contentTypeHeader: contentType,
+            'Access-Control-Allow-Origin': 'true',
+          });
+      log(response.statusCode.toString(), name: "resStat");
+      log(response.body.toString(), name: "res");
+      if (response.statusCode == 201 || response.statusCode == 400) {
         var jsonResponse = convert.jsonDecode(response.body);
         // String reply = await response.transform(utf8.decoder).join();
         print('$jsonResponse');
@@ -36,6 +60,7 @@ class ApiBaseHelper {
       return {'success': 'no', 'message': 'Socket Exception.'};
     }
   }
+
   // Future<void> requestPermission(Permission permission) async {
   //   final status = await permission.request();
 
@@ -95,8 +120,6 @@ class ApiBaseHelper {
   //     return {'success': 'no', 'message': 'Socket Exception.'};
   //   }
   // }
-
- 
 
   // Future<dynamic> postView(String url, String body, cookie) async {
   //   print('Api Post, url $baseUrl$url');
