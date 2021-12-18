@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:grocery_app/common_widgets/app_button.dart';
 import 'package:grocery_app/common_widgets/app_text.dart';
 import 'package:grocery_app/models/grocery_item.dart';
+import 'package:grocery_app/styles/colors.dart';
 import 'package:grocery_app/widgets/item_counter_widget.dart';
 
 import 'favourite_toggle_icon_widget.dart';
@@ -22,9 +23,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Column(
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(),
+        body: Column(
           children: [
             getImageHeaderWidget(),
             Expanded(
@@ -32,35 +34,43 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 25),
                 child: Column(
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children:[Text(
-                        widget.groceryItem.name,
-                        style: TextStyle(
-                            fontSize: 24, fontWeight: FontWeight.bold),
-                      ),
-                      FavoriteToggleIcon(),
-                      ]
-                       
-                
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 12.0),
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              widget.groceryItem.name,
+                              style: TextStyle(
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColors.blackColor),
+                            ),
+                            FavoriteToggleIcon(),
+                          ]),
                     ),
-                   
+
                     // Spacer(),
                     Divider(thickness: 1),
-                    getProductDataRowWidget("Product Details",customWidget:Text("here is description",style:TextStyle(fontSize:18 ))),
+                    getProductDataRowWidget("Product Details",
+                        customWidget: Text("here is description",
+                            style: TextStyle(fontSize: 18))),
                     Divider(thickness: 1),
-                    getProductDataRowWidget("Nutritions"
-                       ,customWidget:Text("here is data of product",style:TextStyle(fontSize:18 ))),
+                    getProductDataRowWidget("Nutritions",
+                        customWidget: Text("here is data of product",
+                            style: TextStyle(fontSize: 18))),
                     Divider(thickness: 1),
                     getProductDataRowWidget(
                       "Review",
                       customWidget: ratingWidget(),
                     ),
-                    
-                    Spacer(),
-            Row(
+
+                    Spacer(
+                      flex: 5,
+                    ),
+                    Row(
                       children: [
-                         Text(
+                        Text(
                           "د.إ${getTotalPrice().toStringAsFixed(2)}",
                           style: TextStyle(
                             fontSize: 24,
@@ -75,14 +85,15 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                             });
                           },
                         ),
-            
-            
                       ],
                     ),
+                    Spacer(),
                     AppButton(
                       label: "Add To Basket",
                     ),
-                    Spacer(),
+                    Spacer(
+                      flex: 3,
+                    ),
                   ],
                 ),
               ),
@@ -133,16 +144,14 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
             children: [
               AppText(text: label, fontWeight: FontWeight.w600, fontSize: 16),
               Spacer(),
-             
-              
-           
             ],
           ),
-           if (customWidget != null) ...[
-                customWidget,
-                SizedBox(
-                  width: 20,
-                ),],
+          if (customWidget != null) ...[
+            customWidget,
+            SizedBox(
+              width: 20,
+            ),
+          ],
         ],
       ),
     );
