@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:grocery_app/helpers/size_config.dart';
+import 'package:grocery_app/models/category.dart';
 import 'package:grocery_app/models/category_item.dart';
 import 'package:grocery_app/categoryItemsPage/category_items_screen.dart';
 import 'package:grocery_app/styles/colors.dart';
@@ -10,8 +11,7 @@ const kPrimaryLightColor = Color(0xFF5b8c16);
 const kPrimaryGradientColor = LinearGradient(
   begin: Alignment.topLeft,
   end: Alignment.bottomRight,
-  colors: [Color(0xFFffd200), 
-  Color(0xFF5b8c16)],
+  colors: [Color(0xFFffd200), Color(0xFF5b8c16)],
 );
 const kSecondaryColor = Color(0xFF979797);
 const kTextColor = Color(0xFF757575);
@@ -43,7 +43,6 @@ const kTextFieldBorderRadius = BorderRadius.all(Radius.circular(18.0));
 const kHintTextStyle = TextStyle(color: AppColors.blackColor, fontSize: 18.0);
 const kTextFieldStyle = TextStyle(color: AppColors.blackColor, fontSize: 18.0);
 
-
 final otpInputDecoration = InputDecoration(
   contentPadding:
       EdgeInsets.symmetric(vertical: getProportionateScreenWidth(15)),
@@ -60,14 +59,11 @@ OutlineInputBorder outlineInputBorder() {
 }
 
 String removeAllHtmlTags(String htmlText) {
-    RegExp exp = RegExp(
-      r"<.*?>|&([a-z0-9]+|#[0-9]{1,6}|#x[0-9a-f]{1,6});",
-      multiLine: true,
-      caseSensitive: true
-    );
+  RegExp exp = RegExp(r"<.*?>|&([a-z0-9]+|#[0-9]{1,6}|#x[0-9a-f]{1,6});",
+      multiLine: true, caseSensitive: true);
 
-    return htmlText.replaceAll(exp, '');
-  }
+  return htmlText.replaceAll(exp, '');
+}
 
 //  appBarDesign(var key) {
 //     return AppBar(
@@ -89,7 +85,7 @@ String removeAllHtmlTags(String htmlText) {
 //       children: [
 //        SizedBox(width: getProportionateScreenWidth(5)),
 //        IconButton(onPressed:null, icon: Image.asset("assets/icons/marketspalsh.png"),iconSize: 30,)
-      
+
 //       ],
 //     ),
 //   ),
@@ -102,7 +98,7 @@ String removeAllHtmlTags(String htmlText) {
 //        crossAxisAlignment: CrossAxisAlignment.end,
 //        children: [
 //          Text("Location",style: TextStyle(color: AppColors.primaryColor,fontSize: 15)),
-         
+
 //          Row(
 //            mainAxisAlignment: MainAxisAlignment.start,
 //            children: [
@@ -112,16 +108,18 @@ String removeAllHtmlTags(String htmlText) {
 //          ),
 //        ],
 //      ),
-     
+
 //      ],),
 //     );
 //   }
 
-   void onCategoryItemClicked(BuildContext context, CategoryItem categoryItem) {
-    Navigator.of(context).push(new MaterialPageRoute(
-      builder: (BuildContext context) {
-        return CategoryItemsScreen(disVal:categoryItem.name);
-      },
-    ));
-  }
-
+void onCategoryItemClicked(BuildContext context, Cat categoryItem, List cat) {
+  Navigator.of(context).push(new MaterialPageRoute(
+    builder: (BuildContext context) {
+      return CategoryItemsScreen(
+        disVal: categoryItem,
+        cat: cat,
+      );
+    },
+  ));
+}

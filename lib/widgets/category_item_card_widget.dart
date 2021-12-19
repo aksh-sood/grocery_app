@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:grocery_app/common_widgets/app_text.dart';
+import 'package:grocery_app/models/category.dart';
 import 'package:grocery_app/models/category_item.dart';
 
 class CategoryItemCardWidget extends StatelessWidget {
   CategoryItemCardWidget({Key key, this.item, this.color = Colors.blue})
       : super(key: key);
-  final CategoryItem item;
+  final Cat item;
 
   final height = 125.0;
 
@@ -53,10 +54,17 @@ class CategoryItemCardWidget extends StatelessWidget {
 
   Widget imageWidget() {
     return Container(
-      child: Image.asset(
-        item.imagePath,
-        fit: BoxFit.contain,
-      ),
+      child: item.image == null
+          ? Image.asset("assets/images/categories_images/fruit.png", scale: 10)
+          : Image.network(
+              item.image,
+              scale: 10,
+              errorBuilder: (BuildContext context, Object exception,
+                  StackTrace stackTrace) {
+                return Image.asset("assets/images/categories_images/fruit.png",
+                    scale: 10);
+              },
+            ),
     );
   }
 }

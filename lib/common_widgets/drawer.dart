@@ -13,15 +13,9 @@ class CategoryDrawer extends StatelessWidget {
   List<Widget> drawerItem = [];
   final List<dynamic> cat;
   List categoryItemsDemo = [];
-  void catCreator() {
-    for (var c in cat) {
-      categoryItemsDemo.add(CategoryItem(id: c.id, name: c.name));
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
-    catCreator();
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: SafeArea(
@@ -60,13 +54,12 @@ class CategoryDrawer extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
-                      children:
-                          categoryItemsDemo.asMap().entries.map<Widget>((e) {
+                      children: cat.asMap().entries.map<Widget>((e) {
                         int index = e.key;
-                        CategoryItem categoryItem = e.value;
+                        Cat categoryItem = e.value;
                         return GestureDetector(
                           onTap: () {
-                            onCategoryItemClicked(context, categoryItem);
+                            onCategoryItemClicked(context, categoryItem, cat);
                           },
                           child: Container(
                             padding: EdgeInsets.all(10),
@@ -91,7 +84,7 @@ class CategoryDrawer extends StatelessWidget {
 
 class DrawerItem extends StatelessWidget {
   DrawerItem({Key key, this.item, this.color}) : super(key: key);
-  final CategoryItem item;
+  final Cat item;
   final Color color;
   @override
   Widget build(BuildContext context) {
@@ -103,7 +96,21 @@ class DrawerItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           CircleAvatar(
-            child: Image.asset(item.imagePath, scale: 10),
+            // child: Image.asset(item.image,
+            //  scale: 10),
+            child: item.image == null
+                ? Image.asset("assets/images/categories_images/fruit.png",
+                    scale: 10)
+                : Image.network(
+                    item.image,
+                    scale: 10,
+                    errorBuilder: (BuildContext context, Object exception,
+                        StackTrace stackTrace) {
+                      return Image.asset(
+                          "assets/images/categories_images/fruit.png",
+                          scale: 10);
+                    },
+                  ),
             backgroundColor: color.withOpacity(0.1),
             radius: getProportionateScreenWidth(35),
           ),

@@ -4,7 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:grocery_app/common_widgets/drawer.dart';
 import 'package:grocery_app/common_widgets/search_bar.dart';
-import 'package:grocery_app/helpers/constants.dart';
+import 'package:grocery_app/screens/account/account_screen.dart';
+import 'package:grocery_app/screens/cart/cart_screen.dart';
+import 'package:grocery_app/screens/explore_screen.dart';
+import 'package:grocery_app/screens/home/home_screen.dart';
+import '../favourite_screen.dart';
 import 'package:grocery_app/helpers/size_config.dart';
 import 'package:grocery_app/styles/colors.dart';
 import 'package:grocery_app/models/category.dart';
@@ -12,7 +16,7 @@ import 'package:grocery_app/woo/config.dart';
 import 'navigator_item.dart';
 
 class DashboardScreen extends StatefulWidget {
-  List cat;
+  final List cat;
   DashboardScreen({this.cat});
   @override
   _DashboardScreenState createState() => _DashboardScreenState();
@@ -23,7 +27,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
   String token = Config.token;
   final GlobalKey<ScaffoldState> _key = GlobalKey();
   bool _searching = false;
-
   List mainCat = [];
   List allcats;
 
@@ -42,8 +45,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
             subCat: []));
       }
     }
-    // print(mainCat);
-    // log(mainCat.length.toString(), name: "kkkkkkkk");
 
     for (var m in mainCat) {
       for (var c in allcats) {
@@ -57,24 +58,21 @@ class _DashboardScreenState extends State<DashboardScreen> {
         }
       }
     }
-    // int sum = 30;
-    // for (var c in mainCat) {
-    //   for (var x in c.subCat) {
-    //     print(x.id);
-    //     print(x.name);
-    //     print(x.slug);
-    //     print(x.image);
-    //     print(x.subCat);
-    //   }
-    //   log(c.subCat.length.toString(), name: "length");
-    //   sum = sum + c.subCat.length;
-    // }
-    // log(sum.toString(), name: "total length");
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    List<NavigatorItem> navigatorItems = [
+      NavigatorItem("Shop", "assets/icons/shop_icon.svg", 0, HomeScreen()),
+      NavigatorItem("Explore", "assets/icons/explore_icon.svg", 1,
+          ExploreScreen(cat: mainCat)),
+      NavigatorItem("Cart", "assets/icons/cart_icon.svg", 2, CartScreen()),
+      NavigatorItem(
+          "Favourite", "assets/icons/favourite_icon.svg", 3, FavouriteScreen()),
+      NavigatorItem(
+          "Account", "assets/icons/account_icon.svg", 4, AccountScreen()),
+    ];
     return Scaffold(
       key: _key,
       drawer: CategoryDrawer(cat: mainCat),
