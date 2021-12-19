@@ -1,6 +1,4 @@
 import 'dart:developer';
-
-import 'package:grocery_app/models/sub_cat.dart';
 import 'package:grocery_app/services/networking.dart';
 import 'package:grocery_app/woo/config.dart';
 
