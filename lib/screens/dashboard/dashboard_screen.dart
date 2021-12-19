@@ -7,11 +7,13 @@ import 'package:grocery_app/common_widgets/search_bar.dart';
 import 'package:grocery_app/helpers/constants.dart';
 import 'package:grocery_app/helpers/size_config.dart';
 import 'package:grocery_app/styles/colors.dart';
+import 'package:grocery_app/models/category.dart';
 import 'package:grocery_app/woo/config.dart';
 import 'navigator_item.dart';
-import 'package:grocery_app/screens/sign_in/components/sign_form.dart';
 
 class DashboardScreen extends StatefulWidget {
+  List cat;
+  DashboardScreen({this.cat});
   @override
   _DashboardScreenState createState() => _DashboardScreenState();
 }
@@ -21,14 +23,61 @@ class _DashboardScreenState extends State<DashboardScreen> {
   String token = Config.token;
   final GlobalKey<ScaffoldState> _key = GlobalKey();
   bool _searching = false;
+
+  List mainCat = [];
+  List allcats;
+
+  @override
+  void initState() {
+    allcats = widget.cat;
+    print(allcats);
+    print(allcats.length);
+    for (var c in allcats) {
+      if (c["parent"] == 0) {
+        mainCat.add(Cat(
+            id: c["id"],
+            name: c["name"],
+            slug: c["slug"],
+            image: c["image"],
+            subCat: []));
+      }
+    }
+    // print(mainCat);
+    // log(mainCat.length.toString(), name: "kkkkkkkk");
+
+    for (var m in mainCat) {
+      for (var c in allcats) {
+        if (m.id == c["parent"]) {
+          m.subCat.add(Cat(
+              id: c["id"],
+              name: c["name"],
+              slug: c["slug"],
+              image: c["image"],
+              subCat: null));
+        }
+      }
+    }
+    // int sum = 30;
+    // for (var c in mainCat) {
+    //   for (var x in c.subCat) {
+    //     print(x.id);
+    //     print(x.name);
+    //     print(x.slug);
+    //     print(x.image);
+    //     print(x.subCat);
+    //   }
+    //   log(c.subCat.length.toString(), name: "length");
+    //   sum = sum + c.subCat.length;
+    // }
+    // log(sum.toString(), name: "total length");
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    log(token, name: "tokenDash");
-
-    // SignForm.token;
     return Scaffold(
       key: _key,
-      drawer: CategoryDrawer(),
+      drawer: CategoryDrawer(cat: mainCat),
       appBar: AppBar(
         actions: [
           Padding(

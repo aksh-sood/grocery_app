@@ -5,6 +5,7 @@ import 'package:grocery_app/helpers/constants.dart';
 import 'package:grocery_app/helpers/form_error.dart';
 import 'package:grocery_app/helpers/keyboard.dart';
 import 'package:grocery_app/helpers/size_config.dart';
+import 'package:grocery_app/models/category.dart';
 import 'package:grocery_app/models/customer_model.dart';
 import 'package:grocery_app/screens/dashboard/dashboard_screen.dart';
 import 'package:grocery_app/screens/forgot_password/forgot_password_screen.dart';
@@ -123,67 +124,69 @@ class _SignFormState extends State<SignForm> {
           DefaultButton(
             text: "Continue",
             press: () async {
-              if (_formKey.currentState.validate()) {
-                setState(() {
-                  isApiCallProcess = true;
-                });
-                _formKey.currentState.save();
-                KeyboardUtil.hideKeyboard(context);
-                CustomerModel model =
-                    CustomerModel.b(email: email, password: password);
-                var response = await model.loginUser();
-                if (response["success"] != "no") {
-                  if (response["success"]) {
-                    Config.token = response["data"]["token"];
-                    Fluttertoast.showToast(
-                        msg: "Welcome back $email",
-                        toastLength: Toast.LENGTH_SHORT,
-                        gravity: ToastGravity.BOTTOM,
-                        timeInSecForIosWeb: 5,
-                        backgroundColor: Colors.grey[850],
-                        textColor: AppColors.whiteColor,
-                        fontSize: 16.0);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute<void>(
-                        builder: (BuildContext context) => DashboardScreen(),
-                      ),
-                    );
-                  } else {
-                    String msg = removeAllHtmlTags(response["message"]);
-                    Fluttertoast.showToast(
-                        msg: "$msg",
-                        toastLength: Toast.LENGTH_SHORT,
-                        gravity: ToastGravity.BOTTOM,
-                        timeInSecForIosWeb: 5,
-                        backgroundColor: Colors.grey[850],
-                        textColor: AppColors.whiteColor,
-                        fontSize: 16.0);
-                  }
-                } else {
-                  Fluttertoast.showToast(
-                      msg: "Error Occured please try later",
-                      toastLength: Toast.LENGTH_SHORT,
-                      gravity: ToastGravity.BOTTOM,
-                      timeInSecForIosWeb: 5,
-                      backgroundColor: Colors.grey[850],
-                      textColor: AppColors.whiteColor,
-                      fontSize: 16.0);
-                }
-              } else {
-                Fluttertoast.showToast(
-                    msg: "Details Not Valid, Please check again",
-                    toastLength: Toast.LENGTH_SHORT,
-                    gravity: ToastGravity.BOTTOM,
-                    timeInSecForIosWeb: 5,
-                    backgroundColor: Colors.grey[850],
-                    textColor: AppColors.whiteColor,
-                    fontSize: 16.0);
-              }
+              // if (_formKey.currentState.validate()) {
+              //   setState(() {
+              //     isApiCallProcess = true;
+              //   });
+              //   _formKey.currentState.save();
+              //   KeyboardUtil.hideKeyboard(context);
+              //   CustomerModel model =
+              //       CustomerModel.b(email: email, password: password);
+              //   var response = await model.loginUser();
+              //   if (response["success"] != "no") {
+              //     if (response["success"]) {
+              //       Config.token = response["data"]["token"];
+              //       Fluttertoast.showToast(
+              //           msg: "Welcome back $email",
+              //           toastLength: Toast.LENGTH_SHORT,
+              //           gravity: ToastGravity.BOTTOM,
+              //           timeInSecForIosWeb: 5,
+              //           backgroundColor: Colors.grey[850],
+              //           textColor: AppColors.whiteColor,
+              //           fontSize: 16.0);
+              List<dynamic> allCats = await Cat().getAllCats();
+              Navigator.push(
+                context,
+                MaterialPageRoute<void>(
+                  builder: (BuildContext context) =>
+                      DashboardScreen(cat: allCats),
+                ),
+              );
+              //     } else {
+              //       String msg = removeAllHtmlTags(response["message"]);
+              //       Fluttertoast.showToast(
+              //           msg: "$msg",
+              //           toastLength: Toast.LENGTH_SHORT,
+              //           gravity: ToastGravity.BOTTOM,
+              //           timeInSecForIosWeb: 5,
+              //           backgroundColor: Colors.grey[850],
+              //           textColor: AppColors.whiteColor,
+              //           fontSize: 16.0);
+              //     }
+              //   } else {
+              //     Fluttertoast.showToast(
+              //         msg: "Error Occured please try later",
+              //         toastLength: Toast.LENGTH_SHORT,
+              //         gravity: ToastGravity.BOTTOM,
+              //         timeInSecForIosWeb: 5,
+              //         backgroundColor: Colors.grey[850],
+              //         textColor: AppColors.whiteColor,
+              //         fontSize: 16.0);
+              //   }
+              // } else {
+              //   Fluttertoast.showToast(
+              //       msg: "Details Not Valid, Please check again",
+              //       toastLength: Toast.LENGTH_SHORT,
+              //       gravity: ToastGravity.BOTTOM,
+              //       timeInSecForIosWeb: 5,
+              //       backgroundColor: Colors.grey[850],
+              //       textColor: AppColors.whiteColor,
+              //       fontSize: 16.0);
+              // }
 
-              setState(() {
-                isApiCallProcess = false;
-              });
+              // setState(() {
+              //   isApiCallProcess = false;
+              // });
             },
           ),
         ],
