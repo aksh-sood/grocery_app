@@ -7,9 +7,10 @@ class Cat {
   String slug;
   String image;
   int id;
-  List<Cat> subCat = [];
+  int count;
+  List<dynamic> subCat = [];
 
-  Cat({this.id, this.name, this.slug, this.image, this.subCat});
+  Cat({this.id, this.name, this.slug, this.image, this.count, this.subCat});
   Future<dynamic> getCats(int page) async {
     var res = await ApiBaseHelper().get(Config.allCat +
         "?page=$page&per_page=100&consumer_key=${Config.key}&consumer_secret=${Config.secret}");

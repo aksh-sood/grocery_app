@@ -42,6 +42,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             name: c["name"],
             slug: c["slug"],
             image: c["image"],
+            count: c["count"],
             subCat: []));
       }
     }
@@ -54,6 +55,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               name: c["name"],
               slug: c["slug"],
               image: c["image"],
+              count: c["count"],
               subCat: null));
         }
       }

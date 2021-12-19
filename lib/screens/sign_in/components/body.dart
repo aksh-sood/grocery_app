@@ -47,7 +47,7 @@ class _BodyState extends State<Body> {
                   ),
                   SizedBox(height: SizeConfig.screenHeight * 0.08),
                   SignForm(),
-                  SizedBox(height: SizeConfig.screenHeight * 0.08),
+                  SizedBox(height: SizeConfig.screenHeight * 0.05),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

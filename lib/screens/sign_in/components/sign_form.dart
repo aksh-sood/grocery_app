@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:grocery_app/common_widgets/default_button.dart';
 import 'package:grocery_app/helpers/constants.dart';
@@ -105,8 +106,8 @@ class _SignFormState extends State<SignForm> {
               ),
               Text("Remember me"),
               Spacer(),
-              GestureDetector(
-                onTap: () => Navigator.push(
+              TextButton(
+                onPressed: () => Navigator.push(
                   context,
                   MaterialPageRoute<void>(
                     builder: (BuildContext context) => ForgotPasswordScreen(),
@@ -114,7 +115,9 @@ class _SignFormState extends State<SignForm> {
                 ),
                 child: Text(
                   "Forgot Password",
-                  style: TextStyle(decoration: TextDecoration.underline),
+                  style: TextStyle(
+                      decoration: TextDecoration.underline,
+                      color: AppColors.secondaryColor),
                 ),
               )
             ],
@@ -136,15 +139,15 @@ class _SignFormState extends State<SignForm> {
               //   if (response["success"] != "no") {
               //     if (response["success"]) {
               //       Config.token = response["data"]["token"];
-              //       Fluttertoast.showToast(
-              //           msg: "Welcome back $email",
-              //           toastLength: Toast.LENGTH_SHORT,
-              //           gravity: ToastGravity.BOTTOM,
-              //           timeInSecForIosWeb: 5,
-              //           backgroundColor: Colors.grey[850],
-              //           textColor: AppColors.whiteColor,
-              //           fontSize: 16.0);
               List<dynamic> allCats = await Cat().getAllCats();
+              Fluttertoast.showToast(
+                  msg: "Welcome back $email",
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.BOTTOM,
+                  timeInSecForIosWeb: 5,
+                  backgroundColor: Colors.grey[850],
+                  textColor: AppColors.whiteColor,
+                  fontSize: 16.0);
               Navigator.push(
                 context,
                 MaterialPageRoute<void>(
@@ -152,10 +155,20 @@ class _SignFormState extends State<SignForm> {
                       DashboardScreen(cat: allCats),
                 ),
               );
+              //       } else {
+              //         String msg = removeAllHtmlTags(response["message"]);
+              //         Fluttertoast.showToast(
+              //             msg: "$msg",
+              //             toastLength: Toast.LENGTH_SHORT,
+              //             gravity: ToastGravity.BOTTOM,
+              //             timeInSecForIosWeb: 5,
+              //             backgroundColor: Colors.grey[850],
+              //             textColor: AppColors.whiteColor,
+              //             fontSize: 16.0);
+              //       }
               //     } else {
-              //       String msg = removeAllHtmlTags(response["message"]);
               //       Fluttertoast.showToast(
-              //           msg: "$msg",
+              //           msg: "Error Occured please try later",
               //           toastLength: Toast.LENGTH_SHORT,
               //           gravity: ToastGravity.BOTTOM,
               //           timeInSecForIosWeb: 5,
@@ -165,7 +178,7 @@ class _SignFormState extends State<SignForm> {
               //     }
               //   } else {
               //     Fluttertoast.showToast(
-              //         msg: "Error Occured please try later",
+              //         msg: "Details Not Valid, Please check again",
               //         toastLength: Toast.LENGTH_SHORT,
               //         gravity: ToastGravity.BOTTOM,
               //         timeInSecForIosWeb: 5,
@@ -173,22 +186,39 @@ class _SignFormState extends State<SignForm> {
               //         textColor: AppColors.whiteColor,
               //         fontSize: 16.0);
               //   }
-              // } else {
-              //   Fluttertoast.showToast(
-              //       msg: "Details Not Valid, Please check again",
-              //       toastLength: Toast.LENGTH_SHORT,
-              //       gravity: ToastGravity.BOTTOM,
-              //       timeInSecForIosWeb: 5,
-              //       backgroundColor: Colors.grey[850],
-              //       textColor: AppColors.whiteColor,
-              //       fontSize: 16.0);
-              // }
 
-              // setState(() {
-              //   isApiCallProcess = false;
-              // });
+              //   setState(() {
+              //     isApiCallProcess = false;
+              //   });
             },
           ),
+          SizedBox(height: 18.h),
+          TextButton(
+            onPressed: () async {
+              List<dynamic> allCats = await Cat().getAllCats();
+              Fluttertoast.showToast(
+                  msg: "Welcome to YourGrocer",
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.BOTTOM,
+                  timeInSecForIosWeb: 5,
+                  backgroundColor: Colors.grey[850],
+                  textColor: AppColors.whiteColor,
+                  fontSize: 16.0);
+              Navigator.push(
+                context,
+                MaterialPageRoute<void>(
+                  builder: (BuildContext context) =>
+                      DashboardScreen(cat: allCats),
+                ),
+              );
+            },
+            child: Text(
+              "Continue as Guest",
+              style: TextStyle(
+                  decoration: TextDecoration.underline,
+                  color: AppColors.secondaryColor),
+            ),
+          )
         ],
       ),
     );

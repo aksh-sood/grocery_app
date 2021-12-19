@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -11,13 +9,14 @@ import 'package:grocery_app/models/grocery_item.dart';
 import 'package:grocery_app/screens/product_details/product_details_screen.dart';
 import 'package:grocery_app/widgets/grocery_item_card_widget.dart';
 import 'package:grocery_app/helpers/constants.dart';
-import 'package:grocery_app/models/category_item.dart';
 import 'package:grocery_app/styles/colors.dart';
 import '../screens/filter_screen.dart';
 
 class CategoryItemsScreen extends StatefulWidget {
-  CategoryItemsScreen({@required this.disVal, @required this.cat});
+  CategoryItemsScreen(
+      {@required this.disVal, @required this.cat, this.subDisVal});
   final Cat disVal;
+  final Cat subDisVal;
   final List<dynamic> cat;
 
   @override
@@ -26,13 +25,11 @@ class CategoryItemsScreen extends StatefulWidget {
 
 class _CategoryItemsScreenState extends State<CategoryItemsScreen> {
   final GlobalKey<ScaffoldState> _key = GlobalKey();
-
   GlobalKey colKey;
   double colWidth;
   void calculateColWidth() {
     WidgetsBinding.instance.addPostFrameCallback((context) {
       final RenderBox box = colKey.currentContext.findRenderObject();
-
       setState(() {
         colWidth = box.size.width;
       });
@@ -41,25 +38,19 @@ class _CategoryItemsScreenState extends State<CategoryItemsScreen> {
 
   @override
   void initState() {
-    // calculateColWidth();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    Cat _subCategory = widget.disVal;
-//      void GoToCategory(BuildContext context)async{
-//  _subCategory=await
-// Navigator.push(context, MaterialPageRoute(builder: (context) =>SubCategoryScreen(subCat:_subCategories,preVal: _subCategory,)));
-
-// }
-
+    Cat _subCategory =
+        widget.subDisVal == null ? widget.disVal : widget.subDisVal;
     return Scaffold(
       key: _key,
-      drawer: SubCategoryScreen(
-        headCat: widget.disVal,
-        preVal: _subCategory,
-      ),
+      drawer: widget.disVal.subCat.length == 0
+          ? null
+          : SubCategoryScreen(
+              headCat: widget.disVal, preVal: _subCategory, allCat: widget.cat),
       appBar: AppBar(
         titleSpacing: 0,
         backgroundColor: Colors.transparent,
@@ -97,7 +88,9 @@ class _CategoryItemsScreenState extends State<CategoryItemsScreen> {
         ],
         title: GestureDetector(
           onTap: () {
-            _key.currentState.openDrawer();
+            widget.disVal.subCat.length == 0
+                ? null
+                : _key.currentState.openDrawer();
           },
           child: Container(
               padding: EdgeInsets.symmetric(
@@ -105,18 +98,23 @@ class _CategoryItemsScreenState extends State<CategoryItemsScreen> {
               ),
               child: RichText(
                 text: TextSpan(
-                  text: _subCategory.name,
+                  text: widget.disVal.name,
                   style: TextStyle(
                       fontSize: 15,
                       color: Colors.black,
                       fontWeight: FontWeight.bold),
-                  children: const <TextSpan>[
+                  children: <TextSpan>[
                     TextSpan(
-                        text: '  (1000 items)',
+                        text: widget.subDisVal == null
+                            ? '  (${widget.disVal.count} items)'
+                            : '  (${widget.subDisVal.count} items)',
                         style: TextStyle(fontSize: 12, color: Colors.grey)),
-                    TextSpan(
-                        text: '\nAll Categories ˅',
-                        style: TextStyle(fontSize: 11, color: Colors.purple)),
+                    widget.disVal.subCat.length == 0
+                        ? null
+                        : TextSpan(
+                            text: '\nAll Categories ˅',
+                            style:
+                                TextStyle(fontSize: 11, color: Colors.purple)),
                   ],
                 ),
               )),
@@ -129,7 +127,8 @@ class _CategoryItemsScreenState extends State<CategoryItemsScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                height: SizeConfig.screenHeight - AppBar().preferredSize.height,
+                height: MediaQuery.of(context).size.height -
+                    AppBar().preferredSize.height,
                 color: AppColors.whiteColor,
                 child: SingleChildScrollView(
                   child: Column(
