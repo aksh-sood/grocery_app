@@ -2,18 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:grocery_app/helpers/constants.dart';
 import 'package:grocery_app/helpers/size_config.dart';
+import 'package:grocery_app/models/category.dart';
 import 'package:grocery_app/models/category_item.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:grocery_app/styles/colors.dart';
 import 'package:grocery_app/widgets/category_item_card_widget.dart';
 
 class CategoryDrawer extends StatelessWidget {
-  CategoryDrawer({
-    Key key,
-  }) : super(key: key);
+  CategoryDrawer({Key key, @required this.cat}) : super(key: key);
   List<Widget> drawerItem = [];
+  final List<dynamic> cat;
+  List categoryItemsDemo = [];
+  void catCreator() {
+    for (var c in cat) {
+      categoryItemsDemo.add(CategoryItem(id: c.id, name: c.name));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    catCreator();
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: SafeArea(
@@ -28,12 +36,12 @@ class CategoryDrawer extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       child: Container(
-                       
                           child: Text(
                             "C\n\nT\n\nA\n\nG\n\nO\n\nR\n\nI\n\nE\n\nS",
                             style: TextStyle(
-                              color: AppColors.yellowColor,
-                                fontSize: 20, fontWeight: FontWeight.bold),
+                                color: AppColors.yellowColor,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold),
                           ),
                           color: AppColors.primaryColor),
                     )
@@ -42,7 +50,6 @@ class CategoryDrawer extends StatelessWidget {
                 ],
               ),
             ),
-          
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -79,8 +86,6 @@ class CategoryDrawer extends StatelessWidget {
         ),
       ),
     );
- 
- 
   }
 }
 
@@ -106,38 +111,38 @@ class DrawerItem extends StatelessWidget {
           Text(item.name,
               textAlign: TextAlign.center,
               softWrap: true,
-              style: TextStyle(color: AppColors.blackColor, fontSize: 15)),
+              style: TextStyle(color: AppColors.blackColor, fontSize: 15.sm)),
         ],
       ),
     );
   }
 }
 
-Widget getStaggeredGridView(BuildContext context) {
-  return StaggeredGridView.count(
-    crossAxisCount: 4,
-    children: categoryItemsDemo.asMap().entries.map<Widget>((e) {
-      int index = e.key;
-      CategoryItem categoryItem = e.value;
-      return GestureDetector(
-        onTap: () {
-          onCategoryItemClicked(context, categoryItem);
-        },
-        child: Container(
-          padding: EdgeInsets.all(10),
-          child: CategoryItemCardWidget(
-            item: categoryItem,
-            color: gridColors[index % gridColors.length],
-          ),
-        ),
-      );
-    }).toList(),
+// Widget getStaggeredGridView(BuildContext context) {
+//   return StaggeredGridView.count(
+//     crossAxisCount: 4,
+//     children: categoryItemsDemo.asMap().entries.map<Widget>((e) {
+//       int index = e.key;
+//       CategoryItem categoryItem = e.value;
+//       return GestureDetector(
+//         onTap: () {
+//           onCategoryItemClicked(context, categoryItem);
+//         },
+//         child: Container(
+//           padding: EdgeInsets.all(10),
+//           child: CategoryItemCardWidget(
+//             item: categoryItem,
+//             color: gridColors[index % gridColors.length],
+//           ),
+//         ),
+//       );
+//     }).toList(),
 
-    //Here is the place that we are getting flexible/ dynamic card for various images
-    staggeredTiles: categoryItemsDemo
-        .map<StaggeredTile>((_) => StaggeredTile.fit(2))
-        .toList(),
-    mainAxisSpacing: 3.0,
-    crossAxisSpacing: 4.0, // add some space
-  );
-}
+//     //Here is the place that we are getting flexible/ dynamic card for various images
+//     staggeredTiles: categoryItemsDemo
+//         .map<StaggeredTile>((_) => StaggeredTile.fit(2))
+//         .toList(),
+//     mainAxisSpacing: 3.0,
+//     crossAxisSpacing: 4.0, // add some space
+//   );
+// }

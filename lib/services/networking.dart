@@ -61,89 +61,26 @@ class ApiBaseHelper {
     }
   }
 
-  // Future<void> requestPermission(Permission permission) async {
-  //   final status = await permission.request();
+  Future<dynamic> get(String url) async {
+    try {
+      final response = await http.get(
+        Uri.parse(Config.url + url),
+      );
+      print(response.statusCode);
+      print(response);
 
-  //   print(status);
-  //   s = status;
-  //   print(s);
-  // }
+      if (response.statusCode == 200 || response.statusCode == 400) {
+        var jsonResponse = convert.jsonDecode(response.body);
+        print('$jsonResponse');
 
-  // Future<dynamic> get(String url, cookie) async {
-  //   try {
-  //     final response = await http
-  //         .get(Uri.parse(Config.url+Config.customerURL), headers: {"cookie": "$cookie"});
-  //     print(response.statusCode);
-  //     print(response);
-  //     log(response.headers.toString(), name: "getr");
-  //     if (response.statusCode == 200 || response.statusCode == 400) {
-  //       var jsonResponse = convert.jsonDecode(response.body);
-  //       print('$jsonResponse');
-
-  //       return jsonResponse;
-  //     }
-  //     return {
-  //       'success': 'no',
-  //       'message': 'Request failed with status: ${response.statusCode}.'
-  //     };
-  //   } on SocketException {
-  //     return {'success': 'no', 'message': 'Socket Exception.'};
-  //   }
-  // }
-
-  // Future<dynamic> postLogin(String url, String body) async {
-  //   print('Api Post, url ${Config.url+Config.customerURL}');
-  //   List value = [];
-  //   try {
-  //     print(body);
-  //     final response =
-  //         await http.post(Uri.parse(Config.url+Config.customerURL), body: body, headers: {
-  //       "content-type": "application/json",
-  //       "accept": "application/json",
-  //     });
-  //     print(response.statusCode);
-  //     print(response);
-  //     log(response.headers.toString(), name: "ApiBaseHelper");
-  //     value.add(response.headers["set-cookie"]);
-  //     if (response.statusCode == 200 || response.statusCode == 400) {
-  //       var jsonResponse = convert.jsonDecode(response.body);
-  //       print('$jsonResponse');
-  //       value.add(jsonResponse);
-  //       log(value.toString(), name: "list");
-  //       return value;
-  //     }
-  //     return {
-  //       'success': 'no',
-  //       'message': 'Request failed with status: ${response.statusCode}.'
-  //     };
-  //   } on SocketException {
-  //     return {'success': 'no', 'message': 'Socket Exception.'};
-  //   }
-  // }
-
-  // Future<dynamic> postView(String url, String body, cookie) async {
-  //   print('Api Post, url $baseUrl$url');
-  //   try {
-  //     print(body);
-  //     final response =
-  //         await http.post(Uri.parse('$baseUrl$url'), body: body, headers: {
-  //       "content-type": "application/json",
-  //       "accept": "application/json",
-  //       "cookie": "$cookie"
-  //     });
-  //     print(response.statusCode);
-  //     // log(response.body.toString(), name: "responseBody");
-  //     // log(response.headers.toString(), name: "ApiBaseHelper");
-  //     if (response.statusCode == 200 || response.statusCode == 400) {
-  //       var jsonResponse = convert.jsonDecode(response.body);
-  //       return jsonResponse["data"];
-  //     }
-  //     return {
-  //       'success': 'no',
-  //       'message': 'Request failed with status: ${response.statusCode}.'
-  //     };
-  //   } on SocketException {
-  //     return {'success': 'no', 'message': 'Socket Exception.'};
-  //   }
-  // }
+        return jsonResponse;
+      }
+      return {
+        'success': 'no',
+        'message': 'Request failed with status: ${response.statusCode}.'
+      };
+    } on SocketException {
+      return {'success': 'no', 'message': 'Socket Exception.'};
+    }
+  }
 }

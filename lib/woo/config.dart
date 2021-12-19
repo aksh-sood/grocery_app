@@ -5,4 +5,5 @@ class Config {
   static String tokenUrl = "https://yg.cleoagro.com/wp-json/jwt-auth/v1/token";
   static String customerURL = "customers";
   static String token;
+  static String allCat = "products/categories";
 }
