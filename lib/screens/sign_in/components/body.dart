@@ -83,15 +83,15 @@ class _BodyState extends State<Body> {
 
   TextFormField buildPasswordFormField() {
     return TextFormField(
-      obscureText: true,
+      obscureText: obscure,
       onChanged: (value) {
         password = value;
-        if (value.isNotEmpty) {
+        if (value.isEmpty) {
           removeError(error: kPassNullError);
         } else if (value.length >= 8) {
           removeError(error: kShortPassError);
         }
-        return null;
+        password = value;
       },
       validator: (value) {
         if (value.isEmpty) {
@@ -109,7 +109,14 @@ class _BodyState extends State<Body> {
         // If  you are using latest version of flutter then lable text and hint text shown like this
         // if you r using flutter less then 1.20.* then maybe this is not working properly
         floatingLabelBehavior: FloatingLabelBehavior.always,
-        suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Lock.svg"),
+        suffixIcon: IconButton(
+            icon: Icon(obscure ? Icons.visibility_off : Icons.visibility,
+                color: kPrimaryColor),
+            onPressed: () {
+              setState(() {
+                obscure = !obscure;
+              });
+            }),
       ),
     );
   }
@@ -170,49 +177,7 @@ class _BodyState extends State<Body> {
                         children: [
                           buildEmailFormField(),
                           SizedBox(height: getProportionateScreenHeight(30)),
-                          TextFormField(
-                            obscureText: obscure,
-                            onChanged: (value) {
-                              password = value;
-                              if (value.isEmpty) {
-                                removeError(error: kPassNullError);
-                              } else if (value.length >= 8) {
-                                removeError(error: kShortPassError);
-                              }
-                              password = value;
-                            },
-                            validator: (value) {
-                              if (value.isEmpty) {
-                                addError(error: kPassNullError);
-                                return "";
-                              } else if (value.length < 8) {
-                                addError(error: kShortPassError);
-                                return "";
-                              }
-                              return null;
-                            },
-                            decoration: InputDecoration(
-                              labelText: "Password",
-                              hintText: "Enter your password",
-                              // If  you are using latest version of flutter then lable text and hint text shown like this
-                              // if you r using flutter less then 1.20.* then maybe this is not working properly
-                              floatingLabelBehavior:
-                                  FloatingLabelBehavior.always,
-                              suffixIcon: IconButton(
-                                  icon: Icon(
-                                      obscure
-                                          ? Icons.visibility_off
-                                          : Icons.visibility,
-                                      color: kPrimaryColor),
-                                  onPressed: () {
-                                    setState(() {
-                                      obscure = !obscure;
-                                    });
-                                  }),
-                            ),
-                          ),
-                          // buildPasswordFormField(),
-
+                          buildPasswordFormField(),
                           SizedBox(height: getProportionateScreenHeight(30)),
                           Row(
                             children: [
