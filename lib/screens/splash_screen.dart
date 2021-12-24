@@ -1,13 +1,10 @@
 import 'dart:async';
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:grocery_app/helpers/size_config.dart';
-import 'package:grocery_app/screens/sign_in/sign_in_screen.dart';
 import 'package:grocery_app/screens/welcomeslider/slider1.dart';
 import 'package:grocery_app/styles/colors.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart'; 
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 class SplashScreen extends StatefulWidget {
   @override
   _SplashScreenState createState() => _SplashScreenState();
@@ -25,8 +22,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void onTimerFinished() {
     Navigator.of(context).pushReplacement(new MaterialPageRoute(
       builder: (BuildContext context) {
-     
-        return    IntroScreen();
+        return IntroScreen();
       },
     ));
   }
@@ -48,14 +44,12 @@ class _SplashScreenState extends State<SplashScreen> {
 Widget splashScreenIcon(context) {
   String iconPath = "assets/icons/marketspalsh.png";
   String textPath = "assets/icons/yourgrocer.png";
-  return 
-  Column(
+  return Column(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
       Image.asset(iconPath),
-      SizedBox(height:10.h) ,
+      SizedBox(height: 10.h),
       Image.asset(textPath),
-
     ],
   );
 }

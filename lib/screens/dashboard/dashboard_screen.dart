@@ -33,8 +33,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   void initState() {
     allcats = widget.cat;
-    print(allcats);
-    print(allcats.length);
     for (var c in allcats) {
       if (c["parent"] == 0) {
         mainCat.add(Cat(
