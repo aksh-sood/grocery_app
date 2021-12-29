@@ -125,32 +125,3 @@ class DrawerItem extends StatelessWidget {
     );
   }
 }
-
-// Widget getStaggeredGridView(BuildContext context) {
-//   return StaggeredGridView.count(
-//     crossAxisCount: 4,
-//     children: categoryItemsDemo.asMap().entries.map<Widget>((e) {
-//       int index = e.key;
-//       CategoryItem categoryItem = e.value;
-//       return GestureDetector(
-//         onTap: () {
-//           onCategoryItemClicked(context, categoryItem);
-//         },
-//         child: Container(
-//           padding: EdgeInsets.all(10),
-//           child: CategoryItemCardWidget(
-//             item: categoryItem,
-//             color: gridColors[index % gridColors.length],
-//           ),
-//         ),
-//       );
-//     }).toList(),
-
-//     //Here is the place that we are getting flexible/ dynamic card for various images
-//     staggeredTiles: categoryItemsDemo
-//         .map<StaggeredTile>((_) => StaggeredTile.fit(2))
-//         .toList(),
-//     mainAxisSpacing: 3.0,
-//     crossAxisSpacing: 4.0, // add some space
-//   );
-// }
