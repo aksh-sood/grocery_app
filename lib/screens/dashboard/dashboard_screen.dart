@@ -31,9 +31,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
   String token = Config.token;
   final GlobalKey<ScaffoldState> _key = GlobalKey();
   bool _searching = false;
-  List mainCat = [];
-  List cats;
-  List data = [];
+  List<Cat> mainCat = [];
+  List<Cat> cats;
+  List<Cat> data = [];
   Box box;
   final List<String> errors = [];
 
@@ -63,7 +63,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     cats = box.toMap().values.toList();
     print(cats);
     if (cats.isEmpty) {
-      data.add("empty");
+      data.add(Cat(name: "null"));
     } else {
       data = cats;
     }
@@ -126,62 +126,69 @@ class _DashboardScreenState extends State<DashboardScreen> {
     ];
     return MultiProvider(
       providers: [
-        Provider<List<dynamic>>(create: (context) => mainCat),
+        FutureProvider<List<Cat>>(
+            initialData: mainCat, create: (context) => sortCats()),
       ],
       child: Scaffold(
         key: _key,
-        drawer: FutureBuilder<Object>(
-            future: sortCats(),
-            builder: (context, snapshot) {
-              if (snapshot.data == null) {
-                return Container(
-                  width: 180.w,
-                  height: MediaQuery.of(context).size.height,
-                  color: AppColors.whiteColor,
-                  child: Row(
-                    children: [
-                      Container(
-                        color: AppColors.primaryColor,
-                        child: Column(
-                          children: [
-                            Spacer(),
-                            Row(children: [
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 10),
-                                child: Container(
-                                    child: Text(
-                                      "C\n\nT\n\nA\n\nG\n\nO\n\nR\n\nI\n\nE\n\nS",
-                                      style: TextStyle(
-                                          color: AppColors.yellowColor,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    color: AppColors.primaryColor),
-                              )
-                            ]),
-                            Spacer()
-                          ],
-                        ),
+        drawer: mainCat == []
+            ?
+            // FutureBuilder<Object>(
+            //     future: sortCats(),
+            //     builder: (context, snapshot) {
+            // if (snapshot.data == null) {
+            //   return
+            Container(
+                width: 180.w,
+                height: MediaQuery.of(context).size.height,
+                color: AppColors.whiteColor,
+                child: Row(
+                  children: [
+                    Container(
+                      color: AppColors.primaryColor,
+                      child: Column(
+                        children: [
+                          Spacer(),
+                          Row(children: [
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 10),
+                              child: Container(
+                                  child: Text(
+                                    "C\n\nT\n\nA\n\nG\n\nO\n\nR\n\nI\n\nE\n\nS",
+                                    style: TextStyle(
+                                        color: AppColors.yellowColor,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  color: AppColors.primaryColor),
+                            )
+                          ]),
+                          Spacer()
+                        ],
                       ),
-                      Container(
-                        width: 140.w,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            CircularProgressIndicator(
-                                color: AppColors.secondaryColor),
-                          ],
-                        ),
+                    ),
+                    Container(
+                      width: 140.w,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          CircularProgressIndicator(
+                              color: AppColors.secondaryColor),
+                        ],
                       ),
-                    ],
-                  ),
-                );
-              } else {
-                return CategoryDrawer();
-              }
-            }),
+                    ),
+                  ],
+                ),
+              )
+            // } else {
+            // return
+            : CategoryDrawer()
+        //     ;
+        //   }
+        // })
+        ,
         appBar: AppBar(
           actions: [
             Padding(
