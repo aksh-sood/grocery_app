@@ -31,13 +31,7 @@ class HomeScreen extends StatelessWidget {
               child: Column(
                 children: [
                   SizedBox(
-                    height: 15,
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  SizedBox(
-                    height: 25,
+                    height: 35,
                   ),
                   padded(HomeBanner()),
                   SizedBox(

@@ -1,12 +1,11 @@
-
 import 'package:flutter/material.dart';
 
 class CarouselPage extends StatelessWidget {
-   CarouselPage({
+  CarouselPage({
     Key key,
     @required this.image,
   }) : super(key: key);
-var image;
+  final image;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -14,7 +13,6 @@ var image;
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8.0),
         image: DecorationImage(
-          
           image: AssetImage(image),
           fit: BoxFit.fill,
         ),
