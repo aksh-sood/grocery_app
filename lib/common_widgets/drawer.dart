@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:grocery_app/helpers/constants.dart';
 import 'package:grocery_app/helpers/size_config.dart';
 import 'package:grocery_app/models/category.dart';
-import 'package:grocery_app/models/category_item.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:grocery_app/styles/colors.dart';
-import 'package:grocery_app/widgets/category_item_card_widget.dart';
+import 'package:provider/provider.dart';
 
 class CategoryDrawer extends StatelessWidget {
-  CategoryDrawer({Key key, @required this.cat}) : super(key: key);
-  List<Widget> drawerItem = [];
-  final List<dynamic> cat;
-  List categoryItemsDemo = [];
+  CategoryDrawer({
+    Key key,
+  }) : super(key: key);
+  final List<Widget> drawerItem = [];
+
+  final List categoryItemsDemo = [];
 
   @override
   Widget build(BuildContext context) {
+    final List<dynamic> cat = Provider.of<List<dynamic>>(context);
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: SafeArea(

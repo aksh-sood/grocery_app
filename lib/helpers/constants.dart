@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:grocery_app/helpers/size_config.dart';
 import 'package:grocery_app/models/category.dart';
@@ -39,9 +40,9 @@ const String kNamelNullError = "Please Enter your name";
 const String kPhoneNumberNullError = "Please Enter your phone number";
 const String kLastNameNullError = "Please Enter your last name";
 const String kAddressNullError = "Please Enter your address";
-const kTextFieldBorderRadius = BorderRadius.all(Radius.circular(18.0));
-const kHintTextStyle = TextStyle(color: AppColors.blackColor, fontSize: 18.0);
-const kTextFieldStyle = TextStyle(color: AppColors.blackColor, fontSize: 18.0);
+var kTextFieldBorderRadius = BorderRadius.all(Radius.circular(18.0.r));
+var kHintTextStyle = TextStyle(color: AppColors.blackColor, fontSize: 15.sm);
+var kTextFieldStyle = TextStyle(color: AppColors.blackColor, fontSize: 18.0.sm);
 
 final otpInputDecoration = InputDecoration(
   contentPadding:

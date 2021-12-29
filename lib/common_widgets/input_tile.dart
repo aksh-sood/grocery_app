@@ -48,19 +48,20 @@ class InputTile extends StatelessWidget {
         prefixIcon: startIcon,
         focusedBorder: OutlineInputBorder(
           borderRadius: kTextFieldBorderRadius,
-          borderSide:  BorderSide(color:AppColors.primaryColor, width: 1.5),
+          borderSide: BorderSide(color: AppColors.primaryColor, width: 1),
         ),
         filled: true,
-        enabledBorder: const OutlineInputBorder(
+        enabledBorder: OutlineInputBorder(
           borderRadius: kTextFieldBorderRadius,
-          borderSide: const BorderSide(color:AppColors.secondaryColor, width: 1),
+          borderSide:
+              const BorderSide(color: AppColors.secondaryColor, width: 1),
         ),
         hintText: inputType,
         hintStyle: kHintTextStyle,
         suffixIcon: tileIcon,
         border: OutlineInputBorder(
           borderRadius: kTextFieldBorderRadius,
-          borderSide: BorderSide(color: AppColors.blackColor, width: 2),
+          borderSide: BorderSide(color: AppColors.blackColor, width: 1),
         ),
       ),
     );

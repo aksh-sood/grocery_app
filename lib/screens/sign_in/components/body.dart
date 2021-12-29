@@ -1,14 +1,10 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:grocery_app/common_widgets/socal_card.dart';
 import 'package:grocery_app/helpers/no_account_text.dart';
 import 'package:grocery_app/helpers/progressHUD.dart';
 import 'package:grocery_app/helpers/size_config.dart';
-import 'package:grocery_app/models/customer_model.dart';
 import 'package:grocery_app/widgets/custom_surfix_icon.dart';
-import 'package:grocery_app/woo/config.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:grocery_app/common_widgets/default_button.dart';
@@ -28,13 +24,14 @@ class _BodyState extends State<Body> {
   final _formKey = GlobalKey<FormState>();
   String email;
   String password;
-  Box box;
+
   bool remember = false;
   bool obscure = true;
   bool isApiCallProcess = false;
   List data = [];
+  Box box;
   final List<String> errors = [];
-  List<dynamic> allCats;
+  // List<dynamic> allCats;
 
   void addError({String error}) {
     if (!errors.contains(error))
@@ -123,52 +120,39 @@ class _BodyState extends State<Body> {
     );
   }
 
-  Future openBox() async {
-    var dir = await getApplicationDocumentsDirectory();
-    log(dir.path, name: "path");
-    Hive.init(dir.path);
-    box = await Hive.openBox("data");
-  }
+  // Future openBox() async {
+  //   var dir = await getApplicationDocumentsDirectory();
+  //   log(dir.path, name: "path");
+  //   Hive.init(dir.path);
+  //   box = await Hive.openBox("data");
+  // }
 
-//  List<dynamic> listConverter(map){
-//    List l=[];
-//    bool b=true;
-//    int i=0;
-//        while (b) {
+  // Future<bool> cacheProductData() async {
+  //   await openBox();
+  //   try {
+  //     List<dynamic> pList = await Cat().getAllCats();
+  //     await putData(pList);
+  //   } catch (e) {
+  //     print("error");
+  //     print(e.message);
+  //   }
+  //   allCats = box.toMap().values.toList();
+  //   print(allCats);
+  //   if (allCats.isEmpty) {
+  //     data.add("empty");
+  //   } else {
+  //     data = allCats;
+  //   }
+  //   return Future.value(true);
+  // }
 
-//         l = l + response;
-//         i = i + 1;
-
-//     }
-//     return l;
-//   }
-
-  Future<bool> cacheProductData() async {
-    await openBox();
-    try {
-      List<dynamic> pList = await Cat().getAllCats();
-      await putData(pList);
-    } catch (e) {
-      print("error");
-      print(e.message);
-    }
-    allCats = box.toMap().values.toList();
-    print(allCats);
-    if (allCats.isEmpty) {
-      data.add("empty");
-    } else {
-      data = allCats;
-    }
-    return Future.value(true);
-  }
-
-  Future putData(productList) async {
-    await box.clear();
-    // box.
-    for (var p in productList) {
-      box.add(p);
-    }
-  }
+  // Future putData(productList) async {
+  //   await box.clear();
+  //   // box.
+  //   for (var p in productList) {
+  //     box.add(p);
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -258,17 +242,18 @@ class _BodyState extends State<Body> {
                               //     if (response["success"]) {
                               // Config.token = response["data"]["token"];
                               //TODO: cache_product_data
-                              await cacheProductData();
-                              if (data.contains("empty")) {
-                                Fluttertoast.showToast(
-                                    msg: "sorry an issue occured",
-                                    toastLength: Toast.LENGTH_SHORT,
-                                    gravity: ToastGravity.BOTTOM,
-                                    timeInSecForIosWeb: 5,
-                                    backgroundColor: Colors.grey[850],
-                                    textColor: AppColors.whiteColor,
-                                    fontSize: 16.0);
-                              }
+
+                              // await cacheProductData();
+                              // if (data.contains("empty")) {
+                              //   Fluttertoast.showToast(
+                              //       msg: "sorry an issue occured",
+                              //       toastLength: Toast.LENGTH_SHORT,
+                              //       gravity: ToastGravity.BOTTOM,
+                              //       timeInSecForIosWeb: 5,
+                              //       backgroundColor: Colors.grey[850],
+                              //       textColor: AppColors.whiteColor,
+                              //       fontSize: 16.0);
+                              // }
                               Fluttertoast.showToast(
                                   msg: "Welcome back $email",
                                   toastLength: Toast.LENGTH_SHORT,
@@ -285,7 +270,7 @@ class _BodyState extends State<Body> {
                                 context,
                                 MaterialPageRoute<void>(
                                   builder: (BuildContext context) =>
-                                      DashboardScreen(cat: allCats),
+                                      DashboardScreen(),
                                 ),
                               );
                               //     } else {
@@ -349,7 +334,7 @@ class _BodyState extends State<Body> {
                                 context,
                                 MaterialPageRoute<void>(
                                   builder: (BuildContext context) =>
-                                      DashboardScreen(cat: allCats),
+                                      DashboardScreen(),
                                 ),
                               );
                             },
