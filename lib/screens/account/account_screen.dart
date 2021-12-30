@@ -4,13 +4,17 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:grocery_app/common_widgets/app_text.dart';
 import 'package:grocery_app/helpers/column_with_seprator.dart';
+import 'package:grocery_app/models/customer_model.dart';
 import 'package:grocery_app/styles/colors.dart';
+import 'package:provider/provider.dart';
 
 import 'account_item.dart';
 
 class AccountScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    CustomerModel model = Provider.of<CustomerModel>(context);
+
     return SafeArea(
       child: Container(
         child: SingleChildScrollView(
@@ -23,12 +27,14 @@ class AccountScreen extends StatelessWidget {
                 leading:
                     SizedBox(width: 65, height: 65, child: getImageHeader()),
                 title: AppText(
-                  text: "Aksh Sood",
+                  text: model == null
+                      ? "Guest User"
+                      : "${model.firstName} ${model.lastName}",
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),
                 subtitle: AppText(
-                  text: "akshsood.decoders@gmail.com",
+                  text: model == null ? "" : model.email,
                   color: Color(0xff7C7C7C),
                   fontWeight: FontWeight.normal,
                   fontSize: 16,
@@ -100,7 +106,8 @@ class AccountScreen extends StatelessWidget {
   Widget getImageHeader() {
     return CircleAvatar(
       radius: 5.0,
-      child:Icon(Icons.person_outline_rounded,color:AppColors.primaryColor,size:25),
+      child: Icon(Icons.person_outline_rounded,
+          color: AppColors.primaryColor, size: 25),
       backgroundColor: AppColors.whiteShader,
       // backgroundImage: AssetImage(imagePath),
       // backgroundColor: AppColors.primaryColor.withOpacity(0.7),

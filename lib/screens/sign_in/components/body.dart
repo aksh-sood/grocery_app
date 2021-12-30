@@ -3,7 +3,9 @@ import 'package:grocery_app/common_widgets/socal_card.dart';
 import 'package:grocery_app/helpers/no_account_text.dart';
 import 'package:grocery_app/helpers/progressHUD.dart';
 import 'package:grocery_app/helpers/size_config.dart';
+import 'package:grocery_app/models/customer_model.dart';
 import 'package:grocery_app/widgets/custom_surfix_icon.dart';
+import 'package:grocery_app/woo/config.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -14,6 +16,7 @@ import 'package:grocery_app/models/category.dart';
 import 'package:grocery_app/screens/dashboard/dashboard_screen.dart';
 import 'package:grocery_app/screens/forgot_password/forgot_password_screen.dart';
 import 'package:grocery_app/styles/colors.dart';
+import 'package:provider/provider.dart';
 
 class Body extends StatefulWidget {
   @override
@@ -30,6 +33,7 @@ class _BodyState extends State<Body> {
   bool isApiCallProcess = false;
   List data = [];
   Box box;
+
   final List<String> errors = [];
   // List<dynamic> allCats;
 
@@ -120,40 +124,6 @@ class _BodyState extends State<Body> {
     );
   }
 
-  // Future openBox() async {
-  //   var dir = await getApplicationDocumentsDirectory();
-  //   log(dir.path, name: "path");
-  //   Hive.init(dir.path);
-  //   box = await Hive.openBox("data");
-  // }
-
-  // Future<bool> cacheProductData() async {
-  //   await openBox();
-  //   try {
-  //     List<dynamic> pList = await Cat().getAllCats();
-  //     await putData(pList);
-  //   } catch (e) {
-  //     print("error");
-  //     print(e.message);
-  //   }
-  //   allCats = box.toMap().values.toList();
-  //   print(allCats);
-  //   if (allCats.isEmpty) {
-  //     data.add("empty");
-  //   } else {
-  //     data = allCats;
-  //   }
-  //   return Future.value(true);
-  // }
-
-  // Future putData(productList) async {
-  //   await box.clear();
-  //   // box.
-  //   for (var p in productList) {
-  //     box.add(p);
-  //   }
-  // }
-
   @override
   Widget build(BuildContext context) {
     return ProgressHUD(
@@ -229,87 +199,95 @@ class _BodyState extends State<Body> {
                           DefaultButton(
                             text: "Continue",
                             press: () async {
-                              // if (_formKey.currentState.validate()) {
-                              //   setState(() {
-                              //     isApiCallProcess = true;
-                              //   });
-                              //   _formKey.currentState.save();
+                              if (_formKey.currentState.validate()) {
+                                setState(() {
+                                  isApiCallProcess = true;
+                                });
+                                _formKey.currentState.save();
 
-                              //   CustomerModel model = CustomerModel.b(
-                              //       email: email, password: password);
-                              //   var response = await model.loginUser();
-                              //   if (response["success"] != "no") {
-                              //     if (response["success"]) {
-                              // Config.token = response["data"]["token"];
-                              //TODO: cache_product_data
+                                CustomerModel model = CustomerModel.b(
+                                    email: email, password: password);
+                                var response = await model.loginUser();
 
-                              // await cacheProductData();
-                              // if (data.contains("empty")) {
-                              //   Fluttertoast.showToast(
-                              //       msg: "sorry an issue occured",
-                              //       toastLength: Toast.LENGTH_SHORT,
-                              //       gravity: ToastGravity.BOTTOM,
-                              //       timeInSecForIosWeb: 5,
-                              //       backgroundColor: Colors.grey[850],
-                              //       textColor: AppColors.whiteColor,
-                              //       fontSize: 16.0);
-                              // }
-                              Fluttertoast.showToast(
-                                  msg: "Welcome back $email",
-                                  toastLength: Toast.LENGTH_SHORT,
-                                  gravity: ToastGravity.BOTTOM,
-                                  timeInSecForIosWeb: 5,
-                                  backgroundColor: Colors.grey[850],
-                                  textColor: AppColors.whiteColor,
-                                  fontSize: 16.0);
-                              // setState(() {
-                              //   isApiCallProcess = false;
-                              // });
+                                if (response["success"] != "no") {
+                                  if (response["success"]) {
+                                    Config.token = response["data"]["token"];
+                                    model.firstName =
+                                        response["data"]["firstName"];
+                                    model.lastName =
+                                        response["data"]["lastName"];
 
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute<void>(
-                                  builder: (BuildContext context) =>
-                                      DashboardScreen(),
-                                ),
-                              );
-                              //     } else {
-                              //       String msg =
-                              //           removeAllHtmlTags(response["message"]);
-                              //       Fluttertoast.showToast(
-                              //           msg: "$msg",
-                              //           toastLength: Toast.LENGTH_SHORT,
-                              //           gravity: ToastGravity.BOTTOM,
-                              //           timeInSecForIosWeb: 5,
-                              //           backgroundColor: Colors.grey[850],
-                              //           textColor: AppColors.whiteColor,
-                              //           fontSize: 16.0);
-                              //     }
-                              //   } else {
-                              //     Fluttertoast.showToast(
-                              //         msg: "Error Occured please try later",
-                              //         toastLength: Toast.LENGTH_SHORT,
-                              //         gravity: ToastGravity.BOTTOM,
-                              //         timeInSecForIosWeb: 5,
-                              //         backgroundColor: Colors.grey[850],
-                              //         textColor: AppColors.whiteColor,
-                              //         fontSize: 16.0);
-                              //   }
-                              // } else {
-                              //   Fluttertoast.showToast(
-                              //       msg:
-                              //           "Details Not Valid, Please check again",
-                              //       toastLength: Toast.LENGTH_SHORT,
-                              //       gravity: ToastGravity.BOTTOM,
-                              //       timeInSecForIosWeb: 5,
-                              //       backgroundColor: Colors.grey[850],
-                              //       textColor: AppColors.whiteColor,
-                              //       fontSize: 16.0);
-                              // }
+                                    // TODO: cache_product_data
 
-                              // setState(() {
-                              //   isApiCallProcess = false;
-                              // });
+                                    // await cacheProductData();
+                                    if (data.contains("empty")) {
+                                      Fluttertoast.showToast(
+                                          msg: "sorry an issue occured",
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          gravity: ToastGravity.BOTTOM,
+                                          timeInSecForIosWeb: 5,
+                                          backgroundColor: Colors.grey[850],
+                                          textColor: AppColors.whiteColor,
+                                          fontSize: 16.0);
+                                    }
+                                    print(
+                                        model.firstName + " " + model.lastName);
+                                    Fluttertoast.showToast(
+                                        msg: "Welcome back $email",
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        gravity: ToastGravity.BOTTOM,
+                                        timeInSecForIosWeb: 5,
+                                        backgroundColor: Colors.grey[850],
+                                        textColor: AppColors.whiteColor,
+                                        fontSize: 16.0);
+                                    setState(() {
+                                      isApiCallProcess = false;
+                                    });
+
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute<void>(
+                                        builder: (BuildContext context) =>
+                                            DashboardScreen(model: model),
+                                      ),
+                                    );
+                                  } else {
+                                    String msg =
+                                        removeAllHtmlTags(response["message"]);
+                                    Fluttertoast.showToast(
+                                        msg: "$msg",
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        gravity: ToastGravity.BOTTOM,
+                                        timeInSecForIosWeb: 5,
+                                        backgroundColor: Colors.grey[850],
+                                        textColor: AppColors.whiteColor,
+                                        fontSize: 16.0);
+                                  }
+                                } else {
+                                  Fluttertoast.showToast(
+                                      msg: "Error Occured please try later",
+                                      toastLength: Toast.LENGTH_SHORT,
+                                      gravity: ToastGravity.BOTTOM,
+                                      timeInSecForIosWeb: 5,
+                                      backgroundColor: Colors.grey[850],
+                                      textColor: AppColors.whiteColor,
+                                      fontSize: 16.0);
+                                }
+                              } else {
+                                Fluttertoast.showToast(
+                                    msg:
+                                        "Details Not Valid, Please check again",
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.BOTTOM,
+                                    timeInSecForIosWeb: 5,
+                                    backgroundColor: Colors.grey[850],
+                                    textColor: AppColors.whiteColor,
+                                    fontSize: 16.0);
+                              }
+
+                              setState(() {
+                                isApiCallProcess = false;
+                              });
                             },
                           ),
                           SizedBox(height: 18.h),
@@ -318,7 +296,7 @@ class _BodyState extends State<Body> {
                               setState(() {
                                 isApiCallProcess = true;
                               });
-                              List<dynamic> allCats = await Cat().getAllCats();
+
                               Fluttertoast.showToast(
                                   msg: "Welcome to YourGrocer",
                                   toastLength: Toast.LENGTH_SHORT,
