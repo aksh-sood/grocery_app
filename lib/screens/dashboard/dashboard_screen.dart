@@ -131,7 +131,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       ],
       child: Scaffold(
         key: _key,
-        drawer: mainCat == []
+        drawer: mainCat.length == 0
             ?
             // FutureBuilder<Object>(
             //     future: sortCats(),

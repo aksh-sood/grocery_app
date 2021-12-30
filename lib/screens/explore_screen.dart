@@ -100,7 +100,7 @@ class ExploreScreen extends StatelessWidget {
       child: Column(
         children: [
           getHeader(),
-          mainCat == []
+          mainCat.length == 0
               ?
               // FutureBuilder(
               //     future: sortCats(),
