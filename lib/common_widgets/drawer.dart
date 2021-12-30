@@ -16,7 +16,7 @@ class CategoryDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<dynamic> cat = Provider.of<List<dynamic>>(context);
+    final List<Cat> cat = Provider.of<List<Cat>>(context);
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: SafeArea(

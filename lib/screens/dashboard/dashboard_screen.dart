@@ -70,7 +70,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return Future.value(true);
   }
 
-  Future<List> sortCats() async {
+  Future<List<Cat>> sortCats() async {
     if (mainCat.length == 0) {
       List<dynamic> allcats = await Cat().getAllCats();
       for (var c in allcats) {
