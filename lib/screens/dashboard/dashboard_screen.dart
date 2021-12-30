@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:grocery_app/common_widgets/drawer.dart';
 import 'package:grocery_app/common_widgets/search_bar.dart';
+import 'package:grocery_app/models/customer_model.dart';
 import 'package:grocery_app/screens/account/account_screen.dart';
 import 'package:grocery_app/screens/cart/cart_screen.dart';
 import 'package:grocery_app/screens/explore_screen.dart';
@@ -15,13 +16,14 @@ import 'package:provider/provider.dart';
 import '../favourite_screen.dart';
 import 'package:grocery_app/helpers/size_config.dart';
 import 'package:grocery_app/styles/colors.dart';
+
 import 'package:grocery_app/models/category.dart';
 import 'package:grocery_app/woo/config.dart';
 import 'navigator_item.dart';
 
 class DashboardScreen extends StatefulWidget {
-  final List cat;
-  DashboardScreen({this.cat});
+  final CustomerModel model;
+  DashboardScreen({this.model});
   @override
   _DashboardScreenState createState() => _DashboardScreenState();
 }
@@ -124,10 +126,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
       NavigatorItem(
           "Account", "assets/icons/account_icon.svg", 4, AccountScreen()),
     ];
+
     return MultiProvider(
       providers: [
-        FutureProvider<List<Cat>>(
-            initialData: mainCat, create: (context) => sortCats()),
+
+        Provider<List<dynamic>>(create: (context) => mainCat),
+        Provider<CustomerModel>(create: (context) => widget.model),
+
+
       ],
       child: Scaffold(
         key: _key,

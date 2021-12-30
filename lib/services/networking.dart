@@ -66,12 +66,9 @@ class ApiBaseHelper {
       final response = await http.get(
         Uri.parse(Config.url + url),
       );
-      print(response.statusCode);
-      print(response);
 
       if (response.statusCode == 200 || response.statusCode == 400) {
         var jsonResponse = convert.jsonDecode(response.body);
-        print('$jsonResponse');
 
         return jsonResponse;
       }
