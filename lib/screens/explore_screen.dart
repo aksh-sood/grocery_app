@@ -56,7 +56,7 @@ class ExploreScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List mainCat = Provider.of<List<dynamic>>(context);
+    List<Cat> mainCat = Provider.of<List<Cat>>(context);
 
     Future<List> sortCats() async {
       if (mainCat.length == 0) {
@@ -100,49 +100,54 @@ class ExploreScreen extends StatelessWidget {
       child: Column(
         children: [
           getHeader(),
-          FutureBuilder(
-              future: sortCats(),
-              builder: (context, snapshot) {
-                if (snapshot.data == null) {
-                  return Container(
-                    height: 30.h,
-                    width: 30.h,
-                    child: CircularProgressIndicator(
-                      color: AppColors.primaryColor,
-                    ),
-                  );
-                } else {
-                  return Expanded(
-                    child: StaggeredGridView.count(
-                      crossAxisCount: 3,
-                      children: mainCat.asMap().entries.map<Widget>((e) {
-                        int index = e.key;
-                        Cat categoryItem = e.value;
-                        return GestureDetector(
-                          onTap: () {
-                            onCategoryItemClicked(
-                                context, categoryItem, mainCat);
-                          },
-                          child: Container(
-                            padding: EdgeInsets.all(4),
-                            child: CategoryItemCardWidget(
-                              item: categoryItem,
-                              color: gridColors[index % gridColors.length],
-                            ),
+          mainCat.length == 0
+              ?
+              // FutureBuilder(
+              //     future: sortCats(),
+              //     builder: (context, snapshot) {
+              //       if (snapshot.data == null) {
+              //         return
+              Container(
+                  height: 30.h,
+                  width: 30.h,
+                  child: CircularProgressIndicator(
+                    color: AppColors.primaryColor,
+                  ),
+                )
+              :
+              //   ;
+              // } else {
+              //   return
+              Expanded(
+                  child: StaggeredGridView.count(
+                    crossAxisCount: 3,
+                    children: mainCat.asMap().entries.map<Widget>((e) {
+                      int index = e.key;
+                      Cat categoryItem = e.value;
+                      return GestureDetector(
+                        onTap: () {
+                          onCategoryItemClicked(context, categoryItem, mainCat);
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(4),
+                          child: CategoryItemCardWidget(
+                            item: categoryItem,
+                            color: gridColors[index % gridColors.length],
                           ),
-                        );
-                      }).toList(),
+                        ),
+                      );
+                    }).toList(),
 
-                      //Here is the place that we are getting flexible/ dynamic card for various images
-                      staggeredTiles: mainCat
-                          .map<StaggeredTile>((_) => StaggeredTile.fit(1))
-                          .toList(),
-                      mainAxisSpacing: 3.0,
-                      crossAxisSpacing: 4.0, // add some space
-                    ),
-                  );
-                }
-              })
+                    //Here is the place that we are getting flexible/ dynamic card for various images
+                    staggeredTiles: mainCat
+                        .map<StaggeredTile>((_) => StaggeredTile.fit(1))
+                        .toList(),
+                    mainAxisSpacing: 3.0,
+                    crossAxisSpacing: 4.0, // add some space
+                  ),
+                ),
+          //   ;}
+          // })
         ],
       ),
     ));
