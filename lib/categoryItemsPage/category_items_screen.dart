@@ -176,8 +176,8 @@ class _CategoryItemsScreenState extends State<CategoryItemsScreen> {
                         margin:
                             EdgeInsets.symmetric(horizontal: 5, vertical: 5),
                         child: GroceryItemCardWidget(
-                          item: groceryItem,
-                        ),
+                            // item: groceryItem,
+                            ),
                       ),
                     );
                   }).toList(),
@@ -196,10 +196,10 @@ class _CategoryItemsScreenState extends State<CategoryItemsScreen> {
   }
 
   void onItemClicked(BuildContext context, GroceryItem groceryItem) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-          builder: (context) => ProductDetailsScreen(groceryItem)),
-    );
+    // Navigator.push(
+    //   context,
+    //   MaterialPageRoute(
+    //       builder: (context) => ProductDetailsScreen(groceryItem)),
+    // );
   }
 }

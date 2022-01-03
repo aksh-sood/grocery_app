@@ -4,8 +4,10 @@ class CarouselPage extends StatelessWidget {
   CarouselPage({
     Key key,
     @required this.image,
+    @required this.asset,
   }) : super(key: key);
   final image;
+  final asset;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -13,7 +15,11 @@ class CarouselPage extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8.0),
         image: DecorationImage(
-          image: AssetImage(image),
+          image: asset
+              ? AssetImage(image)
+              : Image.network(
+                  image,
+                ),
           fit: BoxFit.fill,
         ),
       ),

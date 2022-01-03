@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:grocery_app/helpers/size_config.dart';
-import 'package:grocery_app/models/grocery_item.dart';
-import 'package:grocery_app/screens/product_details/product_details_screen.dart';
+import 'package:grocery_app/models/product.dart';
+import 'package:grocery_app/models/tag.dart';
 import 'package:grocery_app/styles/colors.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:grocery_app/widgets/grocery_item_card_widget.dart';
-import 'package:grocery_app/widgets/search_bar_widget.dart';
 import 'package:grocery_app/models/category.dart';
 import 'grocery_featured_Item_widget.dart';
 import 'home_banner_widget.dart';
@@ -19,8 +17,56 @@ List<GroceryFeaturedItem> groceryFeaturedItems = [
   GroceryFeaturedItem(
       "Bakery & Snacks", "assets/images/categories_images/bakery.png"),
 ];
+List<String> bannerImages = [
+  "assets/images/slider1.png",
+  "assets/images/slider2.png"
+];
 
 class HomeScreen extends StatelessWidget {
+  Future<dynamic> getProductsView(String tag) async {
+    List l = [];
+    var exProductsJson = await Product().getScrollProducts(tag);
+
+    for (var json in exProductsJson) {
+      List<Tag> tags = [];
+      List<String> images = [];
+      List<Cat> categories = [];
+      if (json["categories"] != null) {
+        json["categories"].forEach((v) {
+          categories
+              .add(new Cat(id: v["id"], name: v["name"], slug: v["slug"]));
+        });
+      }
+      if (json["tags"] != null) {
+        json["tags"].forEach((t) {
+          tags.add(new Tag(id: t["id"], name: t["name"], slug: t["slug"]));
+        });
+      }
+      if (json["images"] != null) {
+        json["images"].forEach((i) {
+          images.add(i["src"]);
+        });
+      }
+      l.add(new Product(
+          id: json["id"],
+          name: json["name"],
+          description: json["description"],
+          shortDescription: json["short_description"],
+          slug: json["slug"],
+          onSale: json["on_sale"],
+          sku: json["sku"],
+          permaLink: json["permalink"],
+          price: json["price"],
+          regularPrice: json["regular_price"],
+          salePrice: json["sale_price"],
+          stockStatus: json["stock_status"],
+          images: images,
+          categories: categories,
+          tags: tags));
+    }
+    return l;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,17 +79,55 @@ class HomeScreen extends StatelessWidget {
                   SizedBox(
                     height: 35,
                   ),
-                  padded(HomeBanner()),
+                  padded(HomeBanner(images: bannerImages, asset: true)),
                   SizedBox(
                     height: 25,
                   ),
                   padded(subTitle("Exclusive Order")),
-                  getHorizontalItemSlider(exclusiveOffers),
+                  FutureBuilder(
+                      future: getProductsView("534"),
+                      builder: (context, snapshot) {
+                        if (snapshot.data == null) {
+                          return Container(
+                            margin: EdgeInsets.symmetric(vertical: 8.h),
+                            height: 210.h,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                CircularProgressIndicator(
+                                    color: AppColors.secondaryColor),
+                              ],
+                            ),
+                          );
+                        } else {
+                          return getHorizontalItemSlider(snapshot.data);
+                        }
+                      }),
                   SizedBox(
                     height: 15,
                   ),
                   padded(subTitle("Best Selling")),
-                  getHorizontalItemSlider(bestSelling),
+                  FutureBuilder(
+                      future: getProductsView("509"),
+                      builder: (context, snapshot) {
+                        if (snapshot.data == null) {
+                          return Container(
+                            margin: EdgeInsets.symmetric(vertical: 8.h),
+                            height: 210.h,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                CircularProgressIndicator(
+                                    color: AppColors.secondaryColor),
+                              ],
+                            ),
+                          );
+                        } else {
+                          return getHorizontalItemSlider(snapshot.data);
+                        }
+                      }),
                   SizedBox(
                     height: 15,
                   ),
@@ -55,7 +139,26 @@ class HomeScreen extends StatelessWidget {
                   SizedBox(
                     height: 15,
                   ),
-                  getHorizontalItemSlider(groceries),
+                  FutureBuilder(
+                      future: getProductsView("558"),
+                      builder: (context, snapshot) {
+                        if (snapshot.data == null) {
+                          return Container(
+                            margin: EdgeInsets.symmetric(vertical: 8.h),
+                            height: 210.h,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                CircularProgressIndicator(
+                                    color: AppColors.secondaryColor),
+                              ],
+                            ),
+                          );
+                        } else {
+                          return getHorizontalItemSlider(snapshot.data);
+                        }
+                      }),
                   SizedBox(
                     height: 15,
                   ),
@@ -84,23 +187,25 @@ class HomeScreen extends StatelessWidget {
 
   Widget padded(Widget widget) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 25),
+      padding: EdgeInsets.symmetric(horizontal: 0),
       child: widget,
     );
   }
 
-  Widget getHorizontalItemSlider(List<GroceryItem> items) {
+  Widget getHorizontalItemSlider(List<dynamic> items) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 8.h),
-      height: getProportionateScreenHeight(210),
+      height: 210.h,
       child: ListView.separated(
         padding: EdgeInsets.symmetric(horizontal: 20),
         itemCount: items.length,
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
+          // if(items[index].inStock){
           return GroceryItemCardWidget(
             item: items[index],
           );
+          // }
         },
         separatorBuilder: (BuildContext context, int index) {
           return SizedBox(

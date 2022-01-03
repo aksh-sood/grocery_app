@@ -5,6 +5,9 @@ import 'package:grocery_app/helpers/size_config.dart';
 import 'carousel_page.dart';
 
 class HomeBanner extends StatefulWidget {
+  List images;
+  bool asset;
+  HomeBanner({this.images, this.asset});
   @override
   State<HomeBanner> createState() => _HomeBannerState();
 }
@@ -17,12 +20,9 @@ class _HomeBannerState extends State<HomeBanner> {
   @override
   Widget build(BuildContext context) {
     List<Widget> pages = [];
-    List<String> images = [
-      "assets/images/slider1.png",
-      "assets/images/slider2.png"
-    ];
-    for (var i in images) {
-      pages.add(CarouselPage(image: i));
+
+    for (var i in widget.images) {
+      pages.add(CarouselPage(image: i, asset: widget.asset));
     }
     return Stack(
       alignment: Alignment.bottomCenter,
@@ -51,7 +51,7 @@ class _HomeBannerState extends State<HomeBanner> {
           bottom: getProportionateScreenHeight(7),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: images.asMap().entries.map((entry) {
+            children: widget.images.asMap().entries.map((entry) {
               return GestureDetector(
                 onTap: () => _controller.animateToPage(entry.key),
                 child: Align(

@@ -1,18 +1,21 @@
 import 'dart:ui';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:grocery_app/common_widgets/app_button.dart';
 import 'package:grocery_app/common_widgets/app_text.dart';
 import 'package:grocery_app/models/grocery_item.dart';
+import 'package:grocery_app/models/product.dart';
 import 'package:grocery_app/styles/colors.dart';
 import 'package:grocery_app/widgets/item_counter_widget.dart';
 
 import 'favourite_toggle_icon_widget.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
-  final GroceryItem groceryItem;
+  final Product item;
 
-  const ProductDetailsScreen(this.groceryItem);
+  const ProductDetailsScreen(this.item);
 
   @override
   _ProductDetailsScreenState createState() => _ProductDetailsScreenState();
@@ -40,7 +43,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              widget.groceryItem.name,
+                              widget.item.name,
                               style: TextStyle(
                                   fontSize: 24,
                                   fontWeight: FontWeight.bold,
@@ -105,6 +108,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   }
 
   Widget getImageHeaderWidget() {
+    // TODO:implement slider
     return Container(
       height: 250,
       padding: EdgeInsets.symmetric(horizontal: 25, vertical: 25),
@@ -125,8 +129,19 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
             stops: [0.0, 1.0],
             tileMode: TileMode.clamp),
       ),
-      child: Image(
-        image: AssetImage(widget.groceryItem.imagePath),
+      child: Container(
+        color: AppColors.whiteColor,
+        child: CachedNetworkImage(
+          fit: BoxFit.contain,
+          // height: 90.h,
+          imageUrl: widget.item.images[0],
+          placeholder: (context, url) => Center(
+            child: Text(
+              "Loading...",
+            ),
+          ),
+          errorWidget: (context, url, error) => Icon(Icons.error),
+        ),
       ),
     );
   }
@@ -194,6 +209,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   }
 
   double getTotalPrice() {
-    return amount * widget.groceryItem.price;
+    return amount * double.parse(widget.item.price);
   }
 }
