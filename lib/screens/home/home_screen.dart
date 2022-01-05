@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:grocery_app/models/product.dart';
-import 'package:grocery_app/models/tag.dart';
 import 'package:grocery_app/styles/colors.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:grocery_app/widgets/grocery_item_card_widget.dart';
-import 'package:grocery_app/models/category.dart';
 import 'grocery_featured_Item_widget.dart';
 import 'home_banner_widget.dart';
 
@@ -24,46 +22,7 @@ List<String> bannerImages = [
 
 class HomeScreen extends StatelessWidget {
   Future<dynamic> getProductsView(String tag) async {
-    List l = [];
-    var exProductsJson = await Product().getScrollProducts(tag);
-
-    for (var json in exProductsJson) {
-      List<Tag> tags = [];
-      List<String> images = [];
-      List<Cat> categories = [];
-      if (json["categories"] != null) {
-        json["categories"].forEach((v) {
-          categories
-              .add(new Cat(id: v["id"], name: v["name"], slug: v["slug"]));
-        });
-      }
-      if (json["tags"] != null) {
-        json["tags"].forEach((t) {
-          tags.add(new Tag(id: t["id"], name: t["name"], slug: t["slug"]));
-        });
-      }
-      if (json["images"] != null) {
-        json["images"].forEach((i) {
-          images.add(i["src"]);
-        });
-      }
-      l.add(new Product(
-          id: json["id"],
-          name: json["name"],
-          description: json["description"],
-          shortDescription: json["short_description"],
-          slug: json["slug"],
-          onSale: json["on_sale"],
-          sku: json["sku"],
-          permaLink: json["permalink"],
-          price: json["price"],
-          regularPrice: json["regular_price"],
-          salePrice: json["sale_price"],
-          stockStatus: json["stock_status"],
-          images: images,
-          categories: categories,
-          tags: tags));
-    }
+    var l = await Product().getProductsCustom(tagId: tag, perPage: 20);
     return l;
   }
 

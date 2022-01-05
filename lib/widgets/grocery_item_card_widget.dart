@@ -11,7 +11,6 @@ import 'package:grocery_app/styles/colors.dart';
 class GroceryItemCardWidget extends StatelessWidget {
   GroceryItemCardWidget({Key key, this.item}) : super(key: key);
   final Product item;
-
   final double width = 150.w;
   final double height = 250.h;
   final Color borderColor = Color(0xffE2E2E2);

@@ -56,11 +56,11 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     // Spacer(),
                     Divider(thickness: 1),
                     getProductDataRowWidget("Product Details",
-                        customWidget: Text("here is description",
+                        customWidget: Text(widget.item.shortDescription,
                             style: TextStyle(fontSize: 18))),
                     Divider(thickness: 1),
                     getProductDataRowWidget("Nutritions",
-                        customWidget: Text("here is data of product",
+                        customWidget: Text(widget.item.description,
                             style: TextStyle(fontSize: 18))),
                     Divider(thickness: 1),
                     getProductDataRowWidget(

@@ -133,58 +133,59 @@ class _DashboardScreenState extends State<DashboardScreen> {
       ],
       child: Scaffold(
         key: _key,
-        drawer: FutureBuilder<Object>(
-            future: sortCats(),
-            builder: (context, snapshot) {
-              if (snapshot.data == null) {
-                return Container(
-                  width: 180.w,
-                  height: MediaQuery.of(context).size.height,
-                  color: AppColors.whiteColor,
-                  child: Row(
-                    children: [
-                      Container(
-                        color: AppColors.primaryColor,
-                        child: Column(
-                          children: [
-                            Spacer(),
-                            Row(children: [
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 10),
-                                child: Container(
-                                    child: Text(
-                                      "C\n\nT\n\nA\n\nG\n\nO\n\nR\n\nI\n\nE\n\nS",
-                                      style: TextStyle(
-                                          color: AppColors.yellowColor,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    color: AppColors.primaryColor),
-                              )
-                            ]),
-                            Spacer()
-                          ],
-                        ),
-                      ),
-                      Container(
-                        width: 140.w,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            CircularProgressIndicator(
-                                color: AppColors.secondaryColor),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              } else {
-                return CategoryDrawer();
-              }
-            }),
+        // drawer: FutureBuilder<Object>(
+        //     future: sortCats(),
+        //     builder: (context, snapshot) {
+        //       if (snapshot.data == null) {
+        //         return Container(
+        //           width: 180.w,
+        //           height: MediaQuery.of(context).size.height,
+        //           color: AppColors.whiteColor,
+        //           child: Row(
+        //             children: [
+        //               Container(
+        //                 color: AppColors.primaryColor,
+        //                 child: Column(
+        //                   children: [
+        //                     Spacer(),
+        //                     Row(children: [
+        //                       Padding(
+        //                         padding:
+        //                             const EdgeInsets.symmetric(horizontal: 10),
+        //                         child: Container(
+        //                             child: Text(
+        //                               "C\n\nT\n\nA\n\nG\n\nO\n\nR\n\nI\n\nE\n\nS",
+        //                               style: TextStyle(
+        //                                   color: AppColors.yellowColor,
+        //                                   fontSize: 20,
+        //                                   fontWeight: FontWeight.bold),
+        //                             ),
+        //                             color: AppColors.primaryColor),
+        //                       )
+        //                     ]),
+        //                     Spacer()
+        //                   ],
+        //                 ),
+        //               ),
+        //               Container(
+        //                 width: 140.w,
+        //                 child: Column(
+        //                   mainAxisAlignment: MainAxisAlignment.center,
+        //                   crossAxisAlignment: CrossAxisAlignment.center,
+        //                   children: [
+        //                     CircularProgressIndicator(
+        //                         color: AppColors.secondaryColor),
+        //                   ],
+        //                 ),
+        //               ),
+        //             ],
+        //           ),
+        //         );
+        //       } else {
+        //         return CategoryDrawer();
+        //       }
+        //     }),
+
         appBar: AppBar(
           actions: [
             Padding(
