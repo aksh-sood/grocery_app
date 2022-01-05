@@ -11,8 +11,9 @@ class Cat {
 
   Cat({this.id, this.name, this.slug, this.image, this.count, this.subCat});
   Future<dynamic> getCats(int page) async {
-    var res = await ApiBaseHelper().get(Config.allCat +
-        "?page=$page&per_page=100&consumer_key=${Config.key}&consumer_secret=${Config.secret}");
+    var res = await ApiBaseHelper().get2(Config.url2 +
+        Config.allCat +
+        "?page=$page&per_page=100&consumer_key=${Config.key2}&consumer_secret=${Config.secret2}");
     return res;
   }
 

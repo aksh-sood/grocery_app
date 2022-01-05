@@ -82,6 +82,7 @@ class ApiBaseHelper {
   }
 
   Future<dynamic> get2(String url) async {
+    log(url, name: "url");
     try {
       final response = await http.get(
         Uri.parse(url),

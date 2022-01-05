@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:grocery_app/categoryItemsPage/category_items_screen.dart';
+
 import 'package:grocery_app/common_widgets/drawer.dart';
 import 'package:grocery_app/helpers/constants.dart';
 import 'package:grocery_app/helpers/size_config.dart';
 import 'package:grocery_app/models/category.dart';
 import 'package:grocery_app/models/category_item.dart';
+import 'package:grocery_app/screens/categoryItemsPage/category_items_screen.dart';
 import 'package:grocery_app/styles/colors.dart';
 
 class SubCategoryScreen extends StatefulWidget {

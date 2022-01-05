@@ -40,11 +40,11 @@ var demoItems = [
       imagePath: "assets/images/grocery_images/chicken.png"),
 ];
 
-var exclusiveOffers = [demoItems[0], demoItems[1],demoItems[3]];
+var exclusiveOffers = [demoItems[0], demoItems[1], demoItems[3]];
 
-var bestSelling = [demoItems[2], demoItems[3],demoItems[0]];
+var bestSelling = [demoItems[2], demoItems[3], demoItems[0]];
 
-var groceries = [demoItems[4], demoItems[5],demoItems[1]];
+var groceries = [demoItems[4], demoItems[5], demoItems[1]];
 
 var beverages = [
   GroceryItem(

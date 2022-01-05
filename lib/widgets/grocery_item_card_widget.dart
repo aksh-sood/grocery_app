@@ -8,8 +8,8 @@ import 'package:grocery_app/models/product.dart';
 import 'package:grocery_app/screens/product_details/product_details_screen.dart';
 import 'package:grocery_app/styles/colors.dart';
 
-class GroceryItemCardWidget extends StatelessWidget {
-  GroceryItemCardWidget({Key key, this.item}) : super(key: key);
+class ProductCardWidget extends StatelessWidget {
+  ProductCardWidget({Key key, this.item}) : super(key: key);
   final Product item;
   final double width = 150.w;
   final double height = 250.h;

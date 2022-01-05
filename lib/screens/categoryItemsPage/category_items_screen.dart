@@ -3,17 +3,19 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:grocery_app/categoryItemsPage/sub_category_screen.dart';
 import 'package:grocery_app/common_widgets/drawer.dart';
 import 'package:grocery_app/helpers/progressHUD.dart';
 import 'package:grocery_app/helpers/size_config.dart';
 import 'package:grocery_app/models/category.dart';
 import 'package:grocery_app/models/grocery_item.dart';
+import 'package:grocery_app/models/product.dart';
+import 'package:grocery_app/screens/categoryItemsPage/sub_category_screen.dart';
+import 'package:grocery_app/screens/filter_screen.dart';
 import 'package:grocery_app/screens/product_details/product_details_screen.dart';
 import 'package:grocery_app/widgets/grocery_item_card_widget.dart';
 import 'package:grocery_app/helpers/constants.dart';
 import 'package:grocery_app/styles/colors.dart';
-import '../screens/filter_screen.dart';
+import 'package:provider/provider.dart';
 
 class CategoryItemsScreen extends StatefulWidget {
   CategoryItemsScreen(
@@ -184,9 +186,9 @@ class _CategoryItemsScreenState extends State<CategoryItemsScreen> {
                           height: getProportionateScreenHeight(210),
                           margin:
                               EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-                          child: GroceryItemCardWidget(
-                              // item: groceryItem,
-                              ),
+                          child: ProductCardWidget(
+                            item: groceryItem,
+                          ),
                         ),
                       );
                     }).toList(),

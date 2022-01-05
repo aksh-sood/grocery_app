@@ -21,10 +21,10 @@ List<String> bannerImages = [
 ];
 
 class HomeScreen extends StatelessWidget {
-  Future<dynamic> getProductsView(String tag) async {
-    var l = await Product().getProductsCustom(tagId: tag, perPage: 20);
-    return l;
-  }
+  // Future<dynamic> getProductsView(String tag) async {
+  //   var l = await Product().getProductsCustom(tagId: tag, perPage: 20);
+  //   return l;
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -38,13 +38,14 @@ class HomeScreen extends StatelessWidget {
                   SizedBox(
                     height: 35,
                   ),
-                  padded(HomeBanner(images: bannerImages, asset: true)),
+                  HomeBanner(images: bannerImages, asset: true),
                   SizedBox(
                     height: 25,
                   ),
                   padded(subTitle("Exclusive Order")),
                   FutureBuilder(
-                      future: getProductsView("534"),
+                      future: Product()
+                          .getProductsCustom(tagId: "534", perPage: 20),
                       builder: (context, snapshot) {
                         if (snapshot.data == null) {
                           return Container(
@@ -68,7 +69,8 @@ class HomeScreen extends StatelessWidget {
                   ),
                   padded(subTitle("Best Selling")),
                   FutureBuilder(
-                      future: getProductsView("509"),
+                      future: Product()
+                          .getProductsCustom(tagId: "509", perPage: 20),
                       builder: (context, snapshot) {
                         if (snapshot.data == null) {
                           return Container(
@@ -99,7 +101,8 @@ class HomeScreen extends StatelessWidget {
                     height: 15,
                   ),
                   FutureBuilder(
-                      future: getProductsView("558"),
+                      future: Product()
+                          .getProductsCustom(tagId: "558", perPage: 20),
                       builder: (context, snapshot) {
                         if (snapshot.data == null) {
                           return Container(
@@ -146,7 +149,7 @@ class HomeScreen extends StatelessWidget {
 
   Widget padded(Widget widget) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 0),
+      padding: EdgeInsets.symmetric(horizontal: 25),
       child: widget,
     );
   }
@@ -161,7 +164,7 @@ class HomeScreen extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
           // if(items[index].inStock){
-          return GroceryItemCardWidget(
+          return ProductCardWidget(
             item: items[index],
           );
           // }

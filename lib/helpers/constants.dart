@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:grocery_app/helpers/size_config.dart';
 import 'package:grocery_app/models/category.dart';
-import 'package:grocery_app/models/category_item.dart';
-import 'package:grocery_app/categoryItemsPage/category_items_screen.dart';
+import 'package:grocery_app/screens/categoryItemsPage/category_items_screen.dart';
 import 'package:grocery_app/styles/colors.dart';
 
 const kPrimaryColor = Color(0xFF517d14);

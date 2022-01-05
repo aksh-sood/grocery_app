@@ -108,7 +108,8 @@ class Product {
     List response = await await ApiBaseHelper().get2(Config.url2 +
         Config.productsURL +
         "?consumer_key=${Config.key2}&consumer_secret=${Config.secret2}${parameter.toString()}");
-
+    print("----------------------------------------------");
+    print(response);
     for (var json in response) {
       List<Tag> tags = [];
       List<String> images = [];
