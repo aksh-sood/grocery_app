@@ -53,8 +53,4 @@ flutter:
       fonts:
         - asset: assets/fonts/Poppins/Poppins-Black.ttf
         - asset: assets/fonts/Poppins/Poppins-Light.ttf
-    - family: OpenSans
-      fonts:
-        - asset: assets\fonts\Open_Sans\static\OpenSans\OpenSans-Regular.ttf
-        - asset: assets\fonts\Open_Sans\static\OpenSans_SemiCondensed\OpenSans_SemiCondensed-Light.ttf
-        - asset: assets\fonts\Open_Sans\static\OpenSans\OpenSans-Light.ttf
+

@@ -33,8 +33,10 @@ InputDecorationTheme inputDecorationTheme() {
 
 TextTheme textTheme() {
   return TextTheme(
-    bodyText1: TextStyle(color: kTextColor, fontFamily:"Poppins"),
-    bodyText2: TextStyle(color: kTextColor, fontFamily:"OpenSans"),
+    bodyText1: TextStyle(color: kTextColor, fontFamily: "Poppins"),
+    bodyText2: TextStyle(
+      color: kTextColor,
+    ),
   );
 }
 
