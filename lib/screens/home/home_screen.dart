@@ -23,49 +23,49 @@ List<String> bannerImages = [
 ];
 
 class HomeScreen extends StatelessWidget {
-  Future<dynamic> getProductsView(String tag) async {
-    List l = [];
-    var exProductsJson = await Product().getScrollProducts(tag);
+  // Future<dynamic> getProductsView(String tag) async {
+  //   List l = [];
+  //   var exProductsJson = await Product().getScrollProducts(tag);
 
-    for (var json in exProductsJson) {
-      List<Tag> tags = [];
-      List<String> images = [];
-      List<Cat> categories = [];
-      if (json["categories"] != null) {
-        json["categories"].forEach((v) {
-          categories
-              .add(new Cat(id: v["id"], name: v["name"], slug: v["slug"]));
-        });
-      }
-      if (json["tags"] != null) {
-        json["tags"].forEach((t) {
-          tags.add(new Tag(id: t["id"], name: t["name"], slug: t["slug"]));
-        });
-      }
-      if (json["images"] != null) {
-        json["images"].forEach((i) {
-          images.add(i["src"]);
-        });
-      }
-      l.add(new Product(
-          id: json["id"],
-          name: json["name"],
-          description: json["description"],
-          shortDescription: json["short_description"],
-          slug: json["slug"],
-          onSale: json["on_sale"],
-          sku: json["sku"],
-          permaLink: json["permalink"],
-          price: json["price"],
-          regularPrice: json["regular_price"],
-          salePrice: json["sale_price"],
-          stockStatus: json["stock_status"],
-          images: images,
-          categories: categories,
-          tags: tags));
-    }
-    return l;
-  }
+  //   for (var json in exProductsJson) {
+  //     List<Tag> tags = [];
+  //     List<String> images = [];
+  //     List<Cat> categories = [];
+  //     if (json["categories"] != null) {
+  //       json["categories"].forEach((v) {
+  //         categories
+  //             .add(new Cat(id: v["id"], name: v["name"], slug: v["slug"]));
+  //       });
+  //     }
+  //     if (json["tags"] != null) {
+  //       json["tags"].forEach((t) {
+  //         tags.add(new Tag(id: t["id"], name: t["name"], slug: t["slug"]));
+  //       });
+  //     }
+  //     if (json["images"] != null) {
+  //       json["images"].forEach((i) {
+  //         images.add(i["src"]);
+  //       });
+  //     }
+  //     l.add(new Product(
+  //         id: json["id"],
+  //         name: json["name"],
+  //         description: json["description"],
+  //         shortDescription: json["short_description"],
+  //         slug: json["slug"],
+  //         onSale: json["on_sale"],
+  //         sku: json["sku"],
+  //         permaLink: json["permalink"],
+  //         price: json["price"],
+  //         regularPrice: json["regular_price"],
+  //         salePrice: json["sale_price"],
+  //         stockStatus: json["stock_status"],
+  //         images: images,
+  //         categories: categories,
+  //         tags: tags));
+  //   }
+  //   return l;
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -79,13 +79,14 @@ class HomeScreen extends StatelessWidget {
                   SizedBox(
                     height: 35,
                   ),
-                  padded(HomeBanner(images: bannerImages, asset: true)),
+                  HomeBanner(images: bannerImages, asset: true),
                   SizedBox(
                     height: 25,
                   ),
                   padded(subTitle("Exclusive Order")),
                   FutureBuilder(
-                      future: getProductsView("534"),
+                      future: Product()
+                          .getProductsCustom(tagId: "534", perPage: 20),
                       builder: (context, snapshot) {
                         if (snapshot.data == null) {
                           return Container(
@@ -109,7 +110,8 @@ class HomeScreen extends StatelessWidget {
                   ),
                   padded(subTitle("Best Selling")),
                   FutureBuilder(
-                      future: getProductsView("509"),
+                      future: Product()
+                          .getProductsCustom(tagId: "509", perPage: 20),
                       builder: (context, snapshot) {
                         if (snapshot.data == null) {
                           return Container(
@@ -140,7 +142,8 @@ class HomeScreen extends StatelessWidget {
                     height: 15,
                   ),
                   FutureBuilder(
-                      future: getProductsView("558"),
+                      future: Product()
+                          .getProductsCustom(tagId: "558", perPage: 20),
                       builder: (context, snapshot) {
                         if (snapshot.data == null) {
                           return Container(
@@ -187,7 +190,7 @@ class HomeScreen extends StatelessWidget {
 
   Widget padded(Widget widget) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 0),
+      padding: EdgeInsets.symmetric(horizontal: 25),
       child: widget,
     );
   }
