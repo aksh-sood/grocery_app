@@ -80,4 +80,24 @@ class ApiBaseHelper {
       return {'success': 'no', 'message': 'Socket Exception.'};
     }
   }
+
+  Future<dynamic> get2(String url) async {
+    try {
+      final response = await http.get(
+        Uri.parse(url),
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 400) {
+        var jsonResponse = convert.jsonDecode(response.body);
+
+        return jsonResponse;
+      }
+      return {
+        'success': 'no',
+        'message': 'Request failed with status: ${response.statusCode}.'
+      };
+    } on SocketException {
+      return {'success': 'no', 'message': 'Socket Exception.'};
+    }
+  }
 }

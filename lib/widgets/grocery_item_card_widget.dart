@@ -1,14 +1,16 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:grocery_app/common_widgets/app_text.dart';
 import 'package:grocery_app/helpers/size_config.dart';
 import 'package:grocery_app/models/grocery_item.dart';
+import 'package:grocery_app/models/product.dart';
 import 'package:grocery_app/screens/product_details/product_details_screen.dart';
 import 'package:grocery_app/styles/colors.dart';
 
 class GroceryItemCardWidget extends StatelessWidget {
   GroceryItemCardWidget({Key key, this.item}) : super(key: key);
-  final GroceryItem item;
+  final Product item;
 
   final double width = 150.w;
   final double height = 250.h;
@@ -17,6 +19,15 @@ class GroceryItemCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    int percentOff;
+    if (item.onSale) {
+      percentOff =
+          ((double.parse(item.salePrice) / double.parse(item.price)) * 100)
+              .round();
+    }
+    if (percentOff == 100.0) {
+      item.onSale = false;
+    }
     return Stack(children: [
       Container(
         width: width,
@@ -68,7 +79,7 @@ class GroceryItemCardWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     AppText(
-                      text: "د.إ${item.price.toStringAsFixed(2)}",
+                      text: "د.إ${item.price}",
                       fontSize: 13.sp,
                       fontWeight: FontWeight.bold,
                     ),
@@ -83,35 +94,51 @@ class GroceryItemCardWidget extends StatelessWidget {
       // Positioned(child: addWidget(),top:0,right:0),
       Container(
         height: 23.h,
-        width: 62.w,
+        width: 70.w,
         padding: EdgeInsets.symmetric(horizontal: 6.w),
         decoration: BoxDecoration(
-            color: Colors.red[600].withOpacity(0.85),
+            color: item.onSale
+                ? Colors.red[600].withOpacity(0.85)
+                : Colors.transparent,
             border: Border.all(
-              color: Colors.red[600].withOpacity(0.8),
+              color: item.onSale
+                  ? Colors.red[600].withOpacity(0.8)
+                  : Colors.transparent,
             ),
             borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(borderRadius),
                 bottomRight: Radius.circular(borderRadius))),
-        child: Text("40% OFF",
+        child: Text("${percentOff}% OFF",
             softWrap: false,
-            style: TextStyle(color: Colors.white, fontSize: 12.sm)),
+            style: TextStyle(
+                color: item.onSale ? AppColors.whiteColor : Colors.transparent,
+                fontSize: 12.sm)),
       ),
     ]);
   }
 
-  void onItemClicked(BuildContext context, GroceryItem groceryItem) {
+  void onItemClicked(BuildContext context, Product productItem) {
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => ProductDetailsScreen(groceryItem)),
+          builder: (context) => ProductDetailsScreen(productItem)),
     );
   }
 
   Widget imageWidget() {
     return Container(
-// color: AppColors.whiteShader,
-      child: Image.asset(item.imagePath, width: 80.h, height: 80.h),
+      color: AppColors.whiteColor,
+      child: CachedNetworkImage(
+        // fit: BoxFit.fitHeight,
+        height: 90.h,
+        imageUrl: item.images[0],
+        placeholder: (context, url) => Center(
+          child: Text(
+            "Loading...",
+          ),
+        ),
+        errorWidget: (context, url, error) => Icon(Icons.error),
+      ),
     );
   }
 

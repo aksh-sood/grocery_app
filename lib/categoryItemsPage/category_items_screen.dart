@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:grocery_app/categoryItemsPage/sub_category_screen.dart';
 import 'package:grocery_app/common_widgets/drawer.dart';
 import 'package:grocery_app/helpers/size_config.dart';
 import 'package:grocery_app/models/category.dart';
 import 'package:grocery_app/models/grocery_item.dart';
+import 'package:grocery_app/models/product.dart';
 import 'package:grocery_app/screens/product_details/product_details_screen.dart';
 import 'package:grocery_app/widgets/grocery_item_card_widget.dart';
 import 'package:grocery_app/helpers/constants.dart';
@@ -121,6 +123,8 @@ class _CategoryItemsScreenState extends State<CategoryItemsScreen> {
         ),
       ),
       body: Row(
+        // mainAxisAlignment: MainAxisAlignment.center,
+        // crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Column(
             key: colKey,
@@ -156,50 +160,64 @@ class _CategoryItemsScreenState extends State<CategoryItemsScreen> {
               )
             ],
           ),
-          Column(
-            children: [
-              Container(
-                height: SizeConfig.screenHeight - AppBar().preferredSize.height,
-                width: SizeConfig.screenWidth - 120,
-                child: StaggeredGridView.count(
-                  crossAxisCount: 2,
+          Spacer(),
+          FutureBuilder(
+              future:
+                  Product().getProductsCustom(categoryId: "533", perPage: 100),
+              builder: (context, snapshot) {
+                if (snapshot.data == null) {
+                  return CircularProgressIndicator(
+                      color: AppColors.secondaryColor);
+                } else {
+                  return Column(
+                    children: [
+                      Container(
+                        height: SizeConfig.screenHeight -
+                            AppBar().preferredSize.height,
+                        width: SizeConfig.screenWidth - 120,
+                        child: StaggeredGridView.count(
+                          crossAxisCount: 2,
 
-                  children: beverages.asMap().entries.map<Widget>((e) {
-                    GroceryItem groceryItem = e.value;
-                    return GestureDetector(
-                      onTap: () {
-                        onItemClicked(context, groceryItem);
-                      },
-                      child: Container(
-                        //  margin: EdgeInsets.symmetric(vertical: 4),
-                        height: getProportionateScreenHeight(210),
-                        margin:
-                            EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-                        child: GroceryItemCardWidget(
-                          item: groceryItem,
+                          children:
+                              snapshot.data.asMap().entries.map<Widget>((e) {
+                            Product productItem = e.value;
+                            return GestureDetector(
+                              onTap: () {
+                                onItemClicked(context, productItem);
+                              },
+                              child: Container(
+                                //  margin: EdgeInsets.symmetric(vertical: 4),
+                                height: getProportionateScreenHeight(210),
+                                margin: EdgeInsets.symmetric(
+                                    horizontal: 5, vertical: 5),
+                                child: GroceryItemCardWidget(
+                                  item: e.value,
+                                ),
+                              ),
+                            );
+                          }).toList(),
+                          staggeredTiles: snapshot.data
+                              .map<StaggeredTile>((_) => StaggeredTile.fit(1))
+                              .toList(),
+                          mainAxisSpacing: 3.0,
+                          crossAxisSpacing: 0.0, // add some space
                         ),
                       ),
-                    );
-                  }).toList(),
-                  staggeredTiles: beverages
-                      .map<StaggeredTile>((_) => StaggeredTile.fit(1))
-                      .toList(),
-                  mainAxisSpacing: 3.0,
-                  crossAxisSpacing: 0.0, // add some space
-                ),
-              ),
-            ],
-          ),
+                    ],
+                  );
+                }
+              }),
+          Spacer(),
         ],
       ),
     );
   }
 
-  void onItemClicked(BuildContext context, GroceryItem groceryItem) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-          builder: (context) => ProductDetailsScreen(groceryItem)),
-    );
+  void onItemClicked(BuildContext context, Product groceryItem) {
+    // Navigator.push(
+    //   context,
+    //   MaterialPageRoute(
+    //       builder: (context) => ProductDetailsScreen(groceryItem)),
+    // );
   }
 }

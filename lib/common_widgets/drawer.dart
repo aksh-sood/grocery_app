@@ -32,7 +32,7 @@ class CategoryDrawer extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       child: Container(
                           child: Text(
-                            "C\n\nT\n\nA\n\nG\n\nO\n\nR\n\nI\n\nE\n\nS",
+                            "C\n\nA\n\nT\n\nE\n\nG\n\nO\n\nR\n\nI\n\nE\n\nS",
                             style: TextStyle(
                                 color: AppColors.yellowColor,
                                 fontSize: 20,

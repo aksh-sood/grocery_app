@@ -209,7 +209,8 @@ class _BodyState extends State<Body> {
                                     email: email, password: password);
                                 var response = await model.loginUser();
 
-                                if (response["success"] != "no") {
+                                if (response["success"] != "no" ||
+                                    !response["success"]) {
                                   if (response["success"]) {
                                     Config.token = response["data"]["token"];
                                     model.firstName =

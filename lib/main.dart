@@ -11,6 +11,7 @@ void main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
   runApp(
       // MultiProvider(providers:[
       //   ChangeNotifierProvider(create: (_))
